@@ -1,0 +1,73 @@
+<template name="Add_Contact_Page">
+  <div class="ui container" style="margin: 20px">
+    <form class="ui form contact-data-form {{ errorClass }}">
+      <h4 class="ui dividing header">Contact Information</h4>
+
+      <div class="field">
+        <label>Name</label>
+        <div class="two fields">
+          <div class="field">
+            <input type="text" name="firstName" id="firstName"
+                   placeholder="First Name">
+            <!--
+            all fields in this form are required
+            if this template's displayFieldError(input.id) returns truthy, display error
+            -->
+            {{#if displayFieldError 'firstName' }}
+            <div class="ui error message">
+              <p>You must specify your name.</p>
+            </div>
+            {{/if}}
+          </div>
+          <div class="field">
+            <input type="text" name="lastName" id="lastName"
+                   placeholder="Last Name">
+            {{#if displayFieldError 'lastName' }}
+            <div class="ui error message">
+              <p>You must specify your first name.</p>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Address</label>
+        <div class="field">
+          <input type="text" name="address" id="address"
+                 placeholder="Address">
+          {{#if displayFieldError 'address' }}
+          <div class="ui error message">
+            <p>You must specify your last name.</p>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      <div class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>Phone</label>
+            <input type="text" name="phone" id="phone"
+                   placeholder="Phone">
+            {{#if displayFieldError 'phone' }}
+            <div class="ui error message">
+              <p>You must specify your phone number.</p>
+            </div>
+            {{/if}}
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="text" name="email" id="email"
+                   placeholder="Email">
+            {{#if displayFieldError 'email' }}
+            <div class="ui error message">
+              <p>You must specify your email.</p>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <button class="ui button" tabindex="0"> Submit</button>
+    </form>
+  </div>
+</template>

@@ -1,0 +1,441 @@
+<template name="User_Profile_Page">
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+    {{#if currentUser}}
+
+      <div class="ui fluid container">
+        <div class="ui two column grid">
+          <div class="four wide column">
+            <div class="ui left secondary vertical pointing menu">
+              <a class="item homeTab {{homeActiveClass}}">
+                <i class="home icon"></i>Home
+              </a>
+              <a class="item eventsTab {{eventsActiveClass}}">
+                <i class="calendar outline icon"></i>Events
+              </a>
+              <a class="item friendsTab {{friendsActiveClass}}">
+                <i class="user icon"></i>Friends
+              </a>
+            </div>
+          </div>
+
+
+          <!-- user home page logic -->
+          {{#if homeActiveClass}}
+            <div class="ten wide column">
+              <div class="ui container" style="padding: 0px">
+                <h2>My Projects</h2>
+                <div class="ui three stackable fluid link cards">
+
+                  <div class="card">
+                    <div class="image">
+                      <img class="ui small image"
+                           src="/images/Sample-Photo-1.jpg">
+                    </div>
+                    <div class="content">
+                      <div class="header">projectName-1</div>
+                      <div class="meta">
+                        <a>keywords / topics</a>
+                      </div>
+                      <div class="description">
+                        Project description / bio.
+                      </div>
+                    </div>
+                    <div class="extra content">
+                      <span class="right floated">
+                        Joined in 2013
+                      </span>
+                      <span>
+                        <i class="user icon"></i>
+                        75 Members
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="image">
+                      <img class="ui small image"
+                           src="/images/Sample-Photo-1.jpg">
+                    </div>
+                    <div class="content">
+                      <div class="header">projectName-2</div>
+                      <div class="meta">
+                        <a>keywords / topics</a>
+                      </div>
+                      <div class="description">
+                        Project description / bio.
+                      </div>
+                    </div>
+                    <div class="extra content">
+                      <span class="right floated">
+                        Joined in 2011
+                      </span>
+                      <span>
+                        <i class="user icon"></i>
+                        35 Members
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="image">
+                      <img class="ui small image"
+                           src="/images/Sample-Photo-1.jpg">
+                    </div>
+                    <div class="content">
+                      <div class="header">projectName-3</div>
+                      <div class="meta">
+                        <a>keywords / topics</a>
+                      </div>
+                      <div class="description">
+                        Project description / bio.
+                      </div>
+                    </div>
+                    <div class="extra content">
+                      <span class="right floated">
+                        Joined in 2014
+                      </span>
+                      <span>
+                        <i class="user icon"></i>
+                        151 Members
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="image">
+                      <img class="ui small image"
+                           src="/images/Sample-Photo-1.jpg">
+                    </div>
+                    <div class="content">
+                      <div class="header">projectName-4</div>
+                      <div class="meta">
+                        <a>keywords / topics</a>
+                      </div>
+                      <div class="description">
+                        Project description / bio.
+                      </div>
+                    </div>
+                    <div class="extra content">
+                      <span class="right floated">
+                        Joined in 2011
+                      </span>
+                      <span>
+                        <i class="user icon"></i>
+                        35 Members
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          {{/if}}
+
+
+          <!-- user events page logic -->
+          <!-- TODO: events tracker would be better as a calander -->
+          {{#if eventsActiveClass}}
+            <div class="ten wide column">
+              <div class="ui container">
+                <div class="ui huge celled list">
+
+                  <div class="item">
+                    <div class="ui internally celled stackable grid">
+                      <div class="row">
+                        <div class="four wide column">
+                          <div class="ui raised link card"
+                               style="width: 110px;">
+                            <div class="content"
+                                 style="background-color: darkslategray; padding: 10px">
+                              <div class="header float center"
+                                   style="color: yellow;">9
+                              </div>
+                            </div>
+                            <div class="extra content" style="padding: 10px">
+                              <div class="author"
+                                   style="color: darkslategray; font-size: small">
+                                thisMonth, 2016
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ten wide column">
+                          <div class="content">
+                            <a class="header">projectName</a>
+                            <div class="description">Do something at/for <a><b>eventName.</b></a>
+                              Misc. commentary.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <div class="ui internally celled stackable grid">
+                      <div class="row">
+                        <div class="four wide column">
+                          <div class="ui raised link card"
+                               style="width: 110px;">
+                            <div class="content"
+                                 style="background-color: darkslategray; padding: 10px">
+                              <div class="header float center"
+                                   style="color: yellow;">
+                                23
+                              </div>
+                            </div>
+                            <div class="extra content" style="padding: 10px">
+                              <div class="author"
+                                   style="color: darkslategray; font-size: small">
+                                thisMonth, 2016
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ten wide column">
+                          <div class="content">
+                            <a class="header">projectName</a>
+                            <div class="description">Do something at/for <a><b>eventName.</b></a>
+                              Misc. commentary.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <div class="ui internally celled stackable grid">
+                      <div class="row">
+                        <div class="four wide column">
+                          <div class="ui raised link card"
+                               style="width: 110px;">
+                            <div class="content"
+                                 style="background-color: darkslategray; padding: 10px">
+                              <div class="header float center"
+                                   style="color: greenyellow;">9
+                              </div>
+                            </div>
+                            <div class="extra content" style="padding: 10px">
+                              <div class="author"
+                                   style="color: darkslategray; font-size: small">
+                                laterMonth, 2016
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ten wide column">
+                          <div class="content">
+                            <a class="header">projectName</a>
+                            <div class="description">Do something at/for <a><b>eventName.</b></a>
+                              Misc. commentary.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <div class="ui internally celled stackable grid">
+                      <div class="row">
+                        <div class="four wide column">
+                          <div class="ui raised link card"
+                               style="width: 110px;">
+                            <div class="content"
+                                 style="background-color: darkslategray; padding: 10px">
+                              <div class="header float center"
+                                   style="color: greenyellow;">15
+                              </div>
+                            </div>
+                            <div class="extra content" style="padding: 10px">
+                              <div class="author"
+                                   style="color: darkslategray; font-size: small">
+                                laterMonth, 2016
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ten wide column">
+                          <div class="content">
+                            <a class="header">projectName</a>
+                            <div class="description">Do something at/for <a><b>eventName.</b></a>
+                              Misc. commentary.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <div class="ui internally celled stackable grid">
+                      <div class="row">
+                        <div class="four wide column">
+                          <div class="ui raised link card"
+                               style="width: 110px;">
+                            <div class="content"
+                                 style="background-color: darkslategray; padding: 10px">
+                              <div class="header float center"
+                                   style="color: greenyellow;">25
+                              </div>
+                            </div>
+                            <div class="extra content" style="padding: 10px">
+                              <div class="author"
+                                   style="color: darkslategray; font-size: small">
+                                laterMonth, 2016
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ten wide column">
+                          <div class="content">
+                            <a class="header">projectName</a>
+                            <div class="description">Do something at/for <a><b>eventName.</b></a>
+                              Misc. commentary.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/if}}
+
+
+          <!-- user friends page logic -->
+          {{#if friendsActiveClass}}
+            <div class="column">
+              THIS IS TEST FRIENDS
+            </div>
+          {{/if}}
+        </div>
+      </div>
+
+
+      <!-- testing and proof-of-concept section -->
+      <p> Username: {{firstName}}</p>
+      <p> userId: {{userId}}</p>
+
+      <table class="ui celled table">
+        <thead>
+        <th> Can use extended Meteor.users collection document items to
+          dynamically customize the page; these are all the fields accessible
+          and changeable.
+        </th>
+        </thead>
+        <tbody>
+        <tr>
+          <h3>Data of username:</h3>
+          {{#if userDataField 'username'}}
+            {{userDataField 'username'}}
+          {{else}}
+            userName placeholder
+          {{/if}}
+        </tr>
+        <tr>
+          <h3>projects:</h3>
+          {{#if userDataField 'projects'}}
+            {{#each project in (userDataField 'projects') }}
+              <h5>{{ project }}  <!-- since each project references a string -->
+                <!-- This seems to be the way to pass multiple args in helper functions -->
+                ({{ getProjectData project "_id" }}):
+              </h5>
+              <ul>
+                <!-- path parameter names are specified in app/imports/startup/client/router.js -->
+                <li><a
+                    href="{{ pathFor 'Project_Profile_Page' _id=(getProjectData project "_id") }}">
+                  <button class="ui blue inverted button"><h4>Project profile
+                    link</h4></button>
+                </a>
+                </li>
+                <li>{{ getProjectData project "bio" }}</li>
+                <li>
+                  <ul>
+                    <li><h5>{{ getProjectData project "projectName" }}
+                      events:</h5></li>
+                    <!-- Parens can be used to indicate precedence, but are not actually necessary here -->
+                    {{#each event in (getProjectData project "events") }}
+                      <li>{{ event }}</li>
+                    {{/each}}
+                  </ul>
+                </li>
+                <li>{{ getProjectData project "url" }}</li>
+                <li>
+                  <ul>
+                    <li><h5>{{ getProjectData project "projectName" }}
+                      members:</h5></li>
+                    {{#each member in (getProjectData project "members") }}
+                      <li>{{member}}</li>
+                    {{/each}}
+                  </ul>
+                </li>
+              </ul>
+            {{/each}}
+          {{else}}
+            projects placeholder
+          {{/if}}
+        </tr>
+        <tr>
+          <h3>events:</h3>
+          {{#if userDataField 'events'}}
+            <ul>
+              {{#each event in (userDataField 'events') }}
+                <li>{{ event }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            events placeholder
+          {{/if}}
+        </tr>
+        <tr>
+          <h3>admin of projects:</h3>
+          {{#if userDataField 'adminProjects'}}
+            {{#each project in (userDataField 'projects') }}
+              <h5>{{ project }}
+                <!-- This seems to be the way to pass multiple args in helper functions -->
+                ({{getProjectData project "_id" }}):
+              </h5>
+              <ul>
+                <li>{{ getProjectData project "bio" }}</li>
+                <li>
+                  <ul>
+                    <li><h5>{{ getProjectData project "projectName" }}
+                      events:</h5></li>
+                    {{#each event in (getProjectData project "events") }}
+                      <li>{{ event }}</li>
+                    {{/each}}
+                  </ul>
+                </li>
+                <li>{{ getProjectData project "url" }}</li>
+                <li>
+                  <ul>
+                    <li><h5>{{ getProjectData project "projectName" }}
+                      admins:</h5></li>
+                    {{#each member in (getProjectData project "admins") }}
+                      <li>{{member}}</li>
+                    {{/each}}
+                  </ul>
+                </li>
+              </ul>
+            {{/each}}
+          {{else}}
+            Admin projects placeholder
+          {{/if}}
+        </tr>
+        <tr>
+          <h3>isSiteAdmin:</h3>
+          {{#if userDataField 'isSiteAdmin'}}
+            {{userDataField 'isSiteAdmin'}}
+          {{else}}
+            SiteAdmin placeholder
+          {{/if}}
+        </tr>
+        </tbody>
+      </table>
+    {{/if}}
+  {{/if}}
+</template>
