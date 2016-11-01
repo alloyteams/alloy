@@ -63,14 +63,6 @@ Accounts.onCreateUser(function (options, user) {
   Projects.update({projectName: 'The Null Project'}, { $addToSet: {members: newUser.username} });
   Projects.update({projectName: 'The Null Project'}, { $addToSet: {admins: newUser.username} });
 
-  // // extending Meteor.user collection with custom fields
-  // // this is the recommended way, see https://guide.meteor.com/accounts.html#adding-fields-on-registration
-  // // TODO: find how to extend the Meteor.user schema to always include these fields
-  // user.projects = [defaultProject.projectName];  // assumes projectNames are all uniq. (else need some other uniq. ID)
-  // user.events = ['The Null Event-1', 'The Null Event-2'];
-  // user.adminProjects = [defaultProject.projectName];
-  // user.isSiteAdmin = false;
-
 
   // We still want the default hook's 'profile' behavior.
   if (options.profile)
