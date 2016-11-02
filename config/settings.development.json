@@ -1,3 +1,21 @@
 {
-  "defaultAccount": {"username": "root", "password": "root"}
+  "defaultAccount": {
+    "username": "root",
+    "password": "root"
+  },
+  "cas": {
+    "baseUrl": "https://cas-test.its.hawaii.edu/cas/",
+    "autoClose": true
+  },
+  "public": {
+    "cas": {
+      "loginUrl": "https://cas-test.its.hawaii.edu/cas/login",
+      "serviceParam": "service",
+      "popupWidth": 810,
+      "popupHeight": 610
+    }
+  },
+  "allowed_users": [
+    "tevesn"
+  ]
 }
