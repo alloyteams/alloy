@@ -11,9 +11,6 @@ import {_} from 'meteor/underscore';
 Accounts.validateNewUser(function (user) {
   if (user) {
     // get username from uh-cas login service
-    console.log(user.services)
-    console.log(user.services.cas)
-    console.log(user.services.id)
     const username = user.services.cas.id;
     if (username && _.contains(Meteor.settings.allowed_users, username)) {
       return true;
@@ -74,7 +71,6 @@ Accounts.onCreateUser(function (options, user) {
     adminProjects: [defaultProject.projectName],
     isSiteAdmin: false
   };
-  console.log(newUser)
   Users.insert(newUser);  // this means User documents will have different _id than the Meteor.user._id
                           // unless we create our own _id or Meteor.users.
                           // see https://guide.meteor.com/accounts.html#adding-fields-on-registration
