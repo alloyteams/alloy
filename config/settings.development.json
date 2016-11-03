@@ -1,8 +1,4 @@
 {
-  "defaultAccount": {
-    "username": "root",
-    "password": "root"
-  },
   "cas": {
     "baseUrl": "https://cas-test.its.hawaii.edu/cas/",
     "autoClose": true
@@ -16,6 +12,7 @@
     }
   },
   "allowed_users": [
-    "tevesn"
+    "tevesn",
+    "reedv"
   ]
 }
