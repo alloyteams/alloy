@@ -63,12 +63,17 @@ Accounts.onCreateUser(function (options, user) {
     Projects.insert(defaultProject);
   }
 
-  // initialize newUser account info ad add to Users collection
+  // initialize newUser account info with some default/test info and add to Users collection
   const newUser = {
     username: user.services.cas.id,  // if not using UH cas, use: user.username
-    projects: [defaultProject.projectName],
+    skills: ['hugging'],
+    interests: ['working together'],
     events: ['The Null Event-1', 'The Null Event-2'],
+    projects: [defaultProject.projectName],
     adminProjects: [defaultProject.projectName],
+    followedPeople: ['edwardNullen123'],  // In real cases, would need guarantee that added user existed
+    followedProjects: [defaultProject.projectName],
+    followedBy: ['edwardNullen123'],
     isSiteAdmin: false
   };
   Users.insert(newUser);  // this means User documents will have different _id than the Meteor.user._id
@@ -76,7 +81,7 @@ Accounts.onCreateUser(function (options, user) {
                           // see https://guide.meteor.com/accounts.html#adding-fields-on-registration
 
   // This is a test of adding members to projects dynamically, rather than at project declaration.
-  // add this user as a member and admin of the default project
+  // add this user as a member and admin of the default project array fields
   // see https://docs.mongodb.com/manual/reference/operator/update/
   // TODO: add function to Projects collection api that allows user.projects and project.members to be set simultaneously
   Projects.update({ projectName: 'The Null Project' }, { $addToSet: { members: newUser.username } });
