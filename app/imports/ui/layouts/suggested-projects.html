@@ -1,64 +1,50 @@
 <template name="Suggested_Projects">
-  <div class="ui small cards">
-    <div class="ui card">
-      <div class="image">
-        <!--Would probably require an each statement to go through all of the projects to be featured-->
-        <!--TODO: add project image-->
-        <img src="/images/alloy-wordmark.png">
-      </div>
-      <div class="content">
-        <!--TODO: add project image-->
-        <a class="header">Project Name</a>
-        <!--TODO: add a created date-->
-        <div class="meta">
-          <span class="date">Created on 10/12/2016</span>
-        </div>
-        <!--TODO: add a description of the project-->
-        <div class="description">
-          Here is a short description of the project.
-        </div>
-      </div>
-      <!--TODO: add skills relevant to that project-->
-      <div class="extra content">
-        <a>
-          <div class="ui small label">
-            Skill 1
+  <h1><img style="height:30px; width:auto"
+           src="/images/alloy-icon.png">
+    {{#if currentUser}}
+      Suggested Projects
+    {{else}}
+      Featured Projects
+    {{/if}}
+    <hr/>
+  </h1>
+
+  <!-- TODO: currently goes thru all projects (for testing), needs way to decide which will be featured / suggested -->
+  {{#if Template.subscriptionsReady}}
+    <div class="ui small cards">
+      {{#each project in projectsList}}
+        <div class="ui card">
+          <div class="image">
+            <!-- project image-->
+            <img src="/images/alloy-wordmark.png">
           </div>
-          <div class="ui small label">
-            Skill 2
+          <div class="content">
+            <!--TODO: add project image-->
+            <a class="header">Project Name {{ project.projectName }}</a>
+            <!--TODO: add a created date-->
+            <div class="meta">
+              <span
+                  class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
+            </div>
+            <!-- description of the project-->
+            <div class="description">
+              {{ project.bio }}
+            </div>
           </div>
-        </a>
-      </div>
+          <!--TODO: add skills relevant to that project-->
+          <div class="extra content">
+            {{#each skill in (project.skills)}}
+              <div class="ui small label">
+                {{ skill }}
+              </div>
+            {{/each}}
+          </div>
+          <div class="extra content">
+            Members: {{#if project.members}} {{ project.members.length }} {{else}}
+            0 {{/if}}
+          </div>
+        </div>
+      {{/each}}
     </div>
-    <div class="ui card">
-      <div class="image">
-        <!--Would probably require an each statement to go through all of the projects to be featured-->
-        <!--TODO: add project image-->
-        <img src="/images/alloy-wordmark.png">
-      </div>
-      <div class="content">
-        <!--TODO: add project image-->
-        <a class="header">Project Name</a>
-        <!--TODO: add a created date-->
-        <div class="meta">
-          <span class="date">Created on 10/12/2016</span>
-        </div>
-        <!--TODO: add a description of the project-->
-        <div class="description">
-          Here is a short description of the project.
-        </div>
-      </div>
-      <!--TODO: add skills relevant to that project-->
-      <div class="extra content">
-        <a>
-          <div class="ui small label">
-            Skill 1
-          </div>
-          <div class="ui small label">
-            Skill 2
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
+  {{/if}}
 </template>

@@ -36,6 +36,10 @@ Template.Project_Profile_Page.onCreated(function onCreated() {
 
 // useful thing to note, all Collection docs. have a _id key that is uniq. to that doc
 Template.Project_Profile_Page.helpers({
+  /**
+   * @param fieldVal
+   * @returns {*} The specified value fieldVal of the project document specified by the router to this page
+   */
   projectDataField(fieldVal) {
     // app/imports/startup/client/router.js defines the 'id' vs '_id' bindings
     //   see app/imports/ui/pages/home-page.html
