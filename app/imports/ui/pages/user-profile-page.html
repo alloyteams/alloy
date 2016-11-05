@@ -316,7 +316,7 @@
       </div>
 
 
-      <!-- testing and proof-of-concept section -->
+      <!-- testing and proof-of-concept section, DO NOT DELETE-->
       <p> Username: {{firstName}}</p>
       <p> userId: {{userId}}</p>
 
@@ -328,7 +328,9 @@
         </th>
         </thead>
         <tbody>
+
         <tr>
+          <!-- get this user's username -->
           <h3>Data of username:</h3>
           {{#if userDataField 'username'}}
             {{userDataField 'username'}}
@@ -336,7 +338,51 @@
             userName placeholder
           {{/if}}
         </tr>
+
         <tr>
+          <!-- list all skills if any -->
+          <h3>Skills:</h3>
+          {{#if userDataField 'skills'}}
+            <ul>
+              {{#each skill in (userDataField 'skills')}}
+                <li>{{ skill }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            interests placeholder
+          {{/if}}
+        </tr>
+
+        <tr>
+          <!-- list all interests in any -->
+          <h3>Interests:</h3>
+          {{#if userDataField 'interests'}}
+            <ul>
+              {{#each interest in (userDataField 'interests')}}
+                <li>{{ interest }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            interests placeholder
+          {{/if}}
+        </tr>
+
+        <tr>
+          <!-- iterate thru all events associated with this user -->
+          <h3>events:</h3>
+          {{#if userDataField 'events'}}
+            <ul>
+              {{#each event in (userDataField 'events') }}
+                <li>{{ event }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            events placeholder
+          {{/if}}
+        </tr>
+
+        <tr>
+          <!-- iterate thru accessible data for each project associated with this user -->
           <h3>projects:</h3>
           {{#if userDataField 'projects'}}
             {{#each project in (userDataField 'projects') }}
@@ -379,19 +425,9 @@
             projects placeholder
           {{/if}}
         </tr>
+
         <tr>
-          <h3>events:</h3>
-          {{#if userDataField 'events'}}
-            <ul>
-              {{#each event in (userDataField 'events') }}
-                <li>{{ event }}</li>
-              {{/each}}
-            </ul>
-          {{else}}
-            events placeholder
-          {{/if}}
-        </tr>
-        <tr>
+          <!-- iterate thru accessible data for all projects this user is an admin of -->
           <h3>admin of projects:</h3>
           {{#if userDataField 'adminProjects'}}
             {{#each project in (userDataField 'projects') }}
@@ -426,7 +462,48 @@
             Admin projects placeholder
           {{/if}}
         </tr>
+
         <tr>
+          <!-- list all users followed by this user -->
+          <h3>followed people:</h3>
+          {{#if userDataField 'followedPeople'}}
+            <ul>
+              {{#each person in (userDataField 'followedPeople') }}
+                <li>{{ person }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+          {{/if}}
+        </tr>
+
+        <tr>
+          <!-- list all projects followed by this user -->
+          <h3>followed projects:</h3>
+          {{#if userDataField 'followedProjects'}}
+            <ul>
+              {{#each project in (userDataField 'followedProjects') }}
+                <li>{{ project }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+          {{/if}}
+        </tr>
+
+        <tr>
+          <!-- list all people following this user -->
+          <h3>followed by:</h3>
+          {{#if userDataField 'followedBy'}}
+            <ul>
+              {{#each person in (userDataField 'followedBy') }}
+                <li>{{ person }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+          {{/if}}
+        </tr>
+
+        <tr>
+          <!-- display siteAdmin status of this person (if field has been set) -->
           <h3>isSiteAdmin:</h3>
           {{#if userDataField 'isSiteAdmin'}}
             {{userDataField 'isSiteAdmin'}}

@@ -5,8 +5,9 @@ import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
-import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
-import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
+import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
+import {Users, UsersSchema} from '../../api/users/users.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -17,7 +18,8 @@ const friendsActive = 'friendsActive';
 
 Template.User_Profile_Page.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('UserData');  // extended Meteor.user collection data
+    // this.subscribe('UserData');  // extended Meteor.user collection data
+    this.subscribe('Users');
     this.subscribe('Projects');
   });
 
@@ -30,13 +32,16 @@ Template.User_Profile_Page.onCreated(function onCreated() {
   this.navMenuActive.set(homeActive, true);
   this.navMenuActive.set(eventsActive, false);
   this.navMenuActive.set(friendsActive, false);
+
+  // this.context = ProjectsSchema.namedContext('Project_Profile_Page');
 });
 
 // useful thing to note, all Collection docs. have a _id key that is uniq. to that doc
 Template.User_Profile_Page.helpers({
   userDataField(fieldVal) {
-    // here, we search by username, which we assume to be uniq.
-    const user = Meteor.users.findOne({ username: Meteor.user().username });  // returns undefined if no matching doc. found
+    // here, we search by logged-in username (using the Meteor.users collection),
+    // which we assume to be uniq. and in Users. Returns undefined if no matching doc. found
+    const user = Users.findOne({ username: Meteor.user().profile.name });  // if not using UH cas, use: Meteor.user().username
     // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return user && user[fieldVal];

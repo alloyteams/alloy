@@ -7,6 +7,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
 import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
+import { Users, UsersSchema } from '../../api/users/users.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -17,7 +18,7 @@ const friendsActive = 'friendsActive';
 
 Template.Project_Profile_Page.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('UserData');  // extended Meteor.user collection data
+    this.subscribe('Users');
     this.subscribe('Projects');
   });
 
@@ -41,7 +42,6 @@ Template.Project_Profile_Page.helpers({
     // uses the id param specified in page that routed to this page
     //   see https://github.com/kadirahq/flow-router#routes-definition
     const project = Projects.findOne(FlowRouter.getParam('_id'));
-    console.log(project && project[fieldVal]);
     // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return project && project[fieldVal];
