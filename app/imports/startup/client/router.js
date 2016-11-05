@@ -8,6 +8,13 @@ FlowRouter.route('/', {
   },
 });
 
+FlowRouter.route('/homepage2', {
+  name: 'Home_Page_2',
+  action() {
+    BlazeLayout.render('Homepage_Body', { main: 'Home_Page_2' });
+  },
+});
+
 FlowRouter.route('/user-profile', {
   name: 'User_Profile_Page',
   action() {

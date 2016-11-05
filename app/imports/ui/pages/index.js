@@ -31,3 +31,6 @@ import './project-admin-page.js';
 import './site-admin-page.html';
 import './site-admin-page.js';
 
+
+//Added imports from new UI design
+import './home-page-2.html';
