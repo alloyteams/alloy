@@ -44,4 +44,39 @@
       </div>
     </div>
   </div>
+  <div class="ui container">
+    {{#if Template.subscriptionsReady}}
+    <table class="ui celled table" style="margin: 10px">
+      <thead>
+      <tr>
+        <th>First</th>
+        <th>Last</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Edit Contact</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each contact in contactsList}}
+      <tr>
+        <td>{{contact.firstName}}</td>
+        <td>{{contact.lastName}}</td>
+        <td>{{contact.address}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.email}}</td>
+        <!-- link to page to edit this contact -->
+        <!-- to see whether to binf to 'id' or '_id', see app/imports/startup/client/router.js for url info-->
+        <td><a
+            href="{{pathFor 'Edit_Contact_Page' id=contact._id}}">Edit</a>
+        </td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
+    {{else}}
+    {{> Loading}}
+    {{/if}}
+
+  </div>
 </template>
