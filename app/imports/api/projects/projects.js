@@ -31,6 +31,13 @@ export const ProjectsSchema = new SimpleSchema({
     optional: true,
     max: 200,
   },
+  skills: {
+    label: 'skills',
+    type: [String],
+    optional: true,
+    max: 200,
+    maxCount: 200,
+  },
   url: {
     label: 'url',
     type: String,
@@ -46,18 +53,14 @@ export const ProjectsSchema = new SimpleSchema({
     type: [String],
     optional: true,
   },
-
+  createdAt: {
+    label: 'createdAt',
+    type: Date,
+    optional: false,
+  }
 });
 Projects.attachSchema(ProjectsSchema);
 
-// for testing: for testing logic of user discovering and joining a club
-const joinableNullClub = {
-  projectName: 'joinableNull Club',
-  bio: 'Cross over children. All are welcome',
-  events: ['Bad B-Movies', 'Chair Stackathon'],
-  url: 'https://join.us'
-};
-Projects.insert(joinableNullClub);
 
 // NOTE: rather than adding methods to an api/collection file to give certain collections different behaviors
 // this (http://stackoverflow.com/a/21546609) seems to be to offical way to do it.

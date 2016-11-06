@@ -1,10 +1,11 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
-FlowRouter.route('/', {
+FlowRouter.route('/', {  // set homepage at reference address "/"
   name: 'Home_Page',
   action() {
-    BlazeLayout.render('App_Body', { main: 'Home_Page' });
+    // render using homepage-body layout, with param 'main' mapping to Home_Page template
+    BlazeLayout.render('Homepage_Body', { main: 'Home_Page' });
   },
 });
 
