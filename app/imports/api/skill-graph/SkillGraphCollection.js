@@ -63,13 +63,13 @@ class Edge {
 
   /**
    *
-   * @param v
-   * @param w
+   * @param {string} v
+   * @param {string} w
    * @returns {boolean} true when this edge connects vertices v and w, else false
    */
   connects(v, w) {
-    return (this.either()===v && this.other(v)===w)
-        || (this.either()===w && this.other(w)===v);
+    return (this.either() === v && this.other(v) === w)
+        || (this.either() === w && this.other(w) === v);
   }
 
   /**
@@ -78,9 +78,10 @@ class Edge {
    * @returns {number} -1 if 'that' dominates this edge, +1 if this edge dominates 'that', else 0
    */
   compareTo(thatEdge) {
-    if (this.getWeight() < thatEdge.getWeight())      return -1;
-    else if (this.getWeight() > thatEdge.getWeight()) return +1;
-    else                                              return 0;
+    if (this.getWeight() < thatEdge.getWeight())   return -1;
+    else
+      if (this.getWeight() > thatEdge.getWeight()) return +1;
+      else                                         return 0;
   }
 
   // For debugging. Will depend on what is stored as _v and _w (would need to be printable things)
@@ -89,9 +90,7 @@ class Edge {
   }
 
 }
-export { Edge };  // needed so we can create Edge instances in other files
-
-
+export {Edge};  // needed so we can create Edge instances in other files
 
 class SkillGraph extends BaseCollection {
 
@@ -109,8 +108,13 @@ class SkillGraph extends BaseCollection {
     this._vertexCount = 0;
   }
 
-  edgeCount() { return this._edgeCount; }
-  vertexCount() { return this._vertexCount; }
+  edgeCount() {
+    return this._edgeCount;
+  }
+
+  vertexCount() {
+    return this._vertexCount;
+  }
 
   /**
    *
@@ -119,7 +123,7 @@ class SkillGraph extends BaseCollection {
    */
   addVertex(skill) {
     check(skill, String);
-    const exists = this._collection.findOne({skill: skill});
+    const exists = this._collection.findOne({ skill: skill });
     if (!exists) {
       const newSkill = {
         skill: skill,
@@ -146,47 +150,80 @@ class SkillGraph extends BaseCollection {
     const adjW = this.adjList(w);
 
     // check that adj list of v does NOT ALREADY contain an edge to w
-    // FIXME: this check only tells whether edge exists in v's adjList, NOT w's
-    const existingEdge = _.find(adjV, (edge) => {
-      return (edge._v===v && edge._w===w) || (edge._v===w && edge._w===v) });  // TODO: use edge.connects(v, w)
-    // FIXME: for some reason, won't let me use Edge methods, instead makes me refer to the underlying fields (may have something to do with underscore, like it does not acknowledge the associated class)
-    // This may be a meteor problem, try type casting. see http://stackoverflow.com/a/32554410
-    if ( !existingEdge ) {
+    // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/32554410
+    // So need special way to use Edge methods. see http://stackoverflow.com/a/8736980
+    const existingEdge = _.find(adjV, (e) => {
+          return (e._v === v && e._w === w)
+              || (e._v === w && e._w === v);
+          // FIXME: can't use Edge.prototype.connects(v, w).call(e) here b/c connects() uses other Edge methods and Meteor will not store adj arrays items as Edge instances (rather as generic objects).
+        }
+    );
+    if (!existingEdge) {
       console.log(`edge ${v}--${w} NOT exists`);
-      // if edge not already in adjLists of v and w, add it to both those lists
+      // if edge NOT already in adjLists of v and w, add it to BOTH those lists
       this._collection.update({ skill: v }, { $addToSet: { adj: edge } });
       this._collection.update({ skill: w }, { $addToSet: { adj: edge } });
       this._edgeCount++;
     } else {
-        console.log(`edge ${v}--${w} ALREADY exists`);
-        // else edge v-w already in adj. of v and w, update the weight on that edge for each vertex
-        for (let i=0; i < adjV.length; i++) {
-          // Meteor wont store the edge objects as Edge instances. So need special way to use Edge methods
-          // see http://stackoverflow.com/a/8736980
-          if ( Edge.prototype.connects(v, w).call(adjV[i]) ) {
-            // update the adjList of v and use to replace the old one
-            // see http://stackoverflow.com/a/38864747
-            let incAmount = 10;
-            Edge.prototype.setWeight(
-                Edge.prototype.getWeight().call(adjV[i]) + incAmount)
-                .call(adjV[i]);
-            this._collection.update({skill: v}, { $set: {adj: adjV} });
-            break;
-          }
+      console.log(`edge ${v}--${w} ALREADY exists`);
+      // else edge v-w already in adj. of v AND w, update the weight on that edge for each vertex.
+      // as long as we have been adding edges using addEdge(), there should be no case where v has an edge
+      // v-w, but w does not.
+      const incAmount = 10;
+
+      for (let i = 0; i < adjV.length; i++) {
+        // Meteor wont store the edge objects as Edge instances.
+        // So need special way to use Edge method. see http://stackoverflow.com/a/8736980
+        if (Edge.prototype.connects(v, w).call(adjV[i])) {
+          // update the adjList of v and use to replace the old one
+          // see http://stackoverflow.com/a/38864747
+          Edge.prototype.setWeight(
+              Edge.prototype.getWeight().call(adjV[i]) + incAmount)
+              .call(adjV[i]);
+          // TODO: I fully overwrite the old adj array b/c IDK how the passing by reference works here.
+          // If I were to just change the value of adjV[i], would that change automatically be reflected
+          // in the collection doc. whoes adj field I am modifying?
+          this._collection.update({ skill: v }, { $set: { adj: adjV } });
+
+          break;
         }
-        for (let i=0; i < adjW.length; i++) {
-          if ( Edge.prototype.connects(v, w).call(adjW[i]) ) {
-            // update the adjList of w and use to replace the old one
-            let incAmount = 10;
-            Edge.prototype.setWeight(
-                Edge.prototype.getWeight().call(adjW[i]) + incAmount)
-                .call(adjW[i]);
-            this._collection.update({skill: w}, { $set: {adj: adjW} });
-            break;
-          }
+      }
+      for (let i = 0; i < adjW.length; i++) {
+        if (Edge.prototype.connects(v, w).call(adjW[i])) {
+          // update the adjList of w and use to replace the old one
+          Edge.prototype.setWeight(
+              Edge.prototype.getWeight().call(adjW[i]) + incAmount)
+              .call(adjW[i]);
+          this._collection.update({ skill: w }, { $set: { adj: adjW } });
+
+          break;
+        }
       }
     }
     console.log();
+  }
+
+  /**
+   *
+   * @param {[String]} skills
+   * Adds all skills to the graph, connects all listed skills to each other each with a single edge.
+   */
+  addVertexList(skills) {
+    // add all vertices in skills to graph
+    _.each(skills, (skill) => {
+      this.addVertex(skill);
+    });
+
+    // add edges to graph
+    // all the skills get ONE undirected edge to the other skills mentioned in the skills array
+    // (excluding themselves and avoid double-counting)
+    for (let i = 0; i < skills.length - 1; i++) {
+      for (let j = i + 1; j < skills.length; j++) {
+        let edge = new Edge(skills[i], skills[j], 0);
+        // TODO: these edges are objects, which get passed by reference. Will there be a problem with these edge instances being destroyed and thus the collection doc. holding the references to them will no longer have that data?
+        this.addEdge(edge);
+      }
+    }
   }
 
   /**
@@ -195,14 +232,13 @@ class SkillGraph extends BaseCollection {
    */
   adjList(skill) {
     console.log(`In adjList(${skill})`);
-    const skillVertex = this._collection.findOne({skill: skill});
+    const skillVertex = this._collection.findOne({ skill: skill });
     console.log(skillVertex);
     console.log(`skillVertex.adj[0] is instanceOf Edge: ${(skillVertex.adj[0] instanceof Edge)}`);
     console.log(skillVertex.adj[0]);
     console.log();
     return skillVertex.adj;
   }
-
 
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;

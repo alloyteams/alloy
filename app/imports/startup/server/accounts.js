@@ -58,7 +58,7 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
-    skills: ['JavaScript'],
+    skills: ['JavaScript', 'joining'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
@@ -126,19 +126,7 @@ if (Meteor.users.find().count() === 0) {
 
     // TESTING: update SkillGraphCollection with this new defaultProject
     // adding vertcies to SkillGraphCollection
-    _.each(joinableNullProject.skills, (skill) => {
-      SkillGraphCollection.addVertex(skill);
-    });
-
-    // add edges to SkillGraphCollection
-    // all the skills get ONE edge to the other skills mentioned in the skills array
-    // (excluding themselves and avoid double-counting)
-    for (let i = 0; i < joinableNullProject.skills.length - 1; i++) {
-      for (let j = i + 1; j < joinableNullProject.skills.length; j++) {
-        let edge = new Edge(joinableNullProject.skills[i], joinableNullProject.skills[j], 0);
-        SkillGraphCollection.addEdge(edge);
-      }
-    }
+    SkillGraphCollection.addVertexList(joinableNullProject.skills);
 
     _.each(joinableNullProject.skills, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
