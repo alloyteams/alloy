@@ -3,8 +3,11 @@ import {Accounts} from 'meteor/accounts-base';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 import {_} from 'meteor/underscore';
-import { BaseCollection } from '../../api/base/BaseCollection.js'
-import { SkillGraphCollection, Edge } from '../../api/skill-graph/SkillGraphCollection.js';
+import {BaseCollection} from '../../api/base/BaseCollection.js'
+import {
+    SkillGraphCollection,
+    Edge
+} from '../../api/skill-graph/SkillGraphCollection.js';
 
 /* eslint-disable no-console */
 
@@ -24,7 +27,6 @@ Accounts.validateNewUser(function (user) {
 if (!Meteor.settings.cas) {
   console.log('CAS settings not found! Hint: "meteor --settings ../config/settings.development.json"');
 }
-
 
 Accounts.onCreateUser(function (options, user) {
   /* From http://docs.meteor.com/api/accounts.html
@@ -97,14 +99,12 @@ Accounts.onCreateUser(function (options, user) {
   Projects.update({ projectName: 'The Null Project' }, { $addToSet: { members: newUser.username } });
   Projects.update({ projectName: 'The Null Project' }, { $addToSet: { admins: newUser.username } });
 
-
   // We still want the default hook's 'profile' behavior.
   if (options.profile)
     user.profile = options.profile;
 
   return user;
 });
-
 
 // FIXME: causes 'id required' error when using UH accounts-cas. Should just delete?
 /* When running app for first time, pass a settings file to set up a default user account if no other users. */
@@ -114,7 +114,7 @@ if (Meteor.users.find().count() === 0) {
     projectName: 'joinableNull Project',
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
-    skills: ['clicking', 'joining'],
+    skills: ['finding', 'clicking', 'joining'],
     url: 'https://join.us',
     createdAt: new Date(),
   };
@@ -131,18 +131,17 @@ if (Meteor.users.find().count() === 0) {
     });
 
     // add edges to SkillGraphCollection
-    // all the skills get an edge to the other skills mentioned in the skills array (excluding themselves)
-    for (let i=0; i < joinableNullProject.skills.length; i++) {
-      for (let j=0; j < joinableNullProject.skills.length; j++) {
-        if (j !== i) {
-          let edge = new Edge(joinableNullProject.skills[i], joinableNullProject.skills[j], 0);
-          SkillGraphCollection.addEdge(edge);
-        }
+    // all the skills get ONE edge to the other skills mentioned in the skills array
+    // (excluding themselves and avoid double-counting)
+    for (let i = 0; i < joinableNullProject.skills.length - 1; i++) {
+      for (let j = i + 1; j < joinableNullProject.skills.length; j++) {
+        let edge = new Edge(joinableNullProject.skills[i], joinableNullProject.skills[j], 0);
+        SkillGraphCollection.addEdge(edge);
       }
     }
 
     _.each(joinableNullProject.skills, (skill) => {
-      console.log(`${skill}:\n${SkillGraphCollection.adjListToString(skill)}`);
+      console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
   }
 }

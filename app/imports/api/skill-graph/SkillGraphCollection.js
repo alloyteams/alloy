@@ -78,9 +78,9 @@ class Edge {
    * @returns {number} -1 if 'that' dominates this edge, +1 if this edge dominates 'that', else 0
    */
   compareTo(thatEdge) {
-    if (this.weight() < thatEdge.weight())      return -1;
-    else if (this.weight() > thatEdge.weight()) return +1;
-    else                                        return 0;
+    if (this.getWeight() < thatEdge.getWeight())      return -1;
+    else if (this.getWeight() > thatEdge.getWeight()) return +1;
+    else                                              return 0;
   }
 
   // For debugging. Will depend on what is stored as _v and _w (would need to be printable things)
@@ -146,42 +146,47 @@ class SkillGraph extends BaseCollection {
     const adjW = this.adjList(w);
 
     // check that adj list of v does NOT ALREADY contain an edge to w
+    // FIXME: this check only tells whether edge exists in v's adjList, NOT w's
     const existingEdge = _.find(adjV, (edge) => {
       return (edge._v===v && edge._w===w) || (edge._v===w && edge._w===v) });  // TODO: use edge.connects(v, w)
     // FIXME: for some reason, won't let me use Edge methods, instead makes me refer to the underlying fields (may have something to do with underscore, like it does not acknowledge the associated class)
+    // This may be a meteor problem, try type casting. see http://stackoverflow.com/a/32554410
     if ( !existingEdge ) {
       console.log(`edge ${v}--${w} NOT exists`);
-      // if edge not already in adjLists of v and w, add it to those lists
+      // if edge not already in adjLists of v and w, add it to both those lists
       this._collection.update({ skill: v }, { $addToSet: { adj: edge } });
       this._collection.update({ skill: w }, { $addToSet: { adj: edge } });
       this._edgeCount++;
     } else {
-        // FIXME: if either adjV or adjW is empty, then _collection updates with undefiend => errors
-        // FIXME: Also, this current implementation double-counts the edge weights
         console.log(`edge ${v}--${w} ALREADY exists`);
         // else edge v-w already in adj. of v and w, update the weight on that edge for each vertex
         for (let i=0; i < adjV.length; i++) {
-          if ( (adjV[i]._v===v && adjV[i]._w===w) || (adjV[i]._v===w && adjV[i]._w===v) ) {  //TODO: use adjV.connects(v, w)
+          // Meteor wont store the edge objects as Edge instances. So need special way to use Edge methods
+          // see http://stackoverflow.com/a/8736980
+          if ( Edge.prototype.connects(v, w).call(adjV[i]) ) {
             // update the adjList of v and use to replace the old one
-            // see http://stackoverflow.com/questions/38862847/meteor-mongodb-update-an-array-item-in-a-collection-by-index
-            //TODO: use adjV[i].setWeight(adjV[i].getWeight() + edge.getWeight);
-            adjV[i]._weight = adjV._weight + edge.getWeight();
+            // see http://stackoverflow.com/a/38864747
+            let incAmount = 10;
+            Edge.prototype.setWeight(
+                Edge.prototype.getWeight().call(adjV[i]) + incAmount)
+                .call(adjV[i]);
             this._collection.update({skill: v}, { $set: {adj: adjV} });
             break;
           }
         }
         for (let i=0; i < adjW.length; i++) {
-          if ( (adjW[i]._v===v && adjW[i]._w===w) || (adjW[i]._v===w && adjW[i]._w===v) ) {  //TODO: use adjW.connects(v, w)
+          if ( Edge.prototype.connects(v, w).call(adjW[i]) ) {
             // update the adjList of w and use to replace the old one
-            //TODO use: adjW[i].setWeight(adjW[i].getWeight() + edge.getWeight);
-            adjW[i]._weight = adjW._weight + edge.getWeight();
+            let incAmount = 10;
+            Edge.prototype.setWeight(
+                Edge.prototype.getWeight().call(adjW[i]) + incAmount)
+                .call(adjW[i]);
             this._collection.update({skill: w}, { $set: {adj: adjW} });
             break;
           }
       }
     }
-
-    console.log('\n');
+    console.log();
   }
 
   /**
@@ -193,16 +198,20 @@ class SkillGraph extends BaseCollection {
     const skillVertex = this._collection.findOne({skill: skill});
     console.log(skillVertex);
     console.log(`skillVertex.adj[0] is instanceOf Edge: ${(skillVertex.adj[0] instanceof Edge)}`);
-    console.log(`${skillVertex.adj[0]}\n`);
+    console.log(skillVertex.adj[0]);
+    console.log();
     return skillVertex.adj;
   }
 
 
   adjListToString(skill) {
-    let str = `skill: ${skill}\n\n`;
+    let str = `skill: ${skill}\n`;
     for (let edge of this.adjList(skill)) {
-      str += `${edge.toString()}\n`;
+      console.log(edge);
+      // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/8736980
+      str += `${Edge.prototype.toString.call(edge)}\n`;  // call arg sets context (eg. defines what 'this' refers to)
     }
+    return str;
   }
 }
 
