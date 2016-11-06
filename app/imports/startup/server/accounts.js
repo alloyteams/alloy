@@ -54,11 +54,13 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
+    skills: ['JavaScript'],
     url: 'https://theNullProject.org',
+    createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
   // if the default project has not yet been added to Projects collection, do so.
   // returns 'undefined' if none found (falsey), else first matched obj. (truthy?)
-  let defaultExists = Projects.findOne({ projectName: 'The Null Project' });
+  let defaultExists = Projects.findOne({ projectName: defaultProject.projectName });
   if (!(defaultExists)) {
     Projects.insert(defaultProject);
   }
@@ -97,13 +99,20 @@ Accounts.onCreateUser(function (options, user) {
 
 // FIXME: causes 'id required' error when using UH accounts-cas. Should just delete?
 /* When running app for first time, pass a settings file to set up a default user account if no other users. */
-// if (Meteor.users.find().count() === 0) {
-//   if (!!Meteor.settings.defaultAccount) {
-//     Accounts.createUser({
-//       username: Meteor.settings.defaultAccount.username,
-//       password: Meteor.settings.defaultAccount.password,
-//     });
-//   } else {
-//     console.log('No default user!  Please invoke meteor with a settings file.');
-//   }
-// }
+if (Meteor.users.find().count() === 0) {
+// for testing: for testing logic of user discovering and joining a club
+  const joinableNullClub = {
+    projectName: 'joinableNull Club',
+    bio: 'Cross over children. All are welcome',
+    events: ['Bad B-Movies', 'Chair Stackathon'],
+    skills: ['clicking', 'joining'],
+    url: 'https://join.us',
+    createdAt: new Date(),
+  };
+  // if the default project has not yet been added to Projects collection, do so.
+  // returns 'undefined' if none found (falsey), else first matched obj. (truthy?)
+  let exists = Projects.findOne({ projectName: joinableNullClub.projectName });
+  if (!(exists)) {
+    Projects.insert(joinableNullClub);
+  }
+}

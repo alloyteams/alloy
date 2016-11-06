@@ -9,3 +9,8 @@ import './header.js';
 import './if-logged-in.html';
 import './if-logged-in.js';
 import './loading.html';
+import './welcome-banner.html';
+import './homepage-body.html';
+import './homepage-body.js';
+import './suggested-projects.html';
+import './suggested-projects.js';
