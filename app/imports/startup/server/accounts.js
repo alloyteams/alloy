@@ -3,6 +3,8 @@ import {Accounts} from 'meteor/accounts-base';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 import {_} from 'meteor/underscore';
+import { BaseCollection } from '../../api/base/BaseCollection.js'
+import { SkillGraphCollection, Edge } from '../../api/skill-graph/SkillGraphCollection.js';
 
 /* eslint-disable no-console */
 
@@ -63,6 +65,12 @@ Accounts.onCreateUser(function (options, user) {
   let defaultExists = Projects.findOne({ projectName: defaultProject.projectName });
   if (!(defaultExists)) {
     Projects.insert(defaultProject);
+
+    // TESTING: update SkillGraphCollection with this new defaultProject
+    _.each(defaultProject.skills, (skill) => {
+      SkillGraphCollection.addVertex(skill);
+      console.log(`${skill}:\n${SkillGraphCollection.adjListToString(skill)}`);
+    });
   }
 
   // initialize newUser account info with some default/test info and add to Users collection
@@ -97,12 +105,13 @@ Accounts.onCreateUser(function (options, user) {
   return user;
 });
 
+
 // FIXME: causes 'id required' error when using UH accounts-cas. Should just delete?
 /* When running app for first time, pass a settings file to set up a default user account if no other users. */
 if (Meteor.users.find().count() === 0) {
 // for testing: for testing logic of user discovering and joining a club
-  const joinableNullClub = {
-    projectName: 'joinableNull Club',
+  const joinableNullProject = {
+    projectName: 'joinableNull Project',
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
     skills: ['clicking', 'joining'],
@@ -111,8 +120,29 @@ if (Meteor.users.find().count() === 0) {
   };
   // if the default project has not yet been added to Projects collection, do so.
   // returns 'undefined' if none found (falsey), else first matched obj. (truthy?)
-  let exists = Projects.findOne({ projectName: joinableNullClub.projectName });
+  let exists = Projects.findOne({ projectName: joinableNullProject.projectName });
   if (!(exists)) {
-    Projects.insert(joinableNullClub);
+    Projects.insert(joinableNullProject);
+
+    // TESTING: update SkillGraphCollection with this new defaultProject
+    // adding vertcies to SkillGraphCollection
+    _.each(joinableNullProject.skills, (skill) => {
+      SkillGraphCollection.addVertex(skill);
+    });
+
+    // add edges to SkillGraphCollection
+    // all the skills get an edge to the other skills mentioned in the skills array (excluding themselves)
+    for (let i=0; i < joinableNullProject.skills.length; i++) {
+      for (let j=0; j < joinableNullProject.skills.length; j++) {
+        if (j !== i) {
+          let edge = new Edge(joinableNullProject.skills[i], joinableNullProject.skills[j], 0);
+          SkillGraphCollection.addEdge(edge);
+        }
+      }
+    }
+
+    _.each(joinableNullProject.skills, (skill) => {
+      console.log(`${skill}:\n${SkillGraphCollection.adjListToString(skill)}`);
+    });
   }
 }

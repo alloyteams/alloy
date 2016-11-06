@@ -1,126 +1,214 @@
 /**
  * Created by reedvilanueva on 11/3/16.
  */
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Slugs } from '/imports/api/slug/SlugCollection';
-import BaseInstanceCollection from '/imports/api/base/BaseInstanceCollection';
-import { Meteor } from 'meteor/meteor';
-import { moment } from 'meteor/momentjs:moment';
+import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import BaseCollection from '/imports/api/base/BaseCollection';
+import {Meteor} from 'meteor/meteor';
 
-/** @module Semester */
+// I think can also import normal js libraries. see https://guide.meteor.com/structure.html#importing-from-packages
+
+/** @module SkillGraph */
 
 /**
- * Represents a specific semester, such as "Spring, 2016", "Fall, 2017", or "Summer, 2015".
- * @extends module:BaseInstance~BaseInstanceCollection
+ * @extends BaseCollection
  */
-class SemesterCollection extends BaseInstanceCollection {
+class Edge {
+
+  /**
+   * @param {String} v
+   * @param {String} w
+   * @param {Number} weight
+   * Creates edge object
+   */
+  constructor(v, w, weight) {
+    check(v, String);
+    check(w, String);
+    check(weight, Number);
+    this._v = v;
+    this._w = w;
+    this._baseWeight = 10;
+    this._weight = weight + this._baseWeight;
+  }
+
+  /**
+   *
+   * @returns {Number} the weight of this edge
+   */
+  getWeight() {
+    return this._weight;
+  }
+
+  setWeight(weight) {
+    this._weight = weight;
+  }
+
+  /**
+   *
+   * @returns {String} either of the vertices of this edge
+   */
+  either() {
+    return this._v;
+  }
+
+  /**
+   *
+   * @param vertex
+   * @returns {String} the vertex opposite to the one provided on this edge
+   */
+  other(vertex) {
+    return (vertex === this._v)
+        ? this._w
+        : this._v;
+  }
+
+  /**
+   *
+   * @param v
+   * @param w
+   * @returns {boolean} true when this edge connects vertices v and w, else false
+   */
+  connects(v, w) {
+    return (this.either()===v && this.other(v)===w)
+        || (this.either()===w && this.other(w)===v);
+  }
+
+  /**
+   *
+   * @param thatEdge
+   * @returns {number} -1 if 'that' dominates this edge, +1 if this edge dominates 'that', else 0
+   */
+  compareTo(thatEdge) {
+    if (this.weight() < thatEdge.weight())      return -1;
+    else if (this.weight() > thatEdge.weight()) return +1;
+    else                                        return 0;
+  }
+
+  // For debugging. Will depend on what is stored as _v and _w (would need to be printable things)
+  toString() {
+    return `(${this._v})--(${this._w}): ${this._weight}`;
+  }
+
+}
+export { Edge };  // needed so we can create Edge instances in other files
+
+
+
+class SkillGraph extends BaseCollection {
 
   /**
    * Creates the Semester collection.
    */
   constructor() {
-    super('Semester', new SimpleSchema({
-      term: { type: String },
-      year: { type: Number },
-      sortBy: { type: Number },
-      slugID: { type: SimpleSchema.RegEx.Id },
+    // set the parent _collection field to be used as an adjacency list for skill nodes
+    super('SkillGraph', new SimpleSchema({
+      skill: { label: 'skill', optional: false, type: String },
+      adj: { label: 'adj', optional: false, type: [Edge] },
     }));
-    this.SPRING = 'Spring';
-    this.SUMMER = 'Summer';
-    this.FALL = 'Fall';
-    this.terms = [this.SPRING, this.SUMMER, this.FALL];
-    // use Day of Year (1..365) to represent semester boundaries.
-    // Boundaries might vary by a day depending upon whether this year is a leap year.
-    this.fallStart = parseInt(moment('08-15-2015', 'MM-DD-YYYY').format('DDD'), 10);
-    this.springStart = parseInt(moment('01-01-2015', 'MM-DD-YYYY').format('DDD'), 10);
-    this.summerStart = parseInt(moment('05-15-2015', 'MM-DD-YYYY').format('DDD'), 10);
+
+    this._edgeCount = 0;
+    this._vertexCount = 0;
+  }
+
+  edgeCount() { return this._edgeCount; }
+  vertexCount() { return this._vertexCount; }
+
+  /**
+   *
+   * @param skill
+   * adds the given skill to the graph if none with that label currently exists
+   */
+  addVertex(skill) {
+    check(skill, String);
+    const exists = this._collection.findOne({skill: skill});
+    if (!exists) {
+      const newSkill = {
+        skill: skill,
+        adj: [],
+      };
+      this._collection.insert(newSkill);
+
+      this._vertexCount++;
+    }
   }
 
   /**
-   * Retrieves the docID for the specified Semester, or defines it if not yet present.
-   * Implicitly defines the corresponding slug: Spring, 2016 semester is "Spring-2016".
-   * @example
-   * Semesters.define({ term: Semesters.FALL, year: 2015 });
-   * @param { Object } Object with keys term, semester.
-   * Term must be one of Semesters.FALL, Semesters.SPRING, or Semesters.SUMMER.
-   * Year must be between 1990 and 2050.
-   * @throws { Meteor.Error } If the term or year are not correctly specified.
-   * @returns The docID for this semester instance.
+   * @param edge
+   * Add an edge to the graph
+   * FIXME: WARNING: assumes that the vertices of the inserting edge are already in the graph
    */
-  define({ term, year }) {
-    if (this.terms.indexOf(term) < 0) {
-      throw new Meteor.Error('Invalid term: ', term);
-    }
-    if ((year < 1990) || (year > 2050)) {
-      throw new Meteor.Error('Invalid year: ', year);
-    }
-    // Return immediately if we can find this semester.
-    const doc = this._collection.findOne({ term, year });
-    if (doc) {
-      return doc._id;
-    }
-    let sortBy = 0;
-    if (term === this.FALL) {
-      sortBy = year * 10 + 2;
-    } else if (term === this.SPRING) {
-      sortBy = year * 10;
+  addEdge(edge) {
+    check(edge, Edge);
+    console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
+    console.log(`addingEdge ${edge}`);
+    const v = edge.either();
+    const w = edge.other(v);
+    const adjV = this.adjList(v);
+    const adjW = this.adjList(w);
+
+    // check that adj list of v does NOT ALREADY contain an edge to w
+    const existingEdge = _.find(adjV, (edge) => {
+      return (edge._v===v && edge._w===w) || (edge._v===w && edge._w===v) });  // TODO: use edge.connects(v, w)
+    // FIXME: for some reason, won't let me use Edge methods, instead makes me refer to the underlying fields (may have something to do with underscore, like it does not acknowledge the associated class)
+    if ( !existingEdge ) {
+      console.log(`edge ${v}--${w} NOT exists`);
+      // if edge not already in adjLists of v and w, add it to those lists
+      this._collection.update({ skill: v }, { $addToSet: { adj: edge } });
+      this._collection.update({ skill: w }, { $addToSet: { adj: edge } });
+      this._edgeCount++;
     } else {
-      sortBy = year * 10 + 1;
+        // FIXME: if either adjV or adjW is empty, then _collection updates with undefiend => errors
+        // FIXME: Also, this current implementation double-counts the edge weights
+        console.log(`edge ${v}--${w} ALREADY exists`);
+        // else edge v-w already in adj. of v and w, update the weight on that edge for each vertex
+        for (let i=0; i < adjV.length; i++) {
+          if ( (adjV[i]._v===v && adjV[i]._w===w) || (adjV[i]._v===w && adjV[i]._w===v) ) {  //TODO: use adjV.connects(v, w)
+            // update the adjList of v and use to replace the old one
+            // see http://stackoverflow.com/questions/38862847/meteor-mongodb-update-an-array-item-in-a-collection-by-index
+            //TODO: use adjV[i].setWeight(adjV[i].getWeight() + edge.getWeight);
+            adjV[i]._weight = adjV._weight + edge.getWeight();
+            this._collection.update({skill: v}, { $set: {adj: adjV} });
+            break;
+          }
+        }
+        for (let i=0; i < adjW.length; i++) {
+          if ( (adjW[i]._v===v && adjW[i]._w===w) || (adjW[i]._v===w && adjW[i]._w===v) ) {  //TODO: use adjW.connects(v, w)
+            // update the adjList of w and use to replace the old one
+            //TODO use: adjW[i].setWeight(adjW[i].getWeight() + edge.getWeight);
+            adjW[i]._weight = adjW._weight + edge.getWeight();
+            this._collection.update({skill: w}, { $set: {adj: adjW} });
+            break;
+          }
+      }
     }
-    // Otherwise define a new semester and add it to the collection if successful.
-    const slug = `${term}-${year}`;
-    if (Slugs.isDefined(slug)) {
-      throw new Meteor.Error(`Slug is already defined for undefined semester: ${slug}`);
-    }
-    const slugID = Slugs.define({ name: slug, entityName: 'Semester' });
-    const semesterID = this._collection.insert({ term, year, sortBy, slugID });
-    Slugs.updateEntityID(slugID, semesterID);
-    return semesterID;
+
+    console.log('\n');
   }
 
   /**
-   * Ensures the passed object is a Semester instance.
-   * @param semester Should be a defined semesterID or semester doc.
-   * @throws {Meteor.Error} If semester is not a Semester.
+   * @param skill
+   * @returns {[Edge]} the adjacency list associated with the given skill in the graph
    */
-  assertSemester(semester) {
-    if (!this.isDefined(semester)) {
-      throw new Meteor.Error(`${semester} is not a valid Semester.`);
-    }
+  adjList(skill) {
+    console.log(`In adjList(${skill})`);
+    const skillVertex = this._collection.findOne({skill: skill});
+    console.log(skillVertex);
+    console.log(`skillVertex.adj[0] is instanceOf Edge: ${(skillVertex.adj[0] instanceof Edge)}`);
+    console.log(`${skillVertex.adj[0]}\n`);
+    return skillVertex.adj;
   }
 
-  /**
-   * Returns the passed semester, formatted as a string.
-   * @param semesterID The semester.
-   * @param nospace If true, then term and year are concatenated without a space in between.
-   * @returns { String } The semester as a string.
-   */
-  toString(semesterID, nospace) {
-    this.assertSemester(semesterID);
-    const semesterDoc = this.findDoc(semesterID);
-    return (nospace) ? `${semesterDoc.term}${semesterDoc.year}` : `${semesterDoc.term} ${semesterDoc.year}`;
-  }
 
-  /**
-   * Returns the semesterID associated with the current semester based upon the current timestamp.
-   * See Semesters.FALL_START_DATE, SPRING_START_DATE, and SUMMER_START_DATE.
-   */
-  getCurrentSemester() {
-    const year = moment().year();
-    const day = moment().dayOfYear();
-    let term = '';
-    if (day >= this.fallStart) {
-      term = this.FALL;
-    } else if (day >= this.summerStart) {
-      term = this.SUMMER;
-    } else {
-      term = this.SPRING;
+  adjListToString(skill) {
+    let str = `skill: ${skill}\n\n`;
+    for (let edge of this.adjList(skill)) {
+      str += `${edge.toString()}\n`;
     }
-    return this.define({ term, year });
   }
 }
 
 /**
  * Provides the singleton instance of this class to all other entities.
  */
-export const Semesters = new SemesterCollection();
+// WARNING: the exported const can't have same name as 'type' param. given to constructor
+// (causes 'duplicate declaration' error)
+export const SkillGraphCollection = new SkillGraph();
