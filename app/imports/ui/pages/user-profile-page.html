@@ -419,6 +419,20 @@
                     {{/each}}
                   </ul>
                 </li>
+                <li>
+                  {{#if Template.subscriptionsReady}}
+                    <!-- use the project _id to uniqly match a project with its join button-->
+                    <button class="ui orange inverted button joinRequest"
+                            id="{{ getProjectData project "_id" }}">
+                      <h4>Request join info</h4>
+                    </button>
+                    {{#if isMemberFlag}}
+                      ALREADY A MEMBER
+                      {{else}}
+                      Member status not revealed
+                    {{/if}}
+                  {{/if}}
+                </li>
               </ul>
             {{/each}}
           {{else}}
@@ -465,6 +479,20 @@
 
         <tr>
           <!-- list all users followed by this user -->
+          <h3>pending requests:</h3>
+          {{#if userDataField 'pendingRequests'}}
+            <ul>
+              {{#each project in (userDataField 'pendingRequests') }}
+                <li>{{ project }}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            no pending requests
+          {{/if}}
+        </tr>
+
+        <tr>
+          <!-- list all users followed by this user -->
           <h3>followed people:</h3>
           {{#if userDataField 'followedPeople'}}
             <ul>
@@ -473,6 +501,7 @@
               {{/each}}
             </ul>
           {{else}}
+            No followed people
           {{/if}}
         </tr>
 
@@ -486,6 +515,7 @@
               {{/each}}
             </ul>
           {{else}}
+            no followed projects
           {{/if}}
         </tr>
 
@@ -499,6 +529,7 @@
               {{/each}}
             </ul>
           {{else}}
+            no followers
           {{/if}}
         </tr>
 

@@ -300,7 +300,9 @@
       <table class="ui celled table">
         <thead>
         <th> Can use Projects collection document items to
-          dynamically customize the page; these are all the fields accessible and changeable.
+          dynamically customize the page; these are all the fields accessible
+          and
+          changeable.
         </th>
         </thead>
         <tbody>
@@ -346,6 +348,24 @@
                 {{/each}}
               </ul>
             </li>
+
+            <li>
+              <ul>
+                <li><h5>Join requests:</h5></li>
+                {{#if projectDataField "joinRequests" }}
+                  {{#each user in (projectDataField "joinRequests")}}
+                    <li>{{user}}</li>
+                  {{/each}}
+                {{else}}
+                  No pending requests
+                {{/if}}
+              </ul>
+            </li>
+
+            <li>
+              <h5>Created at: {{ projectDataField "createdAt" }}</h5>
+            </li>
+
           </ul>
         </tr>
         </tbody>

@@ -3,6 +3,7 @@
  */
 import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
+import {ReactiveVar} from 'meteor/reactive-var';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
@@ -15,6 +16,7 @@ const displayErrorMessages = 'displayErrorMessages';
 const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
+
 
 Template.User_Profile_Page.onCreated(function onCreated() {
   this.autorun(() => {
@@ -33,6 +35,7 @@ Template.User_Profile_Page.onCreated(function onCreated() {
   this.navMenuActive.set(eventsActive, false);
   this.navMenuActive.set(friendsActive, false);
 
+  this.isMemberFlag = new ReactiveVar(false);
   // this.context = ProjectsSchema.namedContext('Project_Profile_Page');
 });
 
@@ -67,6 +70,9 @@ Template.User_Profile_Page.helpers({
   },
   friendsActiveClass() {
     return Template.instance().navMenuActive.get(friendsActive) ? 'active' : '';
+  },
+  isMemberFlag() {
+    return Template.instance().isMemberFlag.get();
   },
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';  // empty string is falsey
@@ -116,6 +122,31 @@ Template.User_Profile_Page.events({
 
     Template.instance().navMenuActive.set(eventsActive, false);
     Template.instance().navMenuActive.set(homeActive, false);
+  },
+  'click .joinRequest' (event, instance) {
+    // get username (and email: username@hawaii.edu ?).
+    // add this user info to an inbox for the project.
+    // to identify the project referenced by the button,
+    // see http://stackoverflow.com/a/20920683 or http://stackoverflow.com/a/28984303
+
+    event.preventDefault();
+
+    instance.isMemberFlag.set(false);  // FIXME: why is isMemberFlag marked as unresolved or fales not allowed as param?
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const project = Projects.findOne({ _id: event.currentTarget.id });
+    // check if user is already a member of this project
+     if (_.contains(project.members, user.username)) {
+       instance.isMemberFlag.set(true);
+
+       // TODO: display notification that this user is already a member
+    } else {
+      // update user and project docs. to reflect new request
+      // untrusted code can only modify docs. by their _id field
+      Projects.update({ _id: project._id }, { $addToSet: { joinRequests: user.username } });
+      Users.update({ _id: user._id }, { $addToSet: { pendingRequests: project.projectName } });
+
+      // TODO: display some notification that request has been sent
+    }
   },
 //   // logic for 'submit' event for 'contact-data-form' 'button'
 //   'submit .contact-data-form'(event, instance) {
