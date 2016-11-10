@@ -53,6 +53,12 @@ export const ProjectsSchema = new SimpleSchema({
     type: [String],
     optional: true,
   },
+  joinRequests: {
+    label: 'joinRequests',
+    type: [String],  // TODO: can use user's username; would need to do another publish of Users w/ only public info
+    optional: true,
+    maxCount: 100,  // TODO: this should probably be smaller, to reduce chance of someone having a huge backlog
+  },
   createdAt: {
     label: 'createdAt',
     type: Date,

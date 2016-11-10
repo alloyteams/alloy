@@ -86,8 +86,8 @@ Accounts.onCreateUser(function (options, user) {
   // add this user as a member and admin of the default project array fields
   // see https://docs.mongodb.com/manual/reference/operator/update/
   // TODO: add function to Projects collection api that allows user.projects and project.members to be set simultaneously
-  Projects.update({ projectName: 'The Null Project' }, { $addToSet: { members: newUser.username } });
-  Projects.update({ projectName: 'The Null Project' }, { $addToSet: { admins: newUser.username } });
+  Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { members: newUser.username } });
+  Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { admins: newUser.username } });
 
 
   // We still want the default hook's 'profile' behavior.
