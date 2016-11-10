@@ -351,10 +351,16 @@
 
             <li>
               <ul>
-                <li><h5>Join requests:</h5></li>
+                <!-- TODO:should only be visible if currentUser is admin -->
+                <li><h5>Join requests (TODO: ONLY MAKE VISIBLE IF ADMIN):</h5></li>
                 {{#if projectDataField "joinRequests" }}
                   {{#each user in (projectDataField "joinRequests")}}
-                    <li>{{user}}</li>
+                    <li>{{ user }}
+                      <button class="ui inverted yellow button addMember"
+                              value="{{ user }}">
+                        <h4>Add User</h4>
+                      </button>
+                    </li>
                   {{/each}}
                 {{else}}
                   No pending requests

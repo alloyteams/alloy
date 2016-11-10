@@ -428,7 +428,7 @@
                     </button>
                     {{#if isMemberFlag}}
                       ALREADY A MEMBER
-                      {{else}}
+                    {{else}}
                       Member status not revealed
                     {{/if}}
                   {{/if}}
@@ -542,6 +542,66 @@
             SiteAdmin placeholder
           {{/if}}
         </tr>
+        </tbody>
+      </table>
+
+
+      <hr/>
+
+
+      <table class="ui celled table">
+        <thead>
+        <th>
+          Here is an example of a project we are not a member of by default
+        </th>
+        </thead>
+        <tbody>
+
+        <tr>
+          <ul>
+            <!-- path parameter names are specified in app/imports/startup/client/router.js -->
+            <li><a
+                href="{{ pathFor 'Project_Profile_Page' _id=(getProjectData "joinableNull Club" "_id") }}">
+              <button class="ui blue inverted button"><h4>Project profile
+                link</h4></button>
+            </a>
+            </li>
+            <li>{{ getProjectData "joinableNull Club" "bio" }}</li>
+            <li>
+              <ul>
+                <li><h5>{{ getProjectData "joinableNull Club" "projectName" }}
+                  events:</h5></li>
+                <!-- Parens can be used to indicate precedence, but are not actually necessary here -->
+                {{#each event in (getProjectData 'joinableNull Club' "events") }}
+                  <li>{{ event }}</li>
+                {{/each}}
+              </ul>
+            </li>
+            <li>{{ getProjectData "joinableNull Club" "url" }}</li>
+            <li>
+              <ul>
+                <li><h5>{{ getProjectData "joinableNull Club" "projectName" }}
+                  members:</h5></li>
+                {{#each member in (getProjectData "joinableNull Club" "members") }}
+                  <li>{{member}}</li>
+                {{/each}}
+              </ul>
+            </li>
+            <li>
+              <!-- use the project _id to uniqly match a project with its join button-->
+              <button class="ui orange inverted button joinRequest"
+                      id="{{ getProjectData "joinableNull Club" "_id" }}">
+                <h4>Request join info</h4>
+              </button>
+              {{#if isMemberFlag}}
+                ALREADY A MEMBER
+              {{else}}
+                Member status not revealed
+              {{/if}}
+            </li>
+          </ul>
+        </tr>
+
         </tbody>
       </table>
     {{/if}}
