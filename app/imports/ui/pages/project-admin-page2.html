@@ -1,0 +1,49 @@
+<template name="Project_Admin_Page_2">
+  <p style="color: red">THIS IS A TEST</p>
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+  <p> Username: {{firstName}}</p>
+  <p> userId: {{userId}}</p>
+
+  <div class="ui container">
+  <form class="ui form">
+    <div class="field">
+      <label>Project Title</label>
+      <input type="text" name="project-name" placeholder="Project Title">
+    </div>
+    <div class="field">
+      <label>Project Description</label>
+      <textarea name="project-description" placeholder="Enter a description of your project..."></textarea>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" tabindex="0" class="hidden">
+        <label>I agree to the Terms and Conditions</label>
+      </div>
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+  </form>
+  </div>
+
+  <div class="ui container">
+    <div class="ui two column grid">
+
+      {{#if homeActiveClass}}
+      <div class="column">
+        THIS IS TEST HOME
+      </div>
+      {{/if}}
+      {{#if eventsActiveClass}}
+      <div class="column">
+        THIS IS TEST EVENTS
+      </div>
+      {{/if}}
+      {{#if friendsActiveClass}}
+      <div class="column">
+        THIS IS TEST FRIENDS
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  {{/if}}
+</template>
