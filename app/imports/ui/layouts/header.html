@@ -15,7 +15,7 @@
       {{#if currentUser}}
         <a class="item">
           <div class="ui icon input">
-            <input placeholder="Search for a club" type="text">
+            {{> EasySearch.Input index=index attributes=inputAttributes }}
             <i class="inverted circular search link icon"></i>
           </div>
         </a>
