@@ -2,6 +2,7 @@
  * Created by neil on 11/10/2016.
  */
 
+import {Meteor} from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { EasySearch } from 'meteor/easy:search';
 import { Projects } from '../../api/projects/projects.js';
@@ -21,5 +22,9 @@ Template.search.events({
     let getInput = event.target.searchInput.value;
 
     console.log('search input: ' + getInput);
+
+    let myCursor = Projects.find({projectName: getInput});
+
+    console.log(myCursor.fetch());
   },
 });
