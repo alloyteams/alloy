@@ -13,12 +13,7 @@
 
       <!-- maybe try to find a simple searchbar pkg to implement this part -->
       {{#if currentUser}}
-        <a class="item">
-          <div class="ui icon input">
-            {{> EasySearch.Input index=index attributes=inputAttributes }}
-            <i class="inverted circular search link icon"></i>
-          </div>
-        </a>
+        {{> search}}
       {{/if}}
 
       {{#if currentUser}}
