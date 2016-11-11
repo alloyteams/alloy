@@ -23,7 +23,7 @@ Template.search.events({
 
     console.log('search input: ' + getInput);
 
-    let myCursor = Projects.find({projectName: getInput});
+    let myCursor = Projects.find({skills: getInput});
 
     console.log(myCursor.fetch());
   },
