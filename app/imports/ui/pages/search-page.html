@@ -1,0 +1,46 @@
+<template name="Search_Page">
+  <p style="color: red">THIS IS A TEST SEARCH PAGE</p>
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+    {{#if currentUser}}
+      <p> Username: {{firstName}}</p>
+      <p> userId: {{userId}}</p>
+
+      <div class="ui container">
+        <div class="ui two column grid">
+          <div class="column">
+            <div class="ui left secondary vertical pointing menu">
+              <a class="item homeTab {{homeActiveClass}}">
+                <i class="home icon"></i>Home
+              </a>
+              <a class="item eventsTab {{eventsActiveClass}}">
+                <i class="group icon"></i>Events
+              </a>
+              <a class="item friendsTab {{friendsActiveClass}}">
+                <i class="user icon"></i>Friends
+              </a>
+            </div>
+          </div>
+
+          {{#if homeActiveClass}}
+            <div class="column">
+              THIS IS TEST HOME
+            </div>
+          {{/if}}
+          {{#if eventsActiveClass}}
+            <div class="column">
+              THIS IS TEST EVENTS
+            </div>
+          {{/if}}
+          {{#if friendsActiveClass}}
+            <div class="column">
+              THIS IS TEST FRIENDS
+            </div>
+          {{/if}}
+        </div>
+      </div>
+
+
+    {{/if}}
+  {{/if}}
+</template>

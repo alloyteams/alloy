@@ -13,12 +13,8 @@
 
       <!-- maybe try to find a simple searchbar pkg to implement this part -->
       {{#if currentUser}}
-        <a class="item">
-          <div class="ui icon input">
-            <input placeholder="Search for a club" type="text">
-            <i class="inverted circular search link icon"></i>
-          </div>
-        </a>
+          <a class="{{ isActiveRoute 'Search_Page'}} item"
+             href="{{ pathFor 'Search_Page' }}">Search</a>
       {{/if}}
 
       {{#if currentUser}}

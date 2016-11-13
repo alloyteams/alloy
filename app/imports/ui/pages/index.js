@@ -31,3 +31,5 @@ import './project-admin-page.js';
 import './site-admin-page.html';
 import './site-admin-page.js';
 
+import './search-page.html';
+import './search-page.js';
