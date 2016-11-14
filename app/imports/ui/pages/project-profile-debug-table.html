@@ -1,0 +1,79 @@
+<table class="ui celled table">
+  <thead>
+  <th> <tr>Can use Projects collection document items to
+    dynamically customize the page; these are all the fields accessible
+    and
+    changeable.</tr>
+  </th>
+  </thead>
+  <tbody>
+  <tr>
+    <h3>Club:</h3>
+    {{#if projectDataField 'projectName'}}
+    {{ projectDataField 'projectName'}}
+    {{else}}
+    projectName placeholder
+    {{/if}}
+  </tr>
+  <tr>
+    <h3>Project Data:</h3>
+    <ul>
+      <li><h5>
+        <!-- This seems to be the way to pass multiple args in helper functions -->
+        Club _id: {{ projectDataField "_id" }}:</h5>
+      </li>
+      <li>{{ projectDataField "bio" }}</li>
+      <li>
+        <ul>
+          <li><h5>{{ projectDataField "projectName" }} events:</h5></li>
+          <!-- Parens can be used to indicate precedence, but are not actually necessary here -->
+          {{#each event in (projectDataField "events") }}
+          <li>{{ event }}</li>
+          {{/each}}
+        </ul>
+      </li>
+      <li>{{ projectDataField "url" }}</li>
+      <li>
+        <ul>
+          <li><h5>{{ projectDataField "projectName" }} members:</h5></li>
+          {{#each member in (projectDataField "members") }}
+          <li>{{ member }}</li>
+          {{/each}}
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li><h5>{{ projectDataField "projectName" }} admins:</h5></li>
+          {{#each admin in (projectDataField "admins") }}
+          <li>{{ admin }}</li>
+          {{/each}}
+        </ul>
+      </li>
+
+      <li>
+        <ul>
+          <!-- TODO:should only be visible if currentUser is admin -->
+          <li><h5>Join requests (TODO: ONLY MAKE VISIBLE IF ADMIN):</h5></li>
+          {{#if projectDataField "joinRequests" }}
+          {{#each user in (projectDataField "joinRequests")}}
+          <li>{{ user }}
+            <button class="ui inverted yellow button addMember"
+                    value="{{ user }}">
+              <h4>Add User</h4>
+            </button>
+          </li>
+          {{/each}}
+          {{else}}
+          No pending requests
+          {{/if}}
+        </ul>
+      </li>
+
+      <li>
+        <h5>Created at: {{ projectDataField "createdAt" }}</h5>
+      </li>
+
+    </ul>
+  </tr>
+  </tbody>
+</table>

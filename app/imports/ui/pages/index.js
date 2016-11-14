@@ -24,6 +24,7 @@ import './user-profile-page.js';
 
 import './project-profile-page.html';
 import './project-profile-page.js';
+import './project-profile-page2.html';
 
 import './project-admin-page.html';
 import './project-admin-page.js';

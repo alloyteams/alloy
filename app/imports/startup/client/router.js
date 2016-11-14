@@ -23,6 +23,13 @@ FlowRouter.route('/project-profile/:_id', {
   },
 });
 
+FlowRouter.route('/project-profile-2/:_id', {
+  name: 'Project_Profile_Page_2',
+  action() {
+    BlazeLayout.render('LoggedIn_Body', { main: 'Project_Profile_Page_2' });
+  },
+});
+
 FlowRouter.route('/project-admin-profile', {
   name: 'Project_Admin_Page',
   action() {

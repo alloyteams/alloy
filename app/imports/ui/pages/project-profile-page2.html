@@ -1,0 +1,92 @@
+<template name="Project_Profile_Page_2">
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+  <!--{{#if currentUser}}-->
+  <div class="ui container"
+       style="margin-top: 30px;">
+    <!--TODO: add project title-->
+    <div class="item"><h2>Project Title</h2>
+      <hr/>
+    </div>
+    <div class="ui grid">
+      <div class="five wide column">
+        <!--TODO: replace with profile image if we want to use profile images-->
+        <img class="ui rounded image"
+             src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
+        <!--TODO: display this button if viewer is project owner-->
+        <br/>
+        <div class="ui button">
+          <i class="edit icon"></i>
+          Edit Project Info
+        </div>
+      </div>
+      <div class="eleven wide column">
+          <div class="ui segment">
+            <a class="ui ribbon label" style="background-color:#27aae1; color:white;"><h3>About this Project</h3></a>
+            <p>This is a description of the project to be replaced by "project description".</p>
+          </div>
+          <div class="ui segment">
+            <a class="ui ribbon label" style="background-color:#27bae1; color:white;"><h3>Skills Wanted</h3></a>
+            <br/>
+            <br/>
+            <div class="ui labels">
+              <!--TODO: replace these with skills-->
+              <a class="ui label">Skill 1</a>
+              <a class="ui label">Skill 2</a>
+              <a class="ui label">Skill 3</a>
+              <a class="ui label">Skill 4</a>
+              <a class="ui label">Skill 5</a>
+            </div>
+          </div>
+          <div class="ui segment">
+            <!-- TODO: for each member, fill in their name, link their profile and add their email-->
+            <a class="ui ribbon label" style="background-color:#27c9e1; color:white;"><h3>Project Owner</h3></a>
+            <div class="ui relaxed divided list">
+              <div class="item">
+                <i class="large user middle aligned icon"></i>
+                <div class="content">
+                  <div class="description">Admin Name</div>
+                  <a class="header">owner@hawaii.edu</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui segment">
+            <!-- TODO: for each member, fill in their name, link their profile and add their email-->
+            <a class="ui ribbon label" style="background-color:#27d9e1; color:white;"><h3>Members</h3></a>
+            <div class="ui relaxed divided list">
+              <div class="item">
+                <i class="large user middle aligned icon"></i>
+                <div class="content">
+                  <div class="description">Member 1</div>
+                  <a class="header">member1@hawaii.edu</a>
+                </div>
+                </div>
+              <div class="item">
+                <i class="large user middle aligned icon"></i>
+                <div class="content">
+                  <div class="description">Member 2</div>
+                  <a class="header">member2@hawaii.edu</a>
+                </div>
+              </div>
+              </div>
+            </div>
+      </div>
+    </div>
+
+    <!-- user home page logic -->
+    {{#if homeActiveClass}}
+    {{/if}}
+
+
+    <!-- user events page logic -->
+    {{#if eventsActiveClass}}
+    {{/if}}
+
+    <!-- testing and proof-of-concept section -->
+    <!-- moved this table to project-profile-debug-table.html because some content in it was breaking the html-->
+
+  </div>
+  {{/if}}
+  <!--{{/if}}-->
+</template>
