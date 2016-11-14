@@ -14,3 +14,5 @@ import './homepage-body.html';
 import './homepage-body.js';
 import './suggested-projects.html';
 import './suggested-projects.js';
+import './loggedin-body.html';
+import './loggedin-menu.html'

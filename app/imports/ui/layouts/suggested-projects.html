@@ -1,18 +1,20 @@
 <template name="Suggested_Projects">
-  <h1><img style="height:30px; width:auto"
-           src="/images/alloy-icon.png">
-    {{#if currentUser}}
-      Suggested Projects
-    {{else}}
-      Featured Projects
-    {{/if}}
-    <hr/>
-  </h1>
 
-  <!-- TODO: currently goes thru all projects (for testing), needs way to decide which will be featured / suggested -->
-  {{#if Template.subscriptionsReady}}
-    <div class="ui small cards">
-      {{#each project in projectsList}}
+    <h1><img style="height:30px; width:auto"
+             src="/images/alloy-icon.png">
+      {{#if currentUser}}
+      Suggested Projects
+      {{else}}
+      Featured Projects
+      {{/if}}
+      <hr/>
+    </h1>
+
+  <div class="ui container">
+    <!-- TODO: currently goes thru all projects (for testing), needs way to decide which will be featured / suggested -->
+    {{#if Template.subscriptionsReady}}
+      <div class="ui small cards">
+        {{#each project in projectsList}}
         <div class="ui card">
           <div class="image">
             <!-- project image-->
@@ -34,9 +36,9 @@
           <!--TODO: add skills relevant to that project-->
           <div class="extra content">
             {{#each skill in (project.skills)}}
-              <div class="ui small label">
-                {{ skill }}
-              </div>
+            <div class="ui small label">
+              {{ skill }}
+            </div>
             {{/each}}
           </div>
           <div class="extra content">
@@ -44,7 +46,8 @@
             0 {{/if}}
           </div>
         </div>
-      {{/each}}
-    </div>
-  {{/if}}
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
 </template>

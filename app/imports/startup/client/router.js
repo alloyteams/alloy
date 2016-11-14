@@ -40,7 +40,7 @@ FlowRouter.route('/site-admin-profile', {
 FlowRouter.route('/project-admin-page2', {
   name: 'Project_Admin_Page_2',
   action() {
-    BlazeLayout.render('App_Body', { main: 'Project_Admin_Page_2' });
+    BlazeLayout.render('LoggedIn_Body', { main: 'Project_Admin_Page_2' });
   },
 });
 

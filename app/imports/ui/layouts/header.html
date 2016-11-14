@@ -3,8 +3,8 @@
        style="max-height: 150px" -->
 
   <!-- side menu / TOC -->
-  <div class="ui top secondary pointing menu"
-       style="margin-top: 0px; margin-bottom: 0px; border-radius: 0px; color:black; background-color: #27AAE1">
+  <div class="ui top tabular menu"
+       style="margin-top: 0px; margin-bottom: 0px; border-radius: 0px; color:white; background-color: #27AAE1">
     <div class="ui container">
 
       <a class="item" href="{{pathFor 'Home_Page'}}">
@@ -38,6 +38,12 @@
         {{#if isSiteAdmin}}
         {{/if}}
 
+      {{/if}}
+
+      {{#if currentUser}}
+      <a class="item" href="{{pathFor 'Home_Page'}}">
+        <img class="ui fluid tiny image" src="/images/alloy-bare-wordmark.png">
+      </a>
       {{/if}}
 
       <!-- the handlebar-if logic here keeps user-profile tab tight on the right when user logged in-->

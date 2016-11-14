@@ -28,6 +28,7 @@ import './project-profile-page.js';
 import './project-admin-page.html';
 import './project-admin-page.js';
 import './project-admin-page2.html';
+import './project-admin-page2.js';
 
 import './site-admin-page.html';
 import './site-admin-page.js';

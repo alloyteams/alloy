@@ -47,9 +47,13 @@
         </div>
       </div>
       <div class="ten wide column">
-        <div class="ui padded row grid">
+        <div class="ui two row grid">
           <div class="row">
-            {{>Suggested_Projects}}
+            <div class="ui padded grid">
+              <div class="ui padded row">
+                {{>Suggested_Projects}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -60,36 +64,36 @@
   <!-- just keeping this section around as reference code, DO NOT DELETE -->
   <div class="ui container">
     {{#if Template.subscriptionsReady}}
-      <table class="ui celled table" style="margin: 10px">
-        <thead>
-        <tr>
-          <th>First</th>
-          <th>Last</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Edit Contact</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each contact in contactsList}}
-          <tr>
-            <td>{{contact.firstName}}</td>
-            <td>{{contact.lastName}}</td>
-            <td>{{contact.address}}</td>
-            <td>{{contact.phone}}</td>
-            <td>{{contact.email}}</td>
-            <!-- link to page to edit this contact -->
-            <!-- to see whether to binf to 'id' or '_id', see app/imports/startup/client/router.js for url info-->
-            <td><a
-                href="{{pathFor 'Edit_Contact_Page' id=contact._id}}">Edit</a>
-            </td>
-          </tr>
-        {{/each}}
-        </tbody>
-      </table>
+    <table class="ui celled table" style="margin: 10px">
+      <thead>
+      <tr>
+        <th>First</th>
+        <th>Last</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Edit Contact</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each contact in contactsList}}
+      <tr>
+        <td>{{contact.firstName}}</td>
+        <td>{{contact.lastName}}</td>
+        <td>{{contact.address}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.email}}</td>
+        <!-- link to page to edit this contact -->
+        <!-- to see whether to binf to 'id' or '_id', see app/imports/startup/client/router.js for url info-->
+        <td><a
+            href="{{pathFor 'Edit_Contact_Page' id=contact._id}}">Edit</a>
+        </td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
     {{else}}
-      {{> Loading}}
+    {{> Loading}}
     {{/if}}
 
   </div>
