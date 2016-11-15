@@ -114,7 +114,7 @@ if (Meteor.users.find().count() === 0) {
     projectName: 'joinableNull Project',
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
-    skills: ['finding', 'clicking', 'joining'],
+    skills: ['finding', 'testing', 'joining'],
     url: 'https://join.us',
     createdAt: new Date(),
   };
@@ -127,9 +127,16 @@ if (Meteor.users.find().count() === 0) {
     // TESTING: update SkillGraphCollection with this new defaultProject
     // adding vertcies to SkillGraphCollection
     SkillGraphCollection.addVertexList(joinableNullProject.skills);
+    //console.log(SkillGraphCollection.getRelatedSkills('finding'));
 
     _.each(joinableNullProject.skills, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
   }
 }
+const moreSkills = ['JavaScript', 'test'];
+const evenMoreSkills = ['JavaScript', 'test'];
+SkillGraphCollection.addVertexList(moreSkills);
+SkillGraphCollection.addVertexList(evenMoreSkills);
+
+console.log(SkillGraphCollection.getRelatedSkills('JavaScript'));

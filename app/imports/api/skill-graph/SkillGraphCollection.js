@@ -50,6 +50,10 @@ class Edge {
     return this._v;
   }
 
+  or() {
+    return this._w;
+  }
+
   /**
    *
    * @param vertex
@@ -174,12 +178,16 @@ class SkillGraph extends BaseCollection {
       for (let i = 0; i < adjV.length; i++) {
         // Meteor wont store the edge objects as Edge instances.
         // So need special way to use Edge method. see http://stackoverflow.com/a/8736980
-        if (Edge.prototype.connects(v, w).call(adjV[i])) {
+        if ((Edge.prototype.either.call(adjV[i]) == v && Edge.prototype.or.call(adjV[i]) == w) || (Edge.prototype.either.call(adjV[i]) == w && Edge.prototype.or.call(adjV[i]) == v)) {
+          //  create new edge to replace old edge
+          const newEdge = new Edge(v,w, Edge.prototype.getWeight.call(adjV[i]) + incAmount);
+          //  replace old edge in both adjLists
+          adjV[i] = newEdge;
           // update the adjList of v and use to replace the old one
           // see http://stackoverflow.com/a/38864747
-          Edge.prototype.setWeight(
-              Edge.prototype.getWeight().call(adjV[i]) + incAmount)
-              .call(adjV[i]);
+          /*Edge.prototype.setWeight(
+              Edge.prototype.getWeight.call(adjV[i]) + incAmount)
+              .call(adjV[i]);*/
           // TODO: I fully overwrite the old adj array b/c IDK how the passing by reference works here.
           // If I were to just change the value of adjV[i], would that change automatically be reflected
           // in the collection doc. whoes adj field I am modifying?
@@ -189,6 +197,30 @@ class SkillGraph extends BaseCollection {
         }
       }
       for (let i = 0; i < adjW.length; i++) {
+        // Meteor wont store the edge objects as Edge instances.
+        // So need special way to use Edge method. see http://stackoverflow.com/a/8736980
+        if ((Edge.prototype.either.call(adjW[i]) == v && Edge.prototype.or.call(adjW[i]) == w) || (Edge.prototype.either.call(adjW[i]) == w && Edge.prototype.or.call(adjW[i]) == v)) {
+          //  create new edge to replace old edge
+          const newEdge = new Edge(v,w, Edge.prototype.getWeight.call(adjW[i]) + incAmount);
+          //  replace old edge in both adjLists
+          adjW[i] = newEdge;
+          // update the adjList of v and use to replace the old one
+          // see http://stackoverflow.com/a/38864747
+/*          Edge.prototype.setWeight(
+           Edge.prototype.getWeight.call(adjV[i]) + incAmount)
+           .call(adjV[i]);
+           */
+          // TODO: I fully overwrite the old adj array b/c IDK how the passing by reference works here.
+          // If I were to just change the value of adjV[i], would that change automatically be reflected
+          // in the collection doc. whoes adj field I am modifying?
+          this._collection.update({ skill: w }, { $set: { adj: adjW } });
+
+          break;
+        }
+      }
+
+
+/*      for (let i = 0; i < adjW.length; i++) {
         if (Edge.prototype.connects(v, w).call(adjW[i])) {
           // update the adjList of w and use to replace the old one
           Edge.prototype.setWeight(
@@ -199,6 +231,7 @@ class SkillGraph extends BaseCollection {
           break;
         }
       }
+      */
     }
     console.log();
   }
@@ -231,11 +264,14 @@ class SkillGraph extends BaseCollection {
    * @returns {[Edge]} the adjacency list associated with the given skill in the graph
    */
   adjList(skill) {
-    console.log(`In adjList(${skill})`);
+    //console.log(`In adjList(${skill})`);
     const skillVertex = this._collection.findOne({ skill: skill });
+    if (skillVertex == null){
+      return null;
+    }
     console.log(skillVertex);
-    console.log(`skillVertex.adj[0] is instanceOf Edge: ${(skillVertex.adj[0] instanceof Edge)}`);
-    console.log(skillVertex.adj[0]);
+    //console.log(`skillVertex.adj[0] is instanceOf Edge: ${(skillVertex.adj[0] instanceof Edge)}`);
+    //console.log(skillVertex.adj[0]);
     console.log();
     return skillVertex.adj;
   }
@@ -243,11 +279,39 @@ class SkillGraph extends BaseCollection {
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;
     for (let edge of this.adjList(skill)) {
-      console.log(edge);
+      //console.log(edge);
       // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/8736980
       str += `${Edge.prototype.toString.call(edge)}\n`;  // call arg sets context (eg. defines what 'this' refers to)
     }
     return str;
+  }
+
+  getRelatedSkills(skill) {
+    const adjList = this.adjList(skill);
+    if (adjList == null) {
+      return null;
+    }
+    let relatedSkills = [this.adjList(skill)[0], this.adjList(skill)[1], this.adjList(skill)[2]];
+    console.log(relatedSkills);
+    for (let edge of this.adjList(skill)) {
+      console.log(edge);
+      if (Edge.prototype.getWeight.call(edge) > Edge.prototype.getWeight.call(relatedSkills[0])) {
+        relatedSkills[0] = edge;
+      }
+      else if (Edge.prototype.getWeight.call(edge) > Edge.prototype.getWeight.call(relatedSkills[1])) {
+          relatedSkills[1] = edge;
+      }
+      else if (Edge.prototype.getWeight.call(edge) > Edge.prototype.getWeight.call(relatedSkills[2])) {
+            relatedSkills[2] = edge;
+      }
+    }
+    for (let i = 0; i < 3; i += 1) {
+      if (Edge.prototype.either.call(relatedSkills[i]) == skill)
+        relatedSkills[i] = Edge.prototype.or.call(relatedSkills[i]);
+      else relatedSkills[i] = Edge.prototype.either.call(relatedSkills[i]);
+    }
+
+    return relatedSkills;
   }
 }
 
