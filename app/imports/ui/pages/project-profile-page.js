@@ -117,6 +117,24 @@ Template.Project_Profile_Page.events({
     Template.instance().navMenuActive.set(eventsActive, false);
     Template.instance().navMenuActive.set(homeActive, false);
   },
+  // TODO: This should probably move to project-admin-page when that page is done
+  'click .addMember' (event, instance) {
+    event.preventDefault();
+
+    const memberToAdd = event.currentTarget.value;
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    console.log(memberToAdd)
+    console.log(project)
+    if (_.contains(project.members, memberToAdd)) {
+      console.log(`${memberToAdd} is already a member of this project`)
+    } else {
+      // add requesting user to project.members and remove them from the project.pendingRequests array
+      // see https://docs.mongodb.com/manual/reference/operator/update/pull/#up._S_pull
+      console.log(`adding ${memberToAdd} to ${project.projectName}`)
+      Projects.update({ _id: project._id }, { $addToSet: { members: memberToAdd } });
+      Projects.update( {"_id": project._id }, { $pull: { joinRequests : memberToAdd } } );  // assumes uniq. usernames
+    }
+  },
 //   // logic for 'submit' event for 'contact-data-form' 'button'
 //   'submit .contact-data-form'(event, instance) {
 //     event.preventDefault();

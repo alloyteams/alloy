@@ -18,6 +18,12 @@ export const UsersSchema = new SimpleSchema({
     optional: false,
     max: 200,
   },
+  bio: {
+    label: 'bio',
+    type: String,
+    optional: true,
+    max: 500,
+  },
   skills: {
     label: 'skills',
     type: [String],
@@ -34,7 +40,7 @@ export const UsersSchema = new SimpleSchema({
   },
   events: {
     label: 'events',  // TODO: events may be better implememted as references to an Events collection doc.
-    type: [String],  // assumes all event names uniq. else need other identifier
+    type: [String],   // assumes all event names uniq. else need other identifier
     optional: false,
   },
   projects: {  // used to reference what project user is part of
@@ -50,6 +56,13 @@ export const UsersSchema = new SimpleSchema({
     optional: true,
     max: 200,
     maxCount: 200,
+  },
+  pendingRequests: {
+    label: 'pendingRequests',
+    type: [String],
+    optional: true,
+    max: 200,
+    maxCount: 50,
   },
   followedPeople: {
     label: 'followedPeople',
