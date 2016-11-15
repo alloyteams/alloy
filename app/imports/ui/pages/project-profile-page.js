@@ -7,7 +7,6 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
 import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
-import { Users, UsersSchema } from '../../api/users/users.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -50,8 +49,10 @@ Template.Project_Profile_Page.helpers({
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return project && project[fieldVal];
   },
-  firstName: function () {
-    return Meteor.user().username;
+  isAdmin() {
+    // FIXME: this does not work for some reason
+    console.log(`isAdmin: ${_.contains(projectDataField("admins"), Meteor.user().profile.name)}`);
+    return _.contains(projectDataField("admins"), Meteor.user().profile.name);
   },
   userId: function () {
     return Meteor.userId();
@@ -123,8 +124,6 @@ Template.Project_Profile_Page.events({
 
     const memberToAdd = event.currentTarget.value;
     const project = Projects.findOne(FlowRouter.getParam('_id'));
-    console.log(memberToAdd)
-    console.log(project)
     if (_.contains(project.members, memberToAdd)) {
       console.log(`${memberToAdd} is already a member of this project`)
     } else {

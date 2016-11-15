@@ -38,6 +38,13 @@ export const ProjectsSchema = new SimpleSchema({
     max: 200,
     maxCount: 200,
   },
+  skillsWanted: {
+    label: 'skillsWanted',
+    type: [String],
+    optional: true,
+    max: 200,
+    maxCount: 200,
+  },
   url: {
     label: 'url',
     type: String,

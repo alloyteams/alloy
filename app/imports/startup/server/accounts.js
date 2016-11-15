@@ -55,6 +55,7 @@ Accounts.onCreateUser(function (options, user) {
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
     skills: ['JavaScript'],
+    skillsWanted: ['public speaking', 'hand clapping'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
@@ -106,6 +107,7 @@ if (Meteor.users.find().count() === 0) {
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
     skills: ['clicking', 'joining'],
+    skillsWanted: ['clicking2.0', 'joining2.0'],
     url: 'https://join.us',
     createdAt: new Date(),
   };
