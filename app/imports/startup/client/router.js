@@ -23,14 +23,7 @@ FlowRouter.route('/project-profile/:_id', {
   },
 });
 
-FlowRouter.route('/project-profile-2/:_id', {
-  name: 'Project_Profile_Page_2',
-  action() {
-    BlazeLayout.render('LoggedIn_Body', { main: 'Project_Profile_Page_2' });
-  },
-});
-
-FlowRouter.route('/project-admin-profile', {
+FlowRouter.route('/project-admin-profile/:_id', {
   name: 'Project_Admin_Page',
   action() {
     BlazeLayout.render('App_Body', { main: 'Project_Admin_Page' });
@@ -41,13 +34,6 @@ FlowRouter.route('/site-admin-profile', {
   name: 'Site_Admin_Page',
   action() {
     BlazeLayout.render('App_Body', { main: 'Site_Admin_Page' });
-  },
-});
-
-FlowRouter.route('/project-admin-page2', {
-  name: 'Project_Admin_Page_2',
-  action() {
-    BlazeLayout.render('LoggedIn_Body', { main: 'Project_Admin_Page_2' });
   },
 });
 
