@@ -12,7 +12,7 @@
           <div class="field">
             <label>Project Title</label>
             <!--TODO: replace placeholder with previously entered information for the project-->
-            <input type="text" name="project-name" id="projectName"
+            <input type="text" name="projectName" id="projectName"
                    placeholder="{{ projectDataField "projectName" }}"
                    value="{{ projectDataField "projectName" }}">
           </div>
@@ -24,7 +24,7 @@
           <div class="field">
             <label>Project Description</label>
             <!--TODO: replace placeholder with previously entered information for the project-->
-            <textarea name="project-description" id="bio"
+            <textarea name="bio" id="bio"
                       placeholder="{{ projectDataField "bio" }}">
             </textarea>
           </div>
@@ -44,12 +44,10 @@
           </div>
           <!-- TODO: need to save the changes in the db, reroutes to project profile page for appropriate project, links currently broken because we need the project id -->
           <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
-          <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField "_id")}}">
-            <button class="ui blue button">
+            <button class="ui primary blue button" type="submit">
               <i class="save icon"></i>
               Save
             </button>
-          </a>
           <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField "_id")}}">
             <div class="ui gray button">
               <i class="trash icon"></i>

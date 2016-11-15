@@ -79,6 +79,7 @@ Template.Project_Admin_Page.events({
 //   // logic for 'submit' event for 'project-data-form' 'form submission' event
   'submit .project-data-form'(event, instance) {
     event.preventDefault();
+
     // Get contact info (text fields)
     const projectName = event.target.projectName.value;  // based on associated html id tags
     const bio = event.target.bio.value;
@@ -92,6 +93,8 @@ Template.Project_Admin_Page.events({
     //       once they request to join on the project's profile page.
     Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { projectName: projectName }});
     Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio }});
+
+    FlowRouter.go('Project_Profile_Page', {_id: FlowRouter.getParam('_id')});
 
     //FIXME: this code below is for inserting a totally new project, out code just updates.
     //       need to modify to validate for updates.
