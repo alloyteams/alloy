@@ -28,13 +28,14 @@ class BaseCollection {
     this._type = type;
     this._collectionName = `${type}Collection`;
     if (typeof transform === "undefined") {
-      this._collection = new Mongo.Collection(`${type}Collection`, transform);
+      this._collection = new Mongo.Collection(`${type}Collection`, {transform: transform});
     } else this._collection = new Mongo.Collection(`${type}Collection`);
     this._schema = schema;
     // TODO: may need to add a transform true/false option to attachSchema to get custom types working.
     // If this works, can consider using a maxPQ instead of array for SkillGraphCollection adj list
     // see https://github.com/aldeed/meteor-simple-schema#blackbox,
     // https://github.com/aldeed/meteor-collection2#attachschema-options,
+    // https://docs.meteor.com/api/collections.html#Mongo-Collection,
     // and https://www.eventedmind.com/items/meteor-transforming-collection-documents
     if (typeof transform === "undefined") {
       this._collection.attachSchema(this._schema, {transform: true});

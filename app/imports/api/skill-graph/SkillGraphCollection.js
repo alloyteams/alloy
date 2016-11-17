@@ -38,11 +38,15 @@ class Edge {
    * returns undefined.
    */
   static objToEdge(obj) {
-    if(obj.hasOwnProperty("v") && obj.hasOwnProperty("w") && obj.hasOwnProperty("weight")) {
-      check(obj.v, String);
-      check(obj.w, String);
-      check(obj.weight, Number);
-      return new Edge(obj.v, obj.w, obj.weight);
+    console.log("In objToEdge")
+    console.log(obj)
+    if(obj.hasOwnProperty("_v") && obj.hasOwnProperty("_w") &&
+        obj.hasOwnProperty("_baseWeight") && obj.hasOwnProperty("_weight")) {
+      check(obj._v, String);
+      check(obj._w, String);
+      check(obj._weight, Number);
+      console.log("In objToEdge: returning new Edge")
+      return new Edge(obj._v, obj._w, obj._weight);
     } else return undefined;
   }
 
@@ -121,10 +125,12 @@ class SkillGraph extends BaseCollection {
           skill: { label: 'skill', optional: false, type: String },
           adj: { label: 'adj', optional: false, type: [Edge] },
         }),
-        function transform(doc) {
-          // for transforming objs in adj lists back to edges
-          _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
-        },
+        // function transform(doc) {  //FIXME: is this even doing anything?
+        //   // for transforming objs in adj lists back to edges
+        //   const adj = _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
+        //   doc.adj = adj;
+        //   return doc;
+        // }
     );
 
     this._edgeCount = 0;
@@ -176,9 +182,9 @@ class SkillGraph extends BaseCollection {
     // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/32554410
     // So need special way to use Edge methods. see http://stackoverflow.com/a/8736980
     const existingEdge = _.find(adjV, (e) => {
-          //return Edge.prototype.connects(v, w).call(e);
-          return (e._v === v && e._w === w)
-              || (e._v === w && e._w === v);
+          if (e) {
+            return e.connects();
+          }
           // FIXME: can't use Edge.prototype.connects(v, w).call(e) here
           // b/c connects() uses other Edge methods and Meteor will not store adj arrays items as
           // Edge instances (rather as generic objects).
@@ -200,18 +206,14 @@ class SkillGraph extends BaseCollection {
       for (let i = 0; i < adjs.length; i++) {
         // find the existing connecting edge and update it
         for (let k = 0; k < adjs[i].length; k++) {  // FIXME: why is length not bold?
-          // Meteor wont store the edge objects as Edge instances.
-          // So need special way to use Edge method. see http://stackoverflow.com/a/8736980
-          if (Edge.prototype.connects(v, w).call(adjs[i][k])) {  //FIXME: why is call italicized?
+          let e = adjs[i][k];
+          if (e.connects(v, w)) {
             // update the adjList and use to replace the old one
-            // see http://stackoverflow.com/a/38864747
-            Edge.prototype.setWeight(
-                Edge.prototype.getWeight().call(adjs[i][k]) + incAmount)
-                .call(adjs[i][k]);
+            e.setWeight(e.getWeight() + incAmount);
             // TODO: I fully overwrite the old adj array b/c IDK how the passing by reference works here.
             // If I were to just change the value of adjV[i], would that change automatically be reflected
-            // in the collection doc. whoes adj field I am modifying?
-            this._collection.update({ skill: v }, { $set: { adj: adjs[i][k] } });
+            // in the collection doc. who's adj field I am modifying?
+            this._collection.update({ skill: v }, { $set: { adj: e } });
 
             break;
           }
@@ -251,7 +253,9 @@ class SkillGraph extends BaseCollection {
   adjList(skill) {
     console.log(`In adjList(${skill})`);
     const skillVertex = this._collection.findOne({ skill: skill });
+    skillVertex.adj = _.map(skillVertex.adj, (obj) => { return Edge.objToEdge(obj); })
     console.log(skillVertex);
+    console.log(`typeof adj[0] ${(typeof skillVertex.adj[0])}`);
     console.log();
     return skillVertex.adj;
   }
@@ -260,7 +264,7 @@ class SkillGraph extends BaseCollection {
     let str = `skill: ${skill}\n`;
     for (let edge of this.adjList(skill)) {
       // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/8736980
-      str += `${Edge.prototype.toString.call(edge)}\n`;  // call arg sets context (eg. defines what 'this' refers to)
+      str += `--${edge.other()}: ${edge.getWeight()}\n`;  // call arg sets context (eg. defines what 'this' refers to)
     }
     return str;
   }
