@@ -25,6 +25,12 @@ export const ProjectsSchema = new SimpleSchema({
     optional: false,
     max: 200,
   },
+  pictures: {
+    label: 'pictures',
+    type: [String],     // FIXME: may need to change; urls may have chars that need to be escaped in Strings
+    optional: true,
+    maxCount: 20,
+  },
   events: {
     label: 'events',
     type: [String],  // TODO: should eventually be a custom event object
@@ -33,6 +39,13 @@ export const ProjectsSchema = new SimpleSchema({
   },
   skills: {
     label: 'skills',
+    type: [String],
+    optional: true,
+    max: 200,
+    maxCount: 200,
+  },
+  skillsWanted: {
+    label: 'skillsWanted',
     type: [String],
     optional: true,
     max: 200,
@@ -53,9 +66,15 @@ export const ProjectsSchema = new SimpleSchema({
     type: [String],
     optional: true,
   },
+  joinRequests: {
+    label: 'joinRequests',
+    type: [String],  // TODO: can use user's username; would need to do another publish of Users w/ only public info
+    optional: true,
+    maxCount: 100,  // TODO: this should probably be smaller, to reduce chance of someone having a huge backlog
+  },
   createdAt: {
     label: 'createdAt',
-    type: Date,
+    type: Date,      // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
     optional: false,
   }
 });

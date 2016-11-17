@@ -1,44 +1,60 @@
 <template name="Project_Admin_Page">
-  <p style="color: red">THIS IS A TEST</p>
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
   {{#if Template.subscriptionsReady}}
-    {{#if currentUser}}
-      <p> Username: {{firstName}}</p>
-      <p> userId: {{userId}}</p>
-
-      <div class="ui container">
-        <div class="ui two column grid">
-          <div class="column">
-            <div class="ui left secondary vertical pointing menu">
-              <a class="item homeTab {{homeActiveClass}}">
-                <i class="home icon"></i>Home
-              </a>
-              <a class="item eventsTab {{eventsActiveClass}}">
-                <i class="group icon"></i>Events
-              </a>
-              <a class="item friendsTab {{friendsActiveClass}}">
-                <i class="user icon"></i>Friends
-              </a>
+    <div class="ui container" style="margin-top: 30px;">
+      <div class="ui raised padded segment">
+        <h1>
+          <img style="height:30px; width:auto"
+               src="/images/alloy-icon.png"> Edit Project Information
+          <hr/>
+        </h1>
+        <form class="ui form project-data-form">
+          <div class="field">
+            <label>Project Title</label>
+            <input type="text" name="projectName" id="projectName"
+                   placeholder="{{ projectDataField "projectName" }}"
+                   value="{{ projectDataField "projectName" }}">
+          </div>
+          <div class="field">
+            <label>Upload Project Image</label>
+            <input type="file" name="project-image"
+                   placeholder="Upload a photo for your project...">
+          </div>
+          <div class="field">
+            <label>Project Description</label>
+            <!--TODO: replace placeholder with previously entered information for the project-->
+            <!-- FIXME: currently appears prepended by blank spaces in textarea box-->
+            <textarea name="bio" id="bio"
+                      placeholder="{{projectDataField "bio"}}">
+            </textarea>
+          </div>
+          <div class="field">
+            <label>Skills Wanted</label>
+            <!--TODO: replace placeholder with previously entered information for the project-->
+            <div class="ui fluid multiple search selection dropdown">
+              <i class="dropdown icon"></i>
+              <div class="default text">Skills</div>
+              <div class="menu">
+                <!--TODO: if we have a dropdown menu, we need to enter the options here-->
+              </div>
             </div>
           </div>
+          <div class="field">
 
-          {{#if homeActiveClass}}
-            <div class="column">
-              THIS IS TEST HOME
+          </div>
+          <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
+            <button class="ui primary blue button" type="submit">
+              <i class="save icon"></i>
+              Save
+            </button>
+          <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField "_id")}}">
+            <div class="ui gray button">
+              <i class="trash icon"></i>
+              Abandon Changes
             </div>
-          {{/if}}
-          {{#if eventsActiveClass}}
-            <div class="column">
-              THIS IS TEST EVENTS
-            </div>
-          {{/if}}
-          {{#if friendsActiveClass}}
-            <div class="column">
-              THIS IS TEST FRIENDS
-            </div>
-          {{/if}}
-        </div>
+          </a>
+        </form>
       </div>
-    {{/if}}
+    </div>
   {{/if}}
 </template>

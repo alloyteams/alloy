@@ -11,21 +11,19 @@
                   About Alloy
                   <hr/>
                 </h1>
-                <p style="max-width:600px;margin:0 auto;">Teams with diverse
-                  skills create stronger results, but finding
-                  talented
-                  people with the right skills isn’t always so easy. Alloy makes
-                  building your dream team easier by
-                  bringing
-                  people
-                  together around projects, based on their skills. Guitarist
-                  looking to jam with a drummer? Web
-                  developer looking
-                  to
-                  collaborate with a designer? Filmmaker looking for a 3D
-                  artist?<br><br>Let Alloy help you find a team
-                  with the
-                  right chemistry.</p>
+                <p style="max-width:600px;margin:0 auto;">
+                  <!--
+                  TODO: change this 'about' to more closely focus on the needs of iLab and sPACE
+                  -->
+                  Alloy is a UH student-built tool to help members of the
+                  UH iLab and sPACE communities find projects and
+                  find people for projects of their own. Have an idea for a
+                  project that would look good on your resume? Want to do your
+                  own custom senior project? Or do you just want experiment and
+                  learn something new with other students who just want to do
+                  the same?
+                  <br><br>Let Alloy help you find the teams that's right for
+                  what you want</p>
               </div>
               <div class="padded row">
                 <h1><img style="height:30px; width:auto"
@@ -50,9 +48,13 @@
         </div>
       </div>
       <div class="ten wide column">
-        <div class="ui padded row grid">
+        <div class="ui two row grid">
           <div class="row">
-            {{>Suggested_Projects}}
+            <div class="ui padded grid">
+              <div class="ui padded row">
+                {{>Suggested_Projects}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -63,36 +65,36 @@
   <!-- just keeping this section around as reference code, DO NOT DELETE -->
   <div class="ui container">
     {{#if Template.subscriptionsReady}}
-      <table class="ui celled table" style="margin: 10px">
-        <thead>
-        <tr>
-          <th>First</th>
-          <th>Last</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Edit Contact</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each contact in contactsList}}
-          <tr>
-            <td>{{contact.firstName}}</td>
-            <td>{{contact.lastName}}</td>
-            <td>{{contact.address}}</td>
-            <td>{{contact.phone}}</td>
-            <td>{{contact.email}}</td>
-            <!-- link to page to edit this contact -->
-            <!-- to see whether to binf to 'id' or '_id', see app/imports/startup/client/router.js for url info-->
-            <td><a
-                href="{{pathFor 'Edit_Contact_Page' id=contact._id}}">Edit</a>
-            </td>
-          </tr>
-        {{/each}}
-        </tbody>
-      </table>
+    <table class="ui celled table" style="margin: 10px">
+      <thead>
+      <tr>
+        <th>First</th>
+        <th>Last</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Edit Contact</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each contact in contactsList}}
+      <tr>
+        <td>{{contact.firstName}}</td>
+        <td>{{contact.lastName}}</td>
+        <td>{{contact.address}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.email}}</td>
+        <!-- link to page to edit this contact -->
+        <!-- to see whether to binf to 'id' or '_id', see app/imports/startup/client/router.js for url info-->
+        <td><a
+            href="{{pathFor 'Edit_Contact_Page' id=contact._id}}">Edit</a>
+        </td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
     {{else}}
-      {{> Loading}}
+    {{> Loading}}
     {{/if}}
 
   </div>

@@ -59,6 +59,7 @@ Accounts.onCreateUser(function (options, user) {
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
     skills: ['JavaScript', 'clicking', 'joining'],
+    skillsWanted: ['public speaking', 'hand clapping'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
@@ -96,8 +97,8 @@ Accounts.onCreateUser(function (options, user) {
   // add this user as a member and admin of the default project array fields
   // see https://docs.mongodb.com/manual/reference/operator/update/
   // TODO: add function to Projects collection api that allows user.projects and project.members to be set simultaneously
-  Projects.update({ projectName: 'The Null Project' }, { $addToSet: { members: newUser.username } });
-  Projects.update({ projectName: 'The Null Project' }, { $addToSet: { admins: newUser.username } });
+  Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { members: newUser.username } });
+  Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { admins: newUser.username } });
 
   // We still want the default hook's 'profile' behavior.
   if (options.profile)
@@ -115,6 +116,7 @@ if (Meteor.users.find().count() === 0) {
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
     skills: ['finding', 'clicking', 'joining'],
+    skillsWanted: ['clicking2.0', 'joining2.0'],
     url: 'https://join.us',
     createdAt: new Date(),
   };

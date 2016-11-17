@@ -1,0 +1,12 @@
+<template name="LoggedIn_Body">
+  {{> Header}}
+  <div class="ui fluid grid container">
+    <div class="four wide padded column">
+      {{> LoggedIn_Menu}}
+    </div>
+    <div class="twelve wide column">
+      {{>Template.dynamic template=main}}
+    </div>
+  </div>
+  {{> Footer}}
+</template>

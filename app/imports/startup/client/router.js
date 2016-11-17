@@ -23,7 +23,7 @@ FlowRouter.route('/project-profile/:_id', {
   },
 });
 
-FlowRouter.route('/project-admin-profile', {
+FlowRouter.route('/project-admin-profile/:_id', {
   name: 'Project_Admin_Page',
   action() {
     BlazeLayout.render('App_Body', { main: 'Project_Admin_Page' });
