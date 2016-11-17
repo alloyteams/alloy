@@ -58,7 +58,7 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
-    skills: ['JavaScript', 'joining'],
+    skills: ['JavaScript', 'clicking', 'joining'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
@@ -69,9 +69,9 @@ Accounts.onCreateUser(function (options, user) {
     Projects.insert(defaultProject);
 
     // TESTING: update SkillGraphCollection with this new defaultProject
+    SkillGraphCollection.addVertexList(defaultProject.skills);
     _.each(defaultProject.skills, (skill) => {
-      SkillGraphCollection.addVertex(skill);
-      console.log(`${skill}:\n${SkillGraphCollection.adjListToString(skill)}`);
+      console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
   }
 
