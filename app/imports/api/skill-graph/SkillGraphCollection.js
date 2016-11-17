@@ -26,7 +26,7 @@ class Edge {
     check(weight, Number);
     this._v = v;
     this._w = w;
-    this._baseWeight = 10;
+    this._baseWeight = 0;
     this._weight = weight + this._baseWeight;
   }
 
@@ -183,7 +183,7 @@ class SkillGraph extends BaseCollection {
     // So need special way to use Edge methods. see http://stackoverflow.com/a/8736980
     const existingEdge = _.find(adjV, (e) => {
           if (e) {
-            return e.connects();
+            return e.connects(v, w);
           }
           // FIXME: can't use Edge.prototype.connects(v, w).call(e) here
           // b/c connects() uses other Edge methods and Meteor will not store adj arrays items as
@@ -198,7 +198,7 @@ class SkillGraph extends BaseCollection {
       this._edgeCount++;
     } else {
       console.log(`edge ${v}--${w} ALREADY exists`);
-      // else edge v-w already in adj. of v AND w, update the weight on that edge for each vertex.
+      // else edge v-w already in adj. of v AND w, update the weight on that edge for both vertices.
       // as long as we have been adding edges using addEdge(), there should be no case where v has an edge
       // v-w, but w does not.
       const incAmount = 10;       // TODO: should maybe be stored in Edge class or this constructor
@@ -213,7 +213,7 @@ class SkillGraph extends BaseCollection {
             // TODO: I fully overwrite the old adj array b/c IDK how the passing by reference works here.
             // If I were to just change the value of adjV[i], would that change automatically be reflected
             // in the collection doc. who's adj field I am modifying?
-            this._collection.update({ skill: v }, { $set: { adj: e } });
+            this._collection.update({ skill: v }, { $set: { adj: adjs[i] } });
 
             break;
           }
@@ -264,7 +264,7 @@ class SkillGraph extends BaseCollection {
     let str = `skill: ${skill}\n`;
     for (let edge of this.adjList(skill)) {
       // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/8736980
-      str += `--${edge.other()}: ${edge.getWeight()}\n`;  // call arg sets context (eg. defines what 'this' refers to)
+      str += `${edge.toString()}\n`;  // call arg sets context (eg. defines what 'this' refers to)
     }
     return str;
   }
