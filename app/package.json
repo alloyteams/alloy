@@ -6,7 +6,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
     "meteor-node-stubs": "~0.2.0"
   },
   "devDependencies": {
