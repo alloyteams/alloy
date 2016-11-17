@@ -25,6 +25,12 @@ export const ProjectsSchema = new SimpleSchema({
     optional: false,
     max: 200,
   },
+  pictures: {
+    label: 'pictures',
+    type: [String],     // FIXME: may need to change; urls may have chars that need to be escaped in Strings
+    optional: true,
+    maxCount: 20,
+  },
   events: {
     label: 'events',
     type: [String],  // TODO: should eventually be a custom event object
@@ -68,7 +74,7 @@ export const ProjectsSchema = new SimpleSchema({
   },
   createdAt: {
     label: 'createdAt',
-    type: Date,
+    type: Date,      // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
     optional: false,
   }
 });

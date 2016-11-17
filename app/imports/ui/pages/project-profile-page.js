@@ -50,9 +50,9 @@ Template.Project_Profile_Page.helpers({
     return project && project[fieldVal];
   },
   isAdmin() {
-    // FIXME: this does not work for some reason
-    console.log(`isAdmin: ${_.contains(projectDataField("admins"), Meteor.user().profile.name)}`);
-    return _.contains(projectDataField("admins"), Meteor.user().profile.name);
+    // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    return _.contains(project.admins, Meteor.user().profile.name);
   },
   userId: function () {
     return Meteor.userId();

@@ -15,7 +15,7 @@
                  src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
             <!--TODO: display this button iff viewer is project owner-->
             <br/>
-            {{#if currentUser}}
+            {{#if isAdmin}}
               <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
                 <div class="ui button">
                   <i class="edit icon"></i>
