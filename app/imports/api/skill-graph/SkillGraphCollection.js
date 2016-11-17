@@ -40,7 +40,7 @@ class Edge {
   static objToEdge(obj) {
     console.log("In objToEdge")
     console.log(obj)
-    if(obj.hasOwnProperty("_v") && obj.hasOwnProperty("_w") &&
+    if (obj.hasOwnProperty("_v") && obj.hasOwnProperty("_w") &&
         obj.hasOwnProperty("_baseWeight") && obj.hasOwnProperty("_weight")) {
       check(obj._v, String);
       check(obj._w, String);
@@ -185,42 +185,46 @@ class SkillGraph extends BaseCollection {
           if (e) {
             return e.connects(v, w);
           }
-          // FIXME: can't use Edge.prototype.connects(v, w).call(e) here
-          // b/c connects() uses other Edge methods and Meteor will not store adj arrays items as
-          // Edge instances (rather as generic objects).
         }
     );
     if (!existingEdge) {
       console.log(`edge ${v}--${w} NOT exists`);
       // if edge NOT already in adjLists of v and w, add it to BOTH those lists
-      this._collection.update({ skill: v }, { $addToSet: { adj: edge } });
-      this._collection.update({ skill: w }, { $addToSet: { adj: edge } });
-      this._edgeCount++;
+      this._insertEdge(edge);
     } else {
       console.log(`edge ${v}--${w} ALREADY exists`);
       // else edge v-w already in adj. of v AND w, update the weight on that edge for both vertices.
       // as long as we have been adding edges using addEdge(), there should be no case where v has an edge
       // v-w, but w does not.
-      const incAmount = 10;       // TODO: should maybe be stored in Edge class or this constructor
-      const adjs = [adjV, adjW];  // Using array here, b/c need to do same thing to both
-      for (let i = 0; i < adjs.length; i++) {
-        // find the existing connecting edge and update it
-        for (let k = 0; k < adjs[i].length; k++) {  // FIXME: why is length not bold?
-          let e = adjs[i][k];
-          if (e.connects(v, w)) {
-            // update the adjList and use to replace the old one
-            e.setWeight(e.getWeight() + incAmount);
-            // TODO: I fully overwrite the old adj array b/c IDK how the passing by reference works here.
-            // If I were to just change the value of adjV[i], would that change automatically be reflected
-            // in the collection doc. who's adj field I am modifying?
-            this._collection.update({ skill: v }, { $set: { adj: adjs[i] } });
-
-            break;
-          }
-        }
-      }
+      this._updateEdge(adjV, v, edge);
+      this._updateEdge(adjW, w, edge);
     }
     console.log();
+  }
+
+  _insertEdge(edge) {
+    const v = edge.either();
+    const w = edge.other(v);
+    this._collection.update({ skill: v }, { $addToSet: { adj: edge } });
+    this._collection.update({ skill: w }, { $addToSet: { adj: edge } });
+    this._edgeCount++;
+  }
+
+  // FIXME
+  _updateEdge(adj, vertex, edge) {
+    const v = edge.either();
+    const w = edge.other(v);
+    const incAmount = 10;
+    this._collection.update({ skill: vertex }, {
+      $set: {
+        adj: _.map(adj, (e) => {
+          if (e.connects(v, w)) {
+            e.setWeight(e.getWeight() + incAmount);
+            return e;
+          } else return e;
+        })
+      }
+    });
   }
 
   /**
@@ -253,7 +257,9 @@ class SkillGraph extends BaseCollection {
   adjList(skill) {
     console.log(`In adjList(${skill})`);
     const skillVertex = this._collection.findOne({ skill: skill });
-    skillVertex.adj = _.map(skillVertex.adj, (obj) => { return Edge.objToEdge(obj); })
+    skillVertex.adj = _.map(skillVertex.adj, (obj) => {
+      return Edge.objToEdge(obj);
+    })
     console.log(skillVertex);
     console.log(`typeof adj[0] ${(typeof skillVertex.adj[0])}`);
     console.log();
