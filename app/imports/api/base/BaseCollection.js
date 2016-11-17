@@ -22,13 +22,23 @@ class BaseCollection {
    * Defines internal fields needed by all entities: _type, _collectionName, _collection, and _schema.
    * @param {String} type The name of the entity defined by the subclass.
    * @param {SimpleSchema} schema The schema for validating fields on insertion to the DB.
+   * @param {Function} optional transform function
    */
-  constructor(type, schema) {
+  constructor(type, schema, transform) {
     this._type = type;
     this._collectionName = `${type}Collection`;
-    this._collection = new Mongo.Collection(`${type}Collection`);
+    if (typeof transform === "undefined") {
+      this._collection = new Mongo.Collection(`${type}Collection`, transform);
+    } else this._collection = new Mongo.Collection(`${type}Collection`);
     this._schema = schema;
-    this._collection.attachSchema(this._schema);
+    // TODO: may need to add a transform true/false option to attachSchema to get custom types working.
+    // If this works, can consider using a maxPQ instead of array for SkillGraphCollection adj list
+    // see https://github.com/aldeed/meteor-simple-schema#blackbox,
+    // https://github.com/aldeed/meteor-collection2#attachschema-options,
+    // and https://www.eventedmind.com/items/meteor-transforming-collection-documents
+    if (typeof transform === "undefined") {
+      this._collection.attachSchema(this._schema, {transform: true});
+    } else this._collection.attachSchema(this._schema);
   }
 
   /**

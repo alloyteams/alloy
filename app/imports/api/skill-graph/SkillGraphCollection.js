@@ -31,6 +31,22 @@ class Edge {
   }
 
   /**
+   * @param obj
+   * @returns {Edge}
+   * Takes an object with all, and only, the expected fields of an Edge object
+   * and return an Edge object based on the given obj's field values. Else,
+   * returns undefined.
+   */
+  static objToEdge(obj) {
+    if(obj.hasOwnProperty("v") && obj.hasOwnProperty("w") && obj.hasOwnProperty("weight")) {
+      check(obj.v, String);
+      check(obj.w, String);
+      check(obj.weight, Number);
+      return new Edge(obj.v, obj.w, obj.weight);
+    } else return undefined;
+  }
+
+  /**
    *
    * @returns {Number} the weight of this edge
    */
@@ -99,10 +115,17 @@ class SkillGraph extends BaseCollection {
    */
   constructor() {
     // set the parent _collection field to be used as an adjacency list for skill nodes
-    super('SkillGraph', new SimpleSchema({
-      skill: { label: 'skill', optional: false, type: String },
-      adj: { label: 'adj', optional: false, type: [Edge] },
-    }));
+    super(
+        'SkillGraph',
+        new SimpleSchema({
+          skill: { label: 'skill', optional: false, type: String },
+          adj: { label: 'adj', optional: false, type: [Edge] },
+        }),
+        function transform(doc) {
+          // for transforming objs in adj lists back to edges
+          _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
+        },
+    );
 
     this._edgeCount = 0;
     this._vertexCount = 0;

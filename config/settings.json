@@ -1,0 +1,27 @@
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://testuser:test@ds147377.mlab.com:47377/alloyappdb"
+    }
+  },
+  "cas": {
+    "baseUrl": "https://cas-test.its.hawaii.edu/cas/",
+    "autoClose": true
+  },
+  "public": {
+    "cas": {
+      "loginUrl": "https://cas-test.its.hawaii.edu/cas/login",
+      "serviceParam": "service",
+      "popupWidth": 810,
+      "popupHeight": 610
+    }
+  },
+  "allowed_users": [
+    "tevesn",
+    "reedv",
+    "byerst",
+    "alliekim",
+    "ew7",
+    "johnson"
+  ]
+}
