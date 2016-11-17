@@ -125,12 +125,12 @@ class SkillGraph extends BaseCollection {
           skill: { label: 'skill', optional: false, type: String },
           adj: { label: 'adj', optional: false, type: [Edge] },
         }),
-        // function transform(doc) {  //FIXME: is this even doing anything?
-        //   // for transforming objs in adj lists back to edges
-        //   const adj = _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
-        //   doc.adj = adj;
-        //   return doc;
-        // }
+        function transform(doc) {  //FIXME: is this even doing anything?
+          // for transforming objs in adj lists back to edges
+          const adj = _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
+          doc.adj = adj;
+          return doc;
+        }
     );
 
     this._edgeCount = 0;
@@ -257,11 +257,7 @@ class SkillGraph extends BaseCollection {
   adjList(skill) {
     console.log(`In adjList(${skill})`);
     const skillVertex = this._collection.findOne({ skill: skill });
-    skillVertex.adj = _.map(skillVertex.adj, (obj) => {
-      return Edge.objToEdge(obj);
-    })
     console.log(skillVertex);
-    console.log(`typeof adj[0] ${(typeof skillVertex.adj[0])}`);
     console.log();
     return skillVertex.adj;
   }
