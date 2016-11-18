@@ -54,7 +54,7 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
-    skills: ['JavaScript'],
+    skills: ['JavaScript', 'joining'],
     skillsWanted: ['public speaking', 'hand clapping'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')

@@ -16,7 +16,7 @@ const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
 
 let getInput = '';
-let myCursor = [];
+let myCursor = Projects.find();
 Session.set("countFoundProjects", 0);
 let countFoundProjects = Session.get("countFoundProjects");
 
@@ -25,15 +25,6 @@ Template.Search_Page.onCreated(function onCreated() {
     this.subscribe('Users');
     this.subscribe('Projects');
   });
-
-  // use reactive dict to store error messages
-  this.messageFlags = new ReactiveDict();  // recall, reactive dicts can store template key/vals w/out refreshing
-  this.messageFlags.set(displayErrorMessages, false);
-
-  this.navMenuActive = new ReactiveDict();
-  this.navMenuActive.set(homeActive, true);
-  this.navMenuActive.set(eventsActive, false);
-  this.navMenuActive.set(friendsActive, false);
 });
 
 Template.Search_Page.onRendered(function enableSemantic() {
@@ -52,14 +43,8 @@ Template.Search_Page.helpers({
       return false;
     }
   },
-
-  // TODO: have to implement with #each
-  projectName() {
-    return myCursor.fetch()[0].projectName;
-  },
-  // TODO: have to implement with #each
-  projectBio() {
-    return myCursor.fetch()[0].bio;
+  'iterateProjects': function() {
+    return myCursor.fetch();
   },
 });
 
@@ -81,7 +66,8 @@ Template.Search_Page.events({
     // // _.size() counts the number of items in the array
     // console.log(_.size(myCursor.fetch()));
     // // i'm calling on the first item in the myCursor.fetch() array
-    console.log(myCursor.fetch()[0]);
+    // console.log(myCursor.fetch()[0]);
     console.log(myCursor.fetch()[0].projectName);
+    console.log(Projects.find());
   },
 });
