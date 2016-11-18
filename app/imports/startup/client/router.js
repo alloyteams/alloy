@@ -37,6 +37,13 @@ FlowRouter.route('/site-admin-profile', {
   },
 });
 
+FlowRouter.route('/search', {
+  name: 'Search_Page',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'Search_Page' });
+  },
+});
+
 FlowRouter.route('/add-contact', {
   name: 'Add_Contact_Page',
   action() {

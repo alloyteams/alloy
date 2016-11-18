@@ -1,0 +1,128 @@
+<template name="Search_Page">
+
+  <div class="ui container"
+       style="margin-top: 30px;">
+    <div class="ui segment">
+      <a class="ui ribbon label"
+         style="background-color:#27aae1; color:white;"><h3>About this Project</h3>
+      </a>
+      <p style="margin-top: 5px;">Hello World!</p>
+    </div>
+  </div>
+
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+  {{#if currentUser}}
+  <div class="ui container"
+       style="margin-top: 30px;">
+    <!--TODO: add project title-->
+    <div class="item"><h2>{{ projectDataField "projectName" }}</h2>
+      <hr/>
+    </div>
+    <div class="ui grid">
+      <div class="five wide column">
+        <!--TODO: replace with profile image if we want to use profile images-->
+        <img class="ui rounded image"
+             src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
+        <!--TODO: display this button iff viewer is project owner-->
+        <br/>
+        {{#if isAdmin}}
+        <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField " _id")}}">
+        <div class="ui button">
+          <i class="edit icon"></i>
+          Edit Project Info
+        </div>
+        </a>
+        {{/if}}
+      </div>
+
+      <div class="eleven wide column">
+        <div class="ui segment">
+          <a class="ui ribbon label"
+             style="background-color:#27aae1; color:white;"><h3>About this Project</h3>
+          </a>
+          <p>{{ projectDataField "bio" }}</p>
+        </div>
+        <div class="ui segment">
+          <a class="ui ribbon label"
+             style="background-color:#27bae1; color:white;"><h3>Skills Wanted</h3></a>
+          <br/>
+          <br/>
+          <div class="ui labels">
+            {{#each wanted in (projectDataField "skillsWanted")}}
+            <a class="ui label">{{ wanted }}</a>
+            {{/each}}
+          </div>
+        </div>
+        <div class="ui segment">
+          <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
+          <a class="ui ribbon label"
+             style="background-color:#27c9e1; color:white;"><h3>Project
+            Admins</h3></a>
+          <div class="ui relaxed divided list">
+            {{#each admin in (projectDataField "admins")}}
+            <div class="item">
+              <i class="large user middle aligned icon"></i>
+              <div class="content">
+                <!-- assumes using UH naming/email scheme -->
+                <div class="description">{{ admin }}</div>
+                <a class="header">{{admin}}@hawaii.edu</a>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="ui segment">
+          <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
+          <a class="ui ribbon label"
+             style="background-color:#27d9e1; color:white;"><h3>Members</h3>
+          </a>
+          <div class="ui relaxed divided list">
+            {{#each member in (projectDataField "members")}}
+            <div class="item">
+              <i class="large user middle aligned icon"></i>
+              <div class="content">
+                <!-- assumes using UH naming/email scheme -->
+                <div class="description">{{ member }}</div>
+                <a class="header">{{member}}@hawaii.edu</a>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul>
+      <!-- TODO:should only be visible if currentUser is admin -->
+      <li><h5>Join requests (TODO: ONLY MAKE VISIBLE IF ADMIN):</h5></li>
+      {{#if projectDataField "joinRequests" }}
+      {{#each user in (projectDataField "joinRequests")}}
+      <li>{{ user }}
+        <button class="ui inverted yellow button addMember"
+                value="{{ user }}">
+          <h4>Add User</h4>
+        </button>
+      </li>
+      {{/each}}
+      {{else}}
+      No pending requests
+      {{/if}}
+    </ul>
+
+    <!-- user home page logic -->
+    {{#if homeActiveClass}}
+    {{/if}}
+
+
+    <!-- user events page logic -->
+    {{#if eventsActiveClass}}
+    {{/if}}
+
+    <!-- testing and proof-of-concept section -->
+    <!-- moved this table to project-profile-debug-table.html because some content in it was breaking the html-->
+
+  </div>
+  {{/if}}
+  {{/if}}
+</template>
