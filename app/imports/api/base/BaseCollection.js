@@ -31,8 +31,11 @@ class BaseCollection {
       this._collection = new Mongo.Collection(`${type}Collection`, {transform: transform});
     } else this._collection = new Mongo.Collection(`${type}Collection`);
     this._schema = schema;
-    // TODO: may need to add a transform true/false option to attachSchema to get custom types working.
-    // If this works, can consider using a maxPQ instead of array for SkillGraphCollection adj list
+    // An optional transformation function. Documents will be passed through this function
+    // before being returned from fetch or findOne, and before being passed to callbacks of
+    // observe, map, forEach, allow, and deny.
+    // Useful since mongoDB colletions can only store genric objects
+    //
     // see https://github.com/aldeed/meteor-simple-schema#blackbox,
     // https://github.com/aldeed/meteor-collection2#attachschema-options,
     // https://docs.meteor.com/api/collections.html#Mongo-Collection,

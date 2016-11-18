@@ -38,14 +38,14 @@ class Edge {
    * returns undefined.
    */
   static objToEdge(obj) {
-    console.log("In objToEdge")
-    console.log(obj)
+    // console.log("In objToEdge")
+    // console.log(obj)
     if (obj.hasOwnProperty("_v") && obj.hasOwnProperty("_w") &&
         obj.hasOwnProperty("_baseWeight") && obj.hasOwnProperty("_weight")) {
       check(obj._v, String);
       check(obj._w, String);
       check(obj._weight, Number);
-      console.log("In objToEdge: returning new Edge")
+      // console.log("In objToEdge: returning new Edge")
       return new Edge(obj._v, obj._w, obj._weight);
     } else return undefined;
   }
@@ -126,7 +126,7 @@ class SkillGraph extends BaseCollection {
           adj: { label: 'adj', optional: false, type: [Edge] },
         }),
         function transform(doc) {
-          // for transforming objs in adj lists back to edges
+          // for transforming generic objs in adj lists back to edges
           const adj = _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
           doc.adj = adj;
           return doc;
@@ -171,7 +171,7 @@ class SkillGraph extends BaseCollection {
    */
   addEdge(edge) {
     check(edge, Edge);
-    console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
+    // console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
     console.log(`addingEdge ${edge}`);
     const v = edge.either();
     const w = edge.other(v);
@@ -188,11 +188,11 @@ class SkillGraph extends BaseCollection {
         }
     );
     if (!existingEdge) {
-      console.log(`edge ${v}--${w} NOT exists`);
+      console.log(`edge ${v}--${w} NOT exists: inserting`);
       // if edge NOT already in adjLists of v and w, add it to BOTH those lists
       this._insertEdge(edge);
     } else {
-      console.log(`edge ${v}--${w} ALREADY exists`);
+      console.log(`edge ${v}--${w} ALREADY exists: updating`);
       // else edge v-w already in adj. of v AND w, update the weight on that edge for both vertices.
       // as long as we have been adding edges using addEdge(), there should be no case where v has an edge
       // v-w, but w does not.
@@ -254,10 +254,10 @@ class SkillGraph extends BaseCollection {
    * @returns {[Edge]} the adjacency list associated with the given skill in the graph
    */
   adjList(skill) {
-    console.log(`In adjList(${skill})`);
+    // console.log(`In adjList(${skill})`);
     const skillVertex = this._collection.findOne({ skill: skill });
-    console.log(skillVertex);
-    console.log();
+    // console.log(skillVertex);
+    // console.log();
     return skillVertex.adj;
   }
 
@@ -269,8 +269,7 @@ class SkillGraph extends BaseCollection {
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;
     for (let edge of this.adjList(skill)) {
-      // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/8736980
-      str += `${edge.toString()}\n`;  // call arg sets context (eg. defines what 'this' refers to)
+      str += `${edge.toString()}\n`;
     }
     return str;
   }
