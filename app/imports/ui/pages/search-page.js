@@ -51,23 +51,28 @@ Template.Search_Page.helpers({
 Template.Search_Page.events({
   'submit .form-register': function (event, template) {
     event.preventDefault();
+    countFoundProjects = Session.set("countFoundProjects", 0);
     getInput = event.target.searchInput.value;
 
     console.log('search input: ' + getInput);
 
     myCursor = Projects.find({skills: getInput});
-    // countFoundProjects = _.size(myCursor.fetch());
     countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
 
-    console.log('found projects: ' + Session.get("countFoundProjects"));
-
+    // // Prints to console the number of found projects
+    // console.log('found projects: ' + Session.get("countFoundProjects"));
     // // .fetch() makes an object Array of what is inside the myCursor variable
     // console.log(myCursor.fetch());
     // // _.size() counts the number of items in the array
     // console.log(_.size(myCursor.fetch()));
     // // i'm calling on the first item in the myCursor.fetch() array
     // console.log(myCursor.fetch()[0]);
-    console.log(myCursor.fetch()[0].projectName);
-    console.log(Projects.find());
+    // console.log(myCursor.fetch()[0].projectName);
+  },
+  'submit .form-clear': function (event, template) {
+    event.preventDefault();
+    countFoundProjects = Session.set("countFoundProjects", 0);
+    myCursor = Projects.find({skills: ''});
+    countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
   },
 });

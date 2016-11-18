@@ -4,7 +4,12 @@
     <div class="ui icon input">
       <form class="form-register">
         <input type="text" name="searchInput">
-        <button type="submit" class="register"><i class="inverted circular search link icon"></i></button>
+        <button type="submit" class="register">search <i class="inverted circular search link icon"></i></button>
+      </form>
+    </div>
+    <div class="ui icon input">
+      <form class="form-clear">
+        <button type="submit" class="register">clear <i class="inverted circular undo icon"></i></button>
       </form>
     </div>
   </div>
@@ -27,6 +32,7 @@
     </div>
   </div>
   {{/each}}
+  {{resetCompareBoolean}}
   {{/if}}
 
   <!--{{#if compareFound}}-->
