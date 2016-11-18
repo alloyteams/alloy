@@ -29,5 +29,3 @@ Template.Home_Page.helpers({
   },
 
 });
-
-Template.Home_Page.onRendered({});
