@@ -49,15 +49,15 @@ Template.Suggested_Projects.helpers({
   },
 });
 
-Template.Suggested_Projects.onRendered(function enableSemantic() {
-  const instance = this;
-  // instance.$('select.ui.dropdown').dropdown();
-  // instance.$('.ui.selection.dropdown').dropdown();
-  // instance.$('select.dropdown').dropdown();
-  // instance.$('.ui.checkbox').checkbox();
-  // instance.$('.ui.radio.checkbox').checkbox();
-});
+// Template.Suggested_Projects.onRendered(function enableSemantic() {
+//   const instance = this;
+//   instance.$('select.ui.dropdown').dropdown();
+//   instance.$('.ui.selection.dropdown').dropdown();
+//   instance.$('select.dropdown').dropdown();
+//   instance.$('.ui.checkbox').checkbox();
+//   instance.$('.ui.radio.checkbox').checkbox();
+// });
 
-Template.Suggested_Projects.events({
-
-});
+// Template.Suggested_Projects.events({
+//
+// });
