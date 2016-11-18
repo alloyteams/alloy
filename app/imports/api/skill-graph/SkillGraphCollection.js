@@ -125,7 +125,7 @@ class SkillGraph extends BaseCollection {
           skill: { label: 'skill', optional: false, type: String },
           adj: { label: 'adj', optional: false, type: [Edge] },
         }),
-        function transform(doc) {  //FIXME: is this even doing anything?
+        function transform(doc) {
           // for transforming objs in adj lists back to edges
           const adj = _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
           doc.adj = adj;
@@ -210,7 +210,6 @@ class SkillGraph extends BaseCollection {
     this._edgeCount++;
   }
 
-  // FIXME
   _updateEdge(adj, vertex, edge) {
     const v = edge.either();
     const w = edge.other(v);
@@ -262,6 +261,11 @@ class SkillGraph extends BaseCollection {
     return skillVertex.adj;
   }
 
+  /**
+   *
+   * @param skill-vertex
+   * @returns {string} string includes both vertices of edges and associated weight
+   */
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;
     for (let edge of this.adjList(skill)) {
