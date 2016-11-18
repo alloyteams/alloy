@@ -15,6 +15,10 @@ const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
 
+let getInput = '';
+let myCursor = [];
+let countFoundProjects = 0;
+
 Template.Search_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
@@ -35,14 +39,20 @@ Template.Search_Page.onRendered(function enableSemantic() {
   // TODO:
 });
 
-Template.Search_Page.events({
-  // TODO:
-  'click .addMember' (event, instance) {
-    event.preventDefault();
-  },
-});
-
 Template.Search_Page.helpers({
+  projNum() {
+    return countNum;
+  },
+  compareFound() {
+    if (countFoundProjects > 0)
+    {
+      console.log("alpha");
+      return true;
+    } else {
+      console.log("bravo");
+      return false;
+    }
+  },
   homeActiveClass() {
     return Template.instance().navMenuActive.get(homeActive) ? 'active' : '';  // 'active' string also doubles as truthy
   },
@@ -58,5 +68,27 @@ Template.Search_Page.helpers({
   displayFieldError(fieldName) {
     const errorKeys = Template.instance().context.invalidKeys();
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
+  },
+});
+
+Template.Search_Page.events({
+  'submit .form-register': function (event, template) {
+    event.preventDefault();
+    getInput = event.target.searchInput.value;
+
+    console.log('search input: ' + getInput);
+
+    myCursor = Projects.find({skills: getInput});
+    countFoundProjects = _.size(myCursor.fetch());
+
+    console.log('found projects: ' + countFoundProjects);
+
+    // // .fetch() makes an object Array of what is inside the myCursor variable
+    // console.log(myCursor.fetch());
+    // // _.size() counts the number of items in the array
+    // console.log(_.size(myCursor.fetch()));
+    // // i'm calling on the first item in the myCursor.fetch() array
+    // console.log(myCursor.fetch()[0]);
+    console.log(myCursor.fetch()[0].projectName);
   },
 });

@@ -5,8 +5,6 @@ import {Projects} from '../../api/projects/projects.js';
 // Here's how to do the required initialization for Semantic UI dropdown menus.
 Template.Header.onRendered(function enableDropDown() {
   this.$('.dropdown').dropdown();
-
-  console.log(Projects.find().count());
 });
 
 Template.Header.onCreated(function onCreated() {
@@ -17,6 +15,6 @@ Template.Header.onCreated(function onCreated() {
 
 Template.Header.helpers({
   countProjects() {
-    console.log(Projects.find().count());
+    console.log('Number of Projects: ' + Projects.find().count());
   },
 });
