@@ -9,14 +9,21 @@
     </div>
   </div>
 
+  <!--Verifying the number of projects found after entering your search input-->
+  <div class="ui text container">
+    Projects Found: {{projNum}}
+  </div>
+
+  {{#if compareFound}}
   <div class="ui container"
        style="margin-top: 30px;">
     <div class="ui segment">
       <a class="ui ribbon label"
-         style="background-color:#27aae1; color:white;"><h3>About this Project</h3>
+         style="background-color:#27aae1; color:white;"><h3>{{projectName}}</h3>
       </a>
-      <p style="margin-top: 5px;">Hello World!</p>
+      <p style="margin-top: 5px;">{{projectBio}}</p>
     </div>
   </div>
+  {{/if}}
 
 </template>

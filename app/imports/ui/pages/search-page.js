@@ -17,7 +17,8 @@ const friendsActive = 'friendsActive';
 
 let getInput = '';
 let myCursor = [];
-let countFoundProjects = 0;
+Session.set("countFoundProjects", 0);
+let countFoundProjects = Session.get("countFoundProjects");
 
 Template.Search_Page.onCreated(function onCreated() {
   this.autorun(() => {
@@ -41,33 +42,24 @@ Template.Search_Page.onRendered(function enableSemantic() {
 
 Template.Search_Page.helpers({
   projNum() {
-    return countNum;
+    return countFoundProjects = Session.get("countFoundProjects");
   },
   compareFound() {
-    if (countFoundProjects > 0)
+    if (Session.get("countFoundProjects") > 0)
     {
-      console.log("alpha");
       return true;
     } else {
-      console.log("bravo");
       return false;
     }
   },
-  homeActiveClass() {
-    return Template.instance().navMenuActive.get(homeActive) ? 'active' : '';  // 'active' string also doubles as truthy
+
+  // TODO: have to implement with #each
+  projectName() {
+    return myCursor.fetch()[0].projectName;
   },
-  eventsActiveClass() {
-    return Template.instance().navMenuActive.get(eventsActive) ? 'active' : '';
-  },
-  friendsActiveClass() {
-    return Template.instance().navMenuActive.get(friendsActive) ? 'active' : '';
-  },
-  errorClass() {
-    return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';  // empty string is falsey
-  },
-  displayFieldError(fieldName) {
-    const errorKeys = Template.instance().context.invalidKeys();
-    return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
+  // TODO: have to implement with #each
+  projectBio() {
+    return myCursor.fetch()[0].bio;
   },
 });
 
@@ -79,16 +71,17 @@ Template.Search_Page.events({
     console.log('search input: ' + getInput);
 
     myCursor = Projects.find({skills: getInput});
-    countFoundProjects = _.size(myCursor.fetch());
+    // countFoundProjects = _.size(myCursor.fetch());
+    countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
 
-    console.log('found projects: ' + countFoundProjects);
+    console.log('found projects: ' + Session.get("countFoundProjects"));
 
     // // .fetch() makes an object Array of what is inside the myCursor variable
     // console.log(myCursor.fetch());
     // // _.size() counts the number of items in the array
     // console.log(_.size(myCursor.fetch()));
     // // i'm calling on the first item in the myCursor.fetch() array
-    // console.log(myCursor.fetch()[0]);
+    console.log(myCursor.fetch()[0]);
     console.log(myCursor.fetch()[0].projectName);
   },
 });
