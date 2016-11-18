@@ -51,6 +51,7 @@ Template.Search_Page.helpers({
 Template.Search_Page.events({
   'submit .form-register': function (event, template) {
     event.preventDefault();
+
     countFoundProjects = Session.set("countFoundProjects", 0);
     getInput = event.target.searchInput.value;
 

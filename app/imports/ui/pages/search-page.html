@@ -4,12 +4,14 @@
     <div class="ui icon input">
       <form class="form-register">
         <input type="text" name="searchInput">
-        <button type="submit" class="register">search <i class="inverted circular search link icon"></i></button>
+        <button type="submit" class="register">search <i
+            class="inverted circular search link icon"></i></button>
       </form>
     </div>
     <div class="ui icon input">
       <form class="form-clear">
-        <button type="submit" class="register">clear <i class="inverted circular undo icon"></i></button>
+        <button type="submit" class="register">clear <i
+            class="inverted circular undo icon"></i></button>
       </form>
     </div>
   </div>
@@ -21,30 +23,31 @@
   </div>
 
   {{#if compareFound}}
-  {{#each iterateProjects}}
-  <div class="ui container"
-       style="margin-top: 30px;">
-    <div class="ui segment">
-      <a class="ui ribbon label"
-         style="background-color:#27aae1; color:white;"><h3>{{projectName}}</h3>
-      </a>
-      <p style="margin-top: 5px;">{{bio}}</p>
-    </div>
-  </div>
-  {{/each}}
-  {{resetCompareBoolean}}
+    {{#each iterateProjects}}
+      <div class="ui container"
+           style="margin-top: 30px;">
+        <div class="ui segment">
+          <a class="ui ribbon label"
+             style="background-color:#27aae1; color:white;">
+            <h3>{{projectName}}</h3>
+          </a>
+          <p style="margin-top: 5px;">{{bio}}</p>
+        </div>
+      </div>
+    {{/each}}
+    {{resetCompareBoolean}}
   {{/if}}
 
-  <!--{{#if compareFound}}-->
+    <!--{{#if compareFound}}-->
   <!--<div class="ui container"-->
-       <!--style="margin-top: 30px;">-->
-    <!--<div class="ui segment">-->
-      <!--<a class="ui ribbon label"-->
-         <!--style="background-color:#27aae1; color:white;"><h3>{{projectName}}</h3>-->
-      <!--</a>-->
-      <!--<p style="margin-top: 5px;">{{projectBio}}</p>-->
-    <!--</div>-->
+  <!--style="margin-top: 30px;">-->
+  <!--<div class="ui segment">-->
+  <!--<a class="ui ribbon label"-->
+  <!--style="background-color:#27aae1; color:white;"><h3>{{projectName}}</h3>-->
+  <!--</a>-->
+  <!--<p style="margin-top: 5px;">{{projectBio}}</p>-->
   <!--</div>-->
-  <!--{{/if}}-->
+  <!--</div>-->
+    <!--{{/if}}-->
 
 </template>

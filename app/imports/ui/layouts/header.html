@@ -33,13 +33,6 @@
 
       {{/if}}
 
-      {{#if currentUser}}
-      <a class="item" href="{{pathFor 'Home_Page'}}">
-        <img class="ui fluid tiny image" src="/images/alloy-bare-wordmark.png">
-      </a>
-        {{countProjects}}
-      {{/if}}
-
       <!-- the handlebar-if logic here keeps user-profile tab tight on the right when user logged in-->
       <a class="{{#unless currentUser}}right{{/unless}} item">
         {{> Cas_Login }}
