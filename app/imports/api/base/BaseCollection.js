@@ -34,7 +34,7 @@ class BaseCollection {
     // An optional transformation function. Documents will be passed through this function
     // before being returned from fetch or findOne, and before being passed to callbacks of
     // observe, map, forEach, allow, and deny.
-    // Useful since mongoDB colletions can only store genric objects
+    // Useful since mongoDB colletions can only store genric objects and std. EJSON types
     //
     // see https://github.com/aldeed/meteor-simple-schema#blackbox,
     // https://github.com/aldeed/meteor-collection2#attachschema-options,
