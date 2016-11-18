@@ -31,6 +31,17 @@ Template.Search_Page.onCreated(function onCreated() {
   this.navMenuActive.set(friendsActive, false);
 });
 
+Template.Search_Page.onRendered(function enableSemantic() {
+  // TODO:
+});
+
+Template.Search_Page.events({
+  // TODO:
+  'click .addMember' (event, instance) {
+    event.preventDefault();
+  },
+});
+
 Template.Search_Page.helpers({
   homeActiveClass() {
     return Template.instance().navMenuActive.get(homeActive) ? 'active' : '';  // 'active' string also doubles as truthy
@@ -47,16 +58,5 @@ Template.Search_Page.helpers({
   displayFieldError(fieldName) {
     const errorKeys = Template.instance().context.invalidKeys();
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
-  },
-});
-
-Template.Search_Page.onRendered(function enableSemantic() {
-  // TODO:
-});
-
-Template.Search_Page.events({
-  // TODO:
-  'click .addMember' (event, instance) {
-    event.preventDefault();
   },
 });
