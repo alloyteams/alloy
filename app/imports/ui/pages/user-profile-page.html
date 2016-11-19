@@ -561,28 +561,28 @@
           <ul>
             <!-- path parameter names are specified in app/imports/startup/client/router.js -->
             <li><a
-                href="{{ pathFor 'Project_Profile_Page' _id=(getProjectData "joinableNull Club" "_id") }}">
+                href="{{ pathFor 'Project_Profile_Page' _id=(getProjectData "joinableNull Project" "_id") }}">
               <button class="ui blue inverted button"><h4>Project profile
                 link</h4></button>
             </a>
             </li>
-            <li>{{ getProjectData "joinableNull Club" "bio" }}</li>
+            <li>{{ getProjectData "joinableNull Project" "bio" }}</li>
             <li>
               <ul>
-                <li><h5>{{ getProjectData "joinableNull Club" "projectName" }}
+                <li><h5>{{ getProjectData "joinableNull Project" "projectName" }}
                   events:</h5></li>
                 <!-- Parens can be used to indicate precedence, but are not actually necessary here -->
-                {{#each event in (getProjectData 'joinableNull Club' "events") }}
+                {{#each event in (getProjectData 'joinableNull Project' "events") }}
                   <li>{{ event }}</li>
                 {{/each}}
               </ul>
             </li>
-            <li>{{ getProjectData "joinableNull Club" "url" }}</li>
+            <li>{{ getProjectData "joinableNull Project" "url" }}</li>
             <li>
               <ul>
-                <li><h5>{{ getProjectData "joinableNull Club" "projectName" }}
+                <li><h5>{{ getProjectData "joinableNull Project" "projectName" }}
                   members:</h5></li>
-                {{#each member in (getProjectData "joinableNull Club" "members") }}
+                {{#each member in (getProjectData "joinableNull Project" "members") }}
                   <li>{{member}}</li>
                 {{/each}}
               </ul>
@@ -590,7 +590,7 @@
             <li>
               <!-- use the project _id to uniqly match a project with its join button-->
               <button class="ui orange inverted button joinRequest"
-                      id="{{ getProjectData "joinableNull Club" "_id" }}">
+                      id="{{ getProjectData "joinableNull Project" "_id" }}">
                 <h4>Request join info</h4>
               </button>
               {{#if isMemberFlag}}

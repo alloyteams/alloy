@@ -1,0 +1,60 @@
+<template name="Search_Page">
+
+  <div class="ui centered container" style="margin: 30px auto 0 auto;">
+    <div class="ui icon input">
+      <form class="form-register">
+        <input type="text" name="searchInput">
+        <button type="submit" class="register">search <i
+            class="inverted circular search link icon"></i></button>
+      </form>
+    </div>
+    <div class="ui icon input">
+      <form class="form-clear">
+        <button type="submit" class="register">clear <i
+            class="inverted circular undo icon"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <!--Verifying the number of projects found after entering your search input-->
+  <!--Here for testing purposes. Delete later.-->
+  <div class="ui text container">
+    Projects Found: {{projNum}}
+  </div>
+
+  {{#if compareFound}}
+    {{#each iterateProjects}}
+      <div class="ui container"
+           style="margin-top: 30px;">
+        <div class="ui segment">
+          <a href="{{ pathFor 'Project_Profile_Page' _id=(_id) }}" class="ui ribbon label"
+             style="background-color:#27aae1; color:white;">
+            <h3>{{projectName}}</h3>
+          </a>
+          <p style="margin-top: 5px;">{{bio}}</p>
+        </div>
+      </div>
+    {{/each}}
+    {{resetCompareBoolean}}
+  {{else}}
+    <div class="ui container"
+         style="margin-top: 30px;">
+      <div class="ui segment">
+        <p style="margin-top: 5px;">Enter a skill associated with your desired Projects query.</p>
+      </div>
+    </div>
+  {{/if}}
+
+    <!--{{#if compareFound}}-->
+  <!--<div class="ui container"-->
+  <!--style="margin-top: 30px;">-->
+  <!--<div class="ui segment">-->
+  <!--<a class="ui ribbon label"-->
+  <!--style="background-color:#27aae1; color:white;"><h3>{{projectName}}</h3>-->
+  <!--</a>-->
+  <!--<p style="margin-top: 5px;">{{projectBio}}</p>-->
+  <!--</div>-->
+  <!--</div>-->
+    <!--{{/if}}-->
+
+</template>
