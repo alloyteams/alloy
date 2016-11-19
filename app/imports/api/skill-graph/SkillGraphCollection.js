@@ -3,6 +3,7 @@
  */
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 import BaseCollection from '/imports/api/base/BaseCollection';
+import PriorityQueue from 'js-priority-queue';
 import {Meteor} from 'meteor/meteor';
 
 // I think can also import normal js libraries. see https://guide.meteor.com/structure.html#importing-from-packages
@@ -112,6 +113,9 @@ class Edge {
 }
 export {Edge};  // needed so we can create Edge instances in other files
 
+/**
+ * A bidirectional, weighted graph where vertices are lowercase strings denoting skills.
+ */
 class SkillGraph extends BaseCollection {
 
   /**
@@ -127,7 +131,9 @@ class SkillGraph extends BaseCollection {
         }),
         function transform(doc) {
           // for transforming objs in adj lists back to edges
-          const adj = _.map(doc.adj, (obj) => { return Edge.objToEdge(obj); });
+          const adj = _.map(doc.adj, (obj) => {
+            return Edge.objToEdge(obj);
+          });
           doc.adj = adj;
           return doc;
         }
@@ -152,6 +158,7 @@ class SkillGraph extends BaseCollection {
    */
   addVertex(skill) {
     check(skill, String);
+    skill = skill.toLowerCase();
     const exists = this._collection.findOne({ skill: skill });
     if (!exists) {
       const newSkill = {
@@ -161,20 +168,20 @@ class SkillGraph extends BaseCollection {
       this._collection.insert(newSkill);
 
       this._vertexCount++;
-    }
+    } else console.log(`SkillGraphCollection: addVertex(): ${skill}: already in graph\n`);
   }
 
   /**
    * @param edge
    * Add an edge to the graph
-   * FIXME: WARNING: assumes that the vertices of the inserting edge are already in the graph
+   * FIXME: WARNING: assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill)
    */
   addEdge(edge) {
     check(edge, Edge);
     console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
     console.log(`addingEdge ${edge}`);
-    const v = edge.either();
-    const w = edge.other(v);
+    const v = edge.either().toLowerCase();
+    const w = edge.other(v).toLowerCase();
     const adjV = this.adjList(v);
     const adjW = this.adjList(w);
 
@@ -234,6 +241,7 @@ class SkillGraph extends BaseCollection {
   addVertexList(skills) {
     // add all vertices in skills to graph
     _.each(skills, (skill) => {
+      skill = skill.toLowerCase();
       this.addVertex(skill);
     });
 
@@ -250,11 +258,12 @@ class SkillGraph extends BaseCollection {
   }
 
   /**
-   * @param skill
+   * @param {string} skill
    * @returns {[Edge]} the adjacency list associated with the given skill in the graph
    */
   adjList(skill) {
     console.log(`In adjList(${skill})`);
+    skill = skill.toLowerCase();
     const skillVertex = this._collection.findOne({ skill: skill });
     console.log(skillVertex);
     console.log();
@@ -263,11 +272,36 @@ class SkillGraph extends BaseCollection {
 
   /**
    *
-   * @param skill-vertex
+   * @param {string} skill
+   * @return {PriorityQueue} a 1-indexed priority queue of Edge objects by descending weights
+   */
+  adjMaxPQ(skill) {
+    skill = skill.toLowerCase();
+    const adjList = this.adjList(skill);
+
+    // see https://github.com/adamhooper/js-priority-queue#options
+    const edgeMaxCompare = function (e1, e2) {
+      return e2.getWeight() - e1.getWeight();
+    };
+    // NOTE: this PQ implementation is 1-indexed
+    const maxPQ = new PriorityQueue({
+      comparator: edgeMaxCompare,
+      initialValues: adjList,
+      strategy: PriorityQueue.BinaryHeapStrategy
+    });
+
+    console.log(maxPQ)
+    return maxPQ;
+  }
+
+  /**
+   *
+   * @param {string} skill-vertex
    * @returns {string} string includes both vertices of edges and associated weight
    */
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;
+    skill = skill.toLowerCase();
     for (let edge of this.adjList(skill)) {
       // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/8736980
       str += `${edge.toString()}\n`;  // call arg sets context (eg. defines what 'this' refers to)
