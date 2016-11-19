@@ -74,6 +74,12 @@ Accounts.onCreateUser(function (options, user) {
     _.each(defaultProject.skills, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
+
+    SkillGraphCollection.adjMaxPQ('JavaScript');
+    let pq = SkillGraphCollection.adjMaxPQ('clicking');
+    const currSize = pq.length;
+    console.log("'clicking' PQ");
+    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
   }
 
   // initialize newUser account info with some default/test info and add to Users collection
@@ -133,5 +139,10 @@ if (Meteor.users.find().count() === 0) {
     _.each(joinableNullProject.skills, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
+
+    let pq = SkillGraphCollection.adjMaxPQ('clicking');
+    const currSize = pq.length;
+    console.log("'clicking' PQ");
+    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
   }
 }
