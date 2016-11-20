@@ -114,7 +114,8 @@ class Edge {
 export {Edge};  // needed so we can create Edge instances in other files
 
 /**
- * A bidirectional, weighted graph where vertices are lowercase strings denoting skills.
+ * A bidirectional, weighted graph where vertices are lowercase,
+ * whitespace-removed strings denoting skills.
  */
 class SkillGraph extends BaseCollection {
 
@@ -153,6 +154,30 @@ class SkillGraph extends BaseCollection {
 
   /**
    *
+   * @param {string} str
+   * @return {string} string intended to be equal to other strings with same
+   * sequence of characters, regaudless of whitespace and capitalization.
+   * @private
+   */
+  _makeUniform(str) {
+    // TODO: I made this so users can enter, eg. 'javascript' and 'Java Script' and get same results, can improve?
+    // FIXME: will this affect how Edges interact? I think so, go thru and check.
+    // eg. does edge.other(v) still work when v has been madeUniform()ed from edge version.
+    // FIXME: Need it such that can still get the original string back
+    // suggestion:
+    //  Graph stores skills as lowercase-spaceremoved strings.
+    //  When returning project(s) based on skill graph edges,
+    //    convert the given search term/skill to lowercase-spaceremoved as well
+    //    (to get list of adj skills), then determine which projects have matching
+    //    skills by comparing THEIR lowercase-spaceremoved skills to these adj skills
+    //  Ask neil if this OK
+
+    // converts to lowercase and removes all whitespaces. see http://stackoverflow.com/a/6623263
+    return str.toLowerCase().replaceAll(/\s/g, '');
+  }
+
+  /**
+   *
    * @param skill
    * adds the given skill to the graph if none with that label currently exists
    */
@@ -174,7 +199,7 @@ class SkillGraph extends BaseCollection {
   /**
    * @param edge
    * Add an edge to the graph
-   * FIXME: WARNING: assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill)
+   * WARNING: assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill)
    */
   addEdge(edge) {
     check(edge, Edge);
