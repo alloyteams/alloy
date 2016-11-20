@@ -15,13 +15,10 @@ import {
 /* Validate username against UH cas, sending a specific error message on failure. */
 Accounts.validateNewUser(function (user) {
   if (user) {
-    // get username from uh-cas login service
+    // get username from uh-cas login service (if valid)
     const username = user.services.cas.id;
-    if (username && _.contains(Meteor.settings.allowed_users, username)) {
-      return true;
-    }
-  }
-  throw new Meteor.Error(403, 'User not in the allowed list');
+    if(username) return true;
+  } else throw new Meteor.Error(403, 'User not allowed / valid');
 });
 
 if (!Meteor.settings.cas) {

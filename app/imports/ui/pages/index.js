@@ -28,8 +28,16 @@ import './project-profile-page.js';
 import './project-admin-page.html';
 import './project-admin-page.js';
 
+import './search-page-body.html';
+
 import './search-page.html';
 import './search-page.js';
+
+import './search-projects-page.html';
+import './search-projects-page.js';
+
+import './search-users-page.html';
+import './search-users-page.js';
 
 import './site-admin-page.html';
 import './site-admin-page.js';
