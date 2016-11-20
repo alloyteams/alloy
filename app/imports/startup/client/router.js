@@ -37,13 +37,6 @@ FlowRouter.route('/site-admin-profile', {
   },
 });
 
-FlowRouter.route('/search', {
-  name: 'Search_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Search_Page' });
-  },
-});
-
 FlowRouter.route('/add-contact', {
   name: 'Add_Contact_Page',
   action() {
@@ -91,3 +84,26 @@ FlowRouter.notFound = {
     BlazeLayout.render('App_Body', { main: 'App_Not_Found' });
   },
 };
+
+
+// TODO: CREATING DYNAMIC SEARCH PAGES FOR SEARCHING PROJECTS OR USERS
+FlowRouter.route('/search', {
+  name: 'Search_Page',
+  action() {
+    BlazeLayout.render('Search_Page_Body', { search_main: 'Search_Page' });
+  },
+});
+
+FlowRouter.route('/search/search_projects', {
+  name: 'Search_Projects_Page',
+  action() {
+    BlazeLayout.render('Search_Page_Body', { search_main: 'Search_Projects_Page' });
+  },
+});
+
+FlowRouter.route('/search/search_users', {
+  name: 'Search_Users_Page',
+  action() {
+    BlazeLayout.render('Search_Page_Body', { search_main: 'Search_Users_Page' });
+  },
+});
