@@ -3,6 +3,11 @@ import {Accounts} from 'meteor/accounts-base';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 import {_} from 'meteor/underscore';
+import {BaseCollection} from '../../api/base/BaseCollection.js'
+import {
+    SkillGraphCollection,
+    Edge
+} from '../../api/skill-graph/SkillGraphCollection.js';
 
 /* eslint-disable no-console */
 
@@ -22,7 +27,6 @@ Accounts.validateNewUser(function (user) {
 if (!Meteor.settings.cas) {
   console.log('CAS settings not found! Hint: "meteor --settings ../config/settings.development.json"');
 }
-
 
 Accounts.onCreateUser(function (options, user) {
   /* From http://docs.meteor.com/api/accounts.html
@@ -54,21 +58,41 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
+    skills: ['JavaScript', 'joining', 'clicking'],
+    skillsWanted: ['public speaking', 'hand clapping'],
     url: 'https://theNullProject.org',
+    createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
   // if the default project has not yet been added to Projects collection, do so.
   // returns 'undefined' if none found (falsey), else first matched obj. (truthy?)
-  let defaultExists = Projects.findOne({ projectName: 'The Null Project' });
+  let defaultExists = Projects.findOne({ projectName: defaultProject.projectName });
   if (!(defaultExists)) {
     Projects.insert(defaultProject);
+
+    // TESTING: update SkillGraphCollection with this new defaultProject
+    SkillGraphCollection.addVertexList(defaultProject.skills);
+    _.each(defaultProject.skills, (skill) => {
+      console.log(`${SkillGraphCollection.adjListToString(skill)}`);
+    });
+
+    SkillGraphCollection.adjMaxPQ('JavaScript');
+    let pq = SkillGraphCollection.adjMaxPQ('clicking');
+    const currSize = pq.length;
+    console.log("'clicking' PQ");
+    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
   }
 
-  // initialize newUser account info ad add to Users collection
+  // initialize newUser account info with some default/test info and add to Users collection
   const newUser = {
     username: user.services.cas.id,  // if not using UH cas, use: user.username
-    projects: [defaultProject.projectName],
+    skills: ['hugging'],
+    interests: ['working together'],
     events: ['The Null Event-1', 'The Null Event-2'],
+    projects: [defaultProject.projectName],
     adminProjects: [defaultProject.projectName],
+    followedPeople: ['edwardNullen123'],  // In real cases, would need guarantee that added user existed
+    followedProjects: [defaultProject.projectName],
+    followedBy: ['edwardNullen123'],
     isSiteAdmin: false
   };
   Users.insert(newUser);  // this means User documents will have different _id than the Meteor.user._id
@@ -76,12 +100,11 @@ Accounts.onCreateUser(function (options, user) {
                           // see https://guide.meteor.com/accounts.html#adding-fields-on-registration
 
   // This is a test of adding members to projects dynamically, rather than at project declaration.
-  // add this user as a member and admin of the default project
+  // add this user as a member and admin of the default project array fields
   // see https://docs.mongodb.com/manual/reference/operator/update/
   // TODO: add function to Projects collection api that allows user.projects and project.members to be set simultaneously
-  Projects.update({ projectName: 'The Null Project' }, { $addToSet: { members: newUser.username } });
-  Projects.update({ projectName: 'The Null Project' }, { $addToSet: { admins: newUser.username } });
-
+  Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { members: newUser.username } });
+  Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { admins: newUser.username } });
 
   // We still want the default hook's 'profile' behavior.
   if (options.profile)
@@ -92,13 +115,34 @@ Accounts.onCreateUser(function (options, user) {
 
 // FIXME: causes 'id required' error when using UH accounts-cas. Should just delete?
 /* When running app for first time, pass a settings file to set up a default user account if no other users. */
-// if (Meteor.users.find().count() === 0) {
-//   if (!!Meteor.settings.defaultAccount) {
-//     Accounts.createUser({
-//       username: Meteor.settings.defaultAccount.username,
-//       password: Meteor.settings.defaultAccount.password,
-//     });
-//   } else {
-//     console.log('No default user!  Please invoke meteor with a settings file.');
-//   }
-// }
+if (Meteor.users.find().count() === 0) {
+// for testing: for testing logic of user discovering and joining a club
+  const joinableNullProject = {
+    projectName: 'joinableNull Project',
+    bio: 'Cross over children. All are welcome',
+    events: ['Bad B-Movies', 'Chair Stackathon'],
+    skills: ['finding', 'clicking', 'joining'],
+    skillsWanted: ['clicking2.0', 'joining2.0'],
+    url: 'https://join.us',
+    createdAt: new Date(),
+  };
+  // if the default project has not yet been added to Projects collection, do so.
+  // returns 'undefined' if none found (falsey), else first matched obj. (truthy?)
+  let exists = Projects.findOne({ projectName: joinableNullProject.projectName });
+  if (!(exists)) {
+    Projects.insert(joinableNullProject);
+
+    // TESTING: update SkillGraphCollection with this new defaultProject
+    // adding vertcies to SkillGraphCollection
+    SkillGraphCollection.addVertexList(joinableNullProject.skills);
+
+    _.each(joinableNullProject.skills, (skill) => {
+      console.log(`${SkillGraphCollection.adjListToString(skill)}`);
+    });
+
+    let pq = SkillGraphCollection.adjMaxPQ('clicking');
+    const currSize = pq.length;
+    console.log("'clicking' PQ");
+    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
+  }
+}

@@ -1,10 +1,11 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
-FlowRouter.route('/', {
+FlowRouter.route('/', {  // set homepage at reference address "/"
   name: 'Home_Page',
   action() {
-    BlazeLayout.render('App_Body', { main: 'Home_Page' });
+    // render using homepage-body layout, with param 'main' mapping to Home_Page template
+    BlazeLayout.render('Homepage_Body', { main: 'Home_Page' });
   },
 });
 
@@ -22,7 +23,7 @@ FlowRouter.route('/project-profile/:_id', {
   },
 });
 
-FlowRouter.route('/project-admin-profile', {
+FlowRouter.route('/project-admin-profile/:_id', {
   name: 'Project_Admin_Page',
   action() {
     BlazeLayout.render('App_Body', { main: 'Project_Admin_Page' });
@@ -83,3 +84,26 @@ FlowRouter.notFound = {
     BlazeLayout.render('App_Body', { main: 'App_Not_Found' });
   },
 };
+
+
+// TODO: CREATING DYNAMIC SEARCH PAGES FOR SEARCHING PROJECTS OR USERS
+FlowRouter.route('/search', {
+  name: 'Search_Page',
+  action() {
+    BlazeLayout.render('Search_Page_Body', { search_main: 'Search_Page' });
+  },
+});
+
+FlowRouter.route('/search/search_projects', {
+  name: 'Search_Projects_Page',
+  action() {
+    BlazeLayout.render('Search_Page_Body', { search_main: 'Search_Projects_Page' });
+  },
+});
+
+FlowRouter.route('/search/search_users', {
+  name: 'Search_Users_Page',
+  action() {
+    BlazeLayout.render('Search_Page_Body', { search_main: 'Search_Users_Page' });
+  },
+});

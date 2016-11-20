@@ -3,29 +3,20 @@
        style="max-height: 150px" -->
 
   <!-- side menu / TOC -->
-  <div class="ui top borderless inverted menu"
-       style="margin-top: 0px; margin-bottom: 0px; border-radius: 0px; color:white; background-color: #027450">
+  <div class="ui top tabular menu"
+       style="margin-top: 0px; margin-bottom: 0px; border-radius: 0px; color:white; background-color: #27AAE1">
     <div class="ui container">
 
       <a class="item" href="{{pathFor 'Home_Page'}}">
-        <h1 style="color: white">Alloy</h1>
-      </a>
-
-      <a class="{{ isActiveRoute 'Categories_Page'}} item"
-         href="{{pathFor 'Categories_Page'}}"
-         style="color: white">Categories</a>
-
-      <!-- maybe try to find a simple searchbar pkg to implement this part -->
-      <a class="item">
-        <div class="ui icon input">
-          <input placeholder="Search for a club" type="text">
-          <i class="inverted circular search link icon"></i>
-        </div>
+        <img class="ui fluid tiny image" src="/images/alloy-bare-wordmark.png">
       </a>
 
       {{#if currentUser}}
-        <a class="{{ isActiveRoute 'User_Profile_Page'}} right item"
-           href="{{ pathFor 'User_Profile_Page' }}">My Profile</a>
+      <a class="{{ isActiveRoute 'Search_Page'}} item"
+         href="{{ pathFor 'Search_Page' }}">Search</a>
+
+      <a class="{{ isActiveRoute 'User_Profile_Page'}} right item"
+         href="{{ pathFor 'User_Profile_Page' }}">My Profile</a>
 
         <!-- TODO: these should be behind clubAdmin and siteAdmin checks, respectively-->
         <a class="{{ isActiveRoute 'Project_Admin_Page'}} item"
@@ -40,12 +31,6 @@
         {{#if isSiteAdmin}}
         {{/if}}
 
-        <!-- TODO: remove, keeping here for now as a reference
-        a class="{{ isActiveRoute 'Add_Stuff_Page'}} item"
-           href="{{ pathFor 'Add_Stuff_Page' }}">Add Stuff </a>
-        <a class="{{ isActiveRoute 'List_Stuff_Page'}} item"
-           href="{{ pathFor 'List_Stuff_Page' }}">List Stuff</a
-        -->
       {{/if}}
 
       <!-- the handlebar-if logic here keeps user-profile tab tight on the right when user logged in-->

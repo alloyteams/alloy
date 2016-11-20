@@ -1,183 +1,100 @@
 <template name="Home_Page">
-  <!-- NOTE: the picture I use here is some generic UH picture I found online -->
-  <div class="ui fluid centered grid landing-img" style="margin-top: 0.5px">
-    <div class="column">
-      <p style="color: white;">
-        Tagline:<br/>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.<br/> Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-        ex ea commodo consequat.
-      </p>
-    </div>
-  </div>
-
-  <div class="ui segments" style="border: none">
-
-    <div class="ui center aligned segment">
-      <h2>Featured Projects </h2>
-      <div class="ui stackable fluid link cards" style="margin: 10px">
-
-        <div class="card">
-          <div class="image">
-            <img class="ui large image" src="/images/Sample-Photo-1.jpg">
-          </div>
-          <div class="content">
-            <div class="header">ProjectName-1</div>
-            <div class="meta">
-              <a>keywords / topics</a>
+  <div class="ui container" id="Splash_Top">
+    <div class="ui grid">
+      <div class="six wide column">
+        <div id="Splash_Page" class="ui five row grid">
+          <div class="row">
+            <div class="ui padded grid">
+              <div class="padded row">
+                <h1><img style="height:30px; width:auto"
+                         src="/images/alloy-icon.png">
+                  About Alloy
+                  <hr/>
+                </h1>
+                <p style="max-width:600px;margin:0 auto;">
+                  <!--
+                  TODO: change this 'about' to more closely focus on the needs of iLab and sPACE
+                  -->
+                  Alloy is a UH student-built tool to help members of the
+                  UH iLab and sPACE communities find projects and
+                  find people for projects of their own. Have an idea for a
+                  project that would look good on your resume? Want to do your
+                  own custom senior project? Or do you just want experiment and
+                  learn something new with other students who just want to do
+                  the same?
+                  <br><br>Let Alloy help you find the teams that's right for
+                  what you want</p>
+              </div>
+              <div class="padded row">
+                <h1><img style="height:30px; width:auto"
+                         src="/images/alloy-icon.png">
+                  Key Features
+                  <hr/>
+                </h1>
+                <ul class="ui list" style="max-width:400px;margin:0 auto;">
+                  <li>Create profiles that list your skills, interests, and
+                    availability
+                  </li>
+                  <li>Create projects that other people can browse and join</li>
+                  <li>Search for people based on skills</li>
+                  <li>Follow people you want to work with to track their
+                    projects
+                  </li>
+                  <li>Set up alerts for projects that might interest you</li>
+                </ul>
+              </div>
             </div>
-            <div class="description">
-              Project description / bio.
-            </div>
-          </div>
-          <div class="extra content">
-      <span class="right floated">
-        <button class="ui button"> Request join info </button>
-      </span>
-            <span>
-        <i class="user icon"></i>
-        75 Friends
-      </span>
           </div>
         </div>
-
-        <div class="card">
-          <div class="image">
-            <img class="ui large image" src="/images/Sample-Photo-1.jpg">
-          </div>
-          <div class="content">
-            <div class="header">ProjectName-2</div>
-            <div class="meta">
-              <a>keywords / topics</a>
+      </div>
+      <div class="ten wide column">
+        <div class="ui two row grid">
+          <div class="row">
+            <div class="ui padded grid">
+              <div class="ui padded row">
+                {{>Suggested_Projects}}
+              </div>
             </div>
-            <div class="description">
-              Club description / bio.
-            </div>
-          </div>
-          <div class="extra content">
-      <span class="right floated">
-        <button class="ui button"> Request join info </button>
-      </span>
-            <span>
-        <i class="user icon"></i>
-        35 Friends
-      </span>
           </div>
         </div>
-
-        <div class="card">
-          <div class="image">
-            <img class="ui large image" src="/images/Sample-Photo-1.jpg">
-          </div>
-          <div class="content">
-            <div class="header">ProjectName-3</div>
-            <div class="meta">
-              <a>keywords / topics</a>
-            </div>
-            <div class="description">
-              Project description / bio.
-            </div>
-          </div>
-          <div class="extra content">
-      <span class="right floated">
-        <button class="ui button"> Request join info </button>
-      </span>
-            <span>
-        <i class="user icon"></i>
-        151 Friends
-      </span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="image">
-            <img class="ui large image" src="/images/Sample-Photo-1.jpg">
-          </div>
-          <div class="content">
-            <div class="header">ProjectName-4</div>
-            <div class="meta">
-              <a>keywords / topics</a>
-            </div>
-            <div class="description">
-              project description / bio.
-            </div>
-          </div>
-          <div class="extra content">
-      <span class="right floated">
-        <button class="ui button"> Request join info </button>
-      </span>
-            <span>
-        <i class="user icon"></i>
-        35 Friends
-      </span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="image">
-            <img class="ui large image" src="/images/Sample-Photo-1.jpg">
-          </div>
-          <div class="content">
-            <div class="header">ProjectName-5</div>
-            <div class="meta">
-              <a>keywords / topics</a>
-            </div>
-            <div class="description">
-              Project description / bio.
-            </div>
-          </div>
-          <div class="extra content">
-      <span class="right floated">
-        <button class="ui button"> Request join info </button>
-      </span>
-            <span>
-        <i class="user icon"></i>
-        35 Friends
-      </span>
-          </div>
-        </div>
-
       </div>
     </div>
-
-    <div class="ui left aligned segment"><h3>Other stuff </h3></div>
   </div>
 
 
-  <!-- Keeping this code here for now as a reference -->
+  <!-- just keeping this section around as reference code, DO NOT DELETE -->
   <div class="ui container">
     {{#if Template.subscriptionsReady}}
-      <table class="ui celled table" style="margin: 10px">
-        <thead>
-        <tr>
-          <th>First</th>
-          <th>Last</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Edit Contact</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each contact in contactsList}}
-          <tr>
-            <td>{{contact.firstName}}</td>
-            <td>{{contact.lastName}}</td>
-            <td>{{contact.address}}</td>
-            <td>{{contact.phone}}</td>
-            <td>{{contact.email}}</td>
-            <!-- link to page to edit this contact -->
-            <!-- to see whether to binf to 'id' or '_id', see app/imports/startup/client/router.js for url info-->
-            <td><a
-                href="{{pathFor 'Edit_Contact_Page' id=contact._id}}">Edit</a>
-            </td>
-          </tr>
-        {{/each}}
-        </tbody>
-      </table>
+    <table class="ui celled table" style="margin: 10px">
+      <thead>
+      <tr>
+        <th>First</th>
+        <th>Last</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Edit Contact</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each contact in contactsList}}
+      <tr>
+        <td>{{contact.firstName}}</td>
+        <td>{{contact.lastName}}</td>
+        <td>{{contact.address}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.email}}</td>
+        <!-- link to page to edit this contact -->
+        <!-- to see whether to binf to 'id' or '_id', see app/imports/startup/client/router.js for url info-->
+        <td><a
+            href="{{pathFor 'Edit_Contact_Page' id=contact._id}}">Edit</a>
+        </td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
     {{else}}
-      {{> Loading}}
+    {{> Loading}}
     {{/if}}
 
   </div>

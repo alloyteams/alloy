@@ -6,7 +6,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "js-priority-queue": "^0.1.5",
     "meteor-node-stubs": "~0.2.0"
   },
   "devDependencies": {
@@ -22,7 +22,11 @@
   },
   "postcss": {
     "plugins": {
-      "autoprefixer": {"browsers": ["last 2 versions"]}
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
     }
   }
 }
