@@ -170,6 +170,7 @@ class SkillGraph extends BaseCollection {
     //    convert the given search term/skill to lowercase-spaceremoved as well
     //    (to get list of adj skills), then determine which projects have matching
     //    skills by comparing THEIR lowercase-spaceremoved skills to these adj skills
+    //  Ask neil if this OK
 
     // converts to lowercase and removes all whitespaces. see http://stackoverflow.com/a/6623263
     return str.toLowerCase().replaceAll(/\s/g, '');
