@@ -1,4 +1,9 @@
 {
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://testuser:test@ds147377.mlab.com:47377/alloyappdb"
+    }
+  },
   "cas": {
     "baseUrl": "https://cas-test.its.hawaii.edu/cas/",
     "autoClose": true

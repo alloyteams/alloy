@@ -3,6 +3,11 @@ import {Accounts} from 'meteor/accounts-base';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 import {_} from 'meteor/underscore';
+import {BaseCollection} from '../../api/base/BaseCollection.js'
+import {
+    SkillGraphCollection,
+    Edge
+} from '../../api/skill-graph/SkillGraphCollection.js';
 
 /* eslint-disable no-console */
 
@@ -10,19 +15,15 @@ import {_} from 'meteor/underscore';
 /* Validate username against UH cas, sending a specific error message on failure. */
 Accounts.validateNewUser(function (user) {
   if (user) {
-    // get username from uh-cas login service
+    // get username from uh-cas login service (if valid)
     const username = user.services.cas.id;
-    if (username && _.contains(Meteor.settings.allowed_users, username)) {
-      return true;
-    }
-  }
-  throw new Meteor.Error(403, 'User not in the allowed list');
+    if(username) return true;
+  } else throw new Meteor.Error(403, 'User not allowed / valid');
 });
 
 if (!Meteor.settings.cas) {
   console.log('CAS settings not found! Hint: "meteor --settings ../config/settings.development.json"');
 }
-
 
 Accounts.onCreateUser(function (options, user) {
   /* From http://docs.meteor.com/api/accounts.html
@@ -54,7 +55,7 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
-    skills: ['JavaScript'],
+    skills: ['JavaScript', 'joining', 'clicking'],
     skillsWanted: ['public speaking', 'hand clapping'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
@@ -64,6 +65,18 @@ Accounts.onCreateUser(function (options, user) {
   let defaultExists = Projects.findOne({ projectName: defaultProject.projectName });
   if (!(defaultExists)) {
     Projects.insert(defaultProject);
+
+    // TESTING: update SkillGraphCollection with this new defaultProject
+    SkillGraphCollection.addVertexList(defaultProject.skills);
+    _.each(defaultProject.skills, (skill) => {
+      console.log(`${SkillGraphCollection.adjListToString(skill)}`);
+    });
+
+    SkillGraphCollection.adjMaxPQ('JavaScript');
+    let pq = SkillGraphCollection.adjMaxPQ('clicking');
+    const currSize = pq.length;
+    console.log("'clicking' PQ");
+    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
   }
 
   // initialize newUser account info with some default/test info and add to Users collection
@@ -90,7 +103,6 @@ Accounts.onCreateUser(function (options, user) {
   Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { members: newUser.username } });
   Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { admins: newUser.username } });
 
-
   // We still want the default hook's 'profile' behavior.
   if (options.profile)
     user.profile = options.profile;
@@ -102,19 +114,32 @@ Accounts.onCreateUser(function (options, user) {
 /* When running app for first time, pass a settings file to set up a default user account if no other users. */
 if (Meteor.users.find().count() === 0) {
 // for testing: for testing logic of user discovering and joining a club
-  const joinableNullClub = {
-    projectName: 'joinableNull Club',
+  const joinableNullProject = {
+    projectName: 'joinableNull Project',
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
-    skills: ['clicking', 'joining'],
+    skills: ['finding', 'clicking', 'joining'],
     skillsWanted: ['clicking2.0', 'joining2.0'],
     url: 'https://join.us',
     createdAt: new Date(),
   };
   // if the default project has not yet been added to Projects collection, do so.
   // returns 'undefined' if none found (falsey), else first matched obj. (truthy?)
-  let exists = Projects.findOne({ projectName: joinableNullClub.projectName });
+  let exists = Projects.findOne({ projectName: joinableNullProject.projectName });
   if (!(exists)) {
-    Projects.insert(joinableNullClub);
+    Projects.insert(joinableNullProject);
+
+    // TESTING: update SkillGraphCollection with this new defaultProject
+    // adding vertcies to SkillGraphCollection
+    SkillGraphCollection.addVertexList(joinableNullProject.skills);
+
+    _.each(joinableNullProject.skills, (skill) => {
+      console.log(`${SkillGraphCollection.adjListToString(skill)}`);
+    });
+
+    let pq = SkillGraphCollection.adjMaxPQ('clicking');
+    const currSize = pq.length;
+    console.log("'clicking' PQ");
+    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
   }
 }
