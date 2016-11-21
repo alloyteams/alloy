@@ -55,7 +55,7 @@ Template.Project_Creation_Page.events({
       projectName: newProjectName,
       bio: newBio,
       events: [],
-      skills: [],
+      skills: newSkills,
       skillsWanted: newSkills,
       members: newMembers,
       admins: [Meteor.user().profile.name],
@@ -79,11 +79,10 @@ Template.Project_Creation_Page.events({
     // Determine validity against schema.
     instance.context.validate(newProject);
     if (instance.context.isValid()) {
-      console.log(newProject.skillsWanted);
-
       // insert new contact data into collection
       Projects.insert(newProject);
       instance.messageFlags.set(displayErrorMessages, false);
+      console.log(Projects.find({ projectName: newProjectName }).fetch());
 
       // redirect back to Home_Page
       FlowRouter.go('Home_Page');
