@@ -1,0 +1,78 @@
+<template name="Project_Creation_Page">
+  <a>test</a>
+  <div class="ui container" style="margin-top: 30px;">
+    <div class="ui raised padded segment">
+      <h1>
+        <img style="height:30px; width:auto"
+             src="/images/alloy-icon.png"> Create Project
+        <hr/>
+      </h1>
+      <form class="ui form project-data-form">
+        <div class="field">
+          <label>Project Title</label>
+          <input type="text" name="projectName" id="projectName"
+                 placeholder="Project Name">
+        </div>
+        <div class="field">
+          <label>Upload Project Image</label>
+          <input type="file" name="project-image"
+                 placeholder="Upload a photo for your project...">
+        </div>
+        <div class="field">
+          <label>Project Description</label>
+          <!--TODO: replace placeholder with previously entered information for the project-->
+          <!-- FIXME: currently appears prepended by blank spaces in textarea box-->
+          <textarea name="bio" id="bio"
+                    placeholder="Description">
+          </textarea>
+        </div>
+        <div class="field">
+          <label>Skills Wanted</label>
+          <!--TODO: replace placeholder with previously entered information for the project-->
+          <div class="ui fluid multiple search selection dropdown">
+            <input name="skills" id="skills" type="hidden">
+            <i class="dropdown icon"></i>
+            <div class="default text">Skills</div>
+            <div class="menu">
+              <div class="item" data-value="angular">Angular</div>
+              <div class="item" data-value="css">CSS</div>
+              <div class="item" data-value="design">Graphic Design</div>
+              <div class="item" data-value="ember">Ember</div>
+              <div class="item" data-value="html">HTML</div>
+              <div class="item" data-value="ia">Information Architecture</div>
+              <div class="item" data-value="javascript">Javascript</div>
+              <div class="item" data-value="mech">Mechanical Engineering</div>
+              <div class="item" data-value="meteor">Meteor</div>
+              <div class="item" data-value="node">NodeJS</div>
+              <div class="item" data-value="plumbing">Plumbing</div>
+              <div class="item" data-value="python">Python</div>
+              <div class="item" data-value="rails">Rails</div>
+              <div class="item" data-value="react">React</div>
+              <div class="item" data-value="repair">Kitchen Repair</div>
+              <div class="item" data-value="ruby">Ruby</div>
+              <div class="item" data-value="ui">UI Design</div>
+              <div class="item" data-value="ux">User Experience</div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+
+        </div>
+        <div class="field">
+          <label>Project Website</label>
+          <input type="text" name="projectUrl" id="projectUrl"
+                 placeholder="www.github.com">
+        </div>
+        <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
+        <button class="ui primary blue button" type="submit">
+          <i class="save icon"></i>
+          Submit
+        </button>
+        <div class="ui gray button">
+          <i class="trash icon"></i>
+          Abandon Changes
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
