@@ -1,60 +1,82 @@
 <template name="Project_Admin_Page">
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections. -->
-  {{#if Template.subscriptionsReady}}
-    <div class="ui container" style="margin-top: 30px;">
-      <div class="ui raised padded segment">
-        <h1>
-          <img style="height:30px; width:auto"
-               src="/images/alloy-icon.png"> Edit Project Information
-          <hr/>
-        </h1>
-        <form class="ui form project-data-form">
-          <div class="field">
-            <label>Project Title</label>
-            <input type="text" name="projectName" id="projectName"
-                   placeholder="{{ projectDataField "projectName" }}"
-                   value="{{ projectDataField "projectName" }}">
-          </div>
-          <div class="field">
-            <label>Upload Project Image</label>
-            <input type="file" name="project-image"
-                   placeholder="Upload a photo for your project...">
-          </div>
-          <div class="field">
-            <label>Project Description</label>
-            <!--TODO: replace placeholder with previously entered information for the project-->
-            <!-- FIXME: currently appears prepended by blank spaces in textarea box-->
-            <textarea name="bio" id="bio"
-                      placeholder="{{projectDataField "bio"}}">
-            </textarea>
-          </div>
-          <div class="field">
-            <label>Skills Wanted</label>
-            <!--TODO: replace placeholder with previously entered information for the project-->
-            <div class="ui fluid multiple search selection dropdown">
-              <i class="dropdown icon"></i>
-              <div class="default text">Skills</div>
-              <div class="menu">
-                <!--TODO: if we have a dropdown menu, we need to enter the options here-->
-              </div>
-            </div>
-          </div>
-          <div class="field">
+  <!-- FIXME: Had to remove usage of #if Template subscription ready because it causes issues with dropdown. A workaround should be looked into if possible but for now it 'should' work. More info: https://forums.meteor.com/t/have-you-also-noticed-that-semantic-ui-dropdowns-dont-work-well-with-blaze-conditionals/25720/6 -->
 
-          </div>
-          <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
-            <button class="ui primary blue button" type="submit">
-              <i class="save icon"></i>
-              Save
-            </button>
-          <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField "_id")}}">
-            <div class="ui gray button">
-              <i class="trash icon"></i>
-              Abandon Changes
-            </div>
-          </a>
-        </form>
-      </div>
-    </div>
+  {{#if Template.subscriptionsReady}}
   {{/if}}
+  <div class="ui container" style="margin-top: 30px;">
+    <div class="ui raised padded segment">
+      <h1>
+        <img style="height:30px; width:auto"
+             src="/images/alloy-icon.png"> Edit Project Information
+        <hr/>
+      </h1>
+      <form class="ui form project-data-form">
+        <div class="field">
+          <label>Project Title</label>
+          <input type="text" name="projectName" id="projectName"
+                 placeholder="{{ projectDataField " projectName" }}"
+          value="{{ projectDataField "projectName" }}">
+        </div>
+        <div class="field">
+          <label>Upload Project Image</label>
+          <input type="file" name="project-image"
+                 placeholder="Upload a photo for your project...">
+        </div>
+        <div class="field">
+          <label>Project Description</label>
+          <textarea name="bio" id="bio" placeholder="{{projectDataField "bio" }}" value="{{projectDataField "bio"}}"></textarea>
+        </div>
+        <div class="field">
+          <label>Skills Wanted</label>
+          <!--TODO: replace placeholder with previously entered information for the project-->
+          <div class="ui fluid multiple search selection dropdown">
+            <input name="skillsWanted" id="skillsWanted" type="hidden" value="{{ getSkillString }}">
+            <i class="dropdown icon"></i>
+            <div class="default text">Skills</div>
+            <div class="menu">
+              <div class="item" data-value="Angular">Angular</div>
+              <div class="item" data-value="CSS">CSS</div>
+              <div class="item" data-value="Graphic Design">Graphic Design</div>
+              <div class="item" data-value="Ember">Ember</div>
+              <div class="item" data-value="HTML">HTML</div>
+              <div class="item" data-value="Information Architecture">Information Architecture</div>
+              <div class="item" data-value="Javascript">Javascript</div>
+              <div class="item" data-value="Mechanical Engineering">Mechanical Engineering</div>
+              <div class="item" data-value="Meteor">Meteor</div>
+              <div class="item" data-value="NodeJS">NodeJS</div>
+              <div class="item" data-value="Plumbing">Plumbing</div>
+              <div class="item" data-value="Python">Python</div>
+              <div class="item" data-value="Rails">Rails</div>
+              <div class="item" data-value="React">React</div>
+              <div class="item" data-value="Kitchen Repair">Kitchen Repair</div>
+              <div class="item" data-value="Ruby">Ruby</div>
+              <div class="item" data-value="UI Design">UI Design</div>
+              <div class="item" data-value="User Experience">User Experience</div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Project Website</label>
+          <input type="text" name="projectUrl" id="projectUrl"
+                 placeholder="www.github.com" value="{{projectDataField "url"}}">
+        </div>
+        <div class="field">
+
+        </div>
+        <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
+        <button class="ui primary blue button" type="submit">
+          <i class="save icon"></i>
+          Save
+        </button>
+        <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField " _id")}}">
+        <div class="ui gray button">
+          <i class="trash icon"></i>
+          Abandon Changes
+        </div>
+        </a>
+      </form>
+    </div>
+  </div>
+
 </template>
