@@ -6,6 +6,7 @@ import {ReactiveDict} from 'meteor/reactive-dict';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
+import {Users, UsersSchema} from '../../api/users/users.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
 
@@ -13,6 +14,9 @@ import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection
 const displayErrorMessages = 'displayErrorMessages';
 
 Template.Project_Creation_Page.onCreated(function onCreated() {
+  this.autorun(() => {
+    this.subscribe('Users');  // extended Meteor.user collection data
+  });
   // use reactive dict to store error messages
   this.messageFlags = new ReactiveDict();  // recall, reactive dicts can store template key/vals w/out refreshing
   this.messageFlags.set(displayErrorMessages, false);
@@ -29,24 +33,15 @@ Template.Project_Creation_Page.helpers({
   },
 });
 
-// Template.Project_Creation_Page.onRendered(function enableSemantic() {
-//   const instance = this;
-//   instance.$('select.ui.dropdown').dropdown();
-//   instance.$('.ui.selection.dropdown').dropdown();
-//   instance.$('select.dropdown').dropdown();
-//   instance.$('.ui.checkbox').checkbox();
-//   instance.$('.ui.radio.checkbox').checkbox();
-// });
-
 Template.Project_Creation_Page.events({
 //   // logic for 'submit' event for 'project-data-form' 'form submission' event
   'submit .project-data-form'(event, instance) {
     event.preventDefault();
 
-    // Get contact info (text fields)
+    // Get project info (text fields)
     const newProjectName = event.target.projectName.value;  // based on associated html id tags
     const newBio = event.target.bio.value;
-    const newMembers = [Meteor.user().profile.name];
+    const newMember = Meteor.user().profile.name;
     // split string of comma-seperated words into array of strings
     const newSkills = event.target.skills.value.split(",");
     const newUrl = event.target.projectUrl.value;
@@ -56,8 +51,8 @@ Template.Project_Creation_Page.events({
       events: [],
       skills: newSkills,
       skillsWanted: newSkills,
-      members: newMembers,
-      admins: [Meteor.user().profile.name],
+      members: [newMember],
+      admins: [newMember],
       url: newUrl,
       createdAt: new Date(),
     };
@@ -73,8 +68,16 @@ Template.Project_Creation_Page.events({
       // insert new contact data into collection
       Projects.insert(newProject);
       instance.messageFlags.set(displayErrorMessages, false);
-      console.log(Projects.find({ projectName: newProjectName }).fetch());
 
+      // Update the user to reflect new project
+      const user = Users.find({ username: newMember }).fetch()[0];
+      const userID = user['_id'];
+      let projects = user['projects'];
+      projects.push(newProjectName);
+      let adminProjects = user['adminProjects'];
+      adminProjects.push(newProjectName);
+      Users.update({ _id: userID }, { $set: { projects: projects } });
+      Users.update({ _id: userID }, { $set: { adminProjects: adminProjects } });
       // redirect back to Home_Page
       FlowRouter.go('Home_Page');
     } else {
