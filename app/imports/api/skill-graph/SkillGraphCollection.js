@@ -13,6 +13,10 @@ import {Meteor} from 'meteor/meteor';
 /**
  * @extends BaseCollection
  */
+
+/**
+ * edge object for skillgraph, where each vertex is a lowercase, whitespace-removed string
+ */
 class Edge {
 
   /**
@@ -25,8 +29,8 @@ class Edge {
     check(v, String);
     check(w, String);
     check(weight, Number);
-    this._v = v;
-    this._w = w;
+    this._v = v.toLowerCase();
+    this._w = w.toLowerCase();
     this._baseWeight = 0;
     this._weight = weight + this._baseWeight;
   }
@@ -172,6 +176,30 @@ class SkillGraph extends BaseCollection {
   }
 
   /**
+   *
+   * @param {[String]} skills
+   * Adds all skills to the graph, connects all listed skills to each other each with a single edge.
+   */
+  addVertexList(skills) {
+    // add all vertices in skills to graph
+    _.each(skills, (skill) => {
+      skill = skill.toLowerCase();
+      this.addVertex(skill);
+    });
+
+    // add edges to graph
+    // all the skills get ONE undirected edge to the other skills mentioned in the skills array
+    // (excluding themselves and avoid double-counting)
+    for (let i = 0; i < skills.length - 1; i++) {
+      for (let j = i + 1; j < skills.length; j++) {
+        let edge = new Edge(skills[i], skills[j], 0);
+        // TODO: these edges are objects, which get passed by reference. Will there be a problem with these edge instances being destroyed and thus the collection doc. holding the references to them will no longer have that data?
+        this.addEdge(edge);
+      }
+    }
+  }
+
+  /**
    * @param edge
    * Add an edge to the graph
    * FIXME: WARNING: assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill)
@@ -180,8 +208,10 @@ class SkillGraph extends BaseCollection {
     check(edge, Edge);
     // console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
     console.log(`addingEdge ${edge}`);
-    const v = edge.either().toLowerCase();
-    const w = edge.other(v).toLowerCase();
+    let v = edge.either();
+    let w = edge.other(v);
+    v = v.toLowerCase();
+    w = w.toLowerCase();
     const adjV = this.adjList(v);
     const adjW = this.adjList(w);
 
@@ -233,29 +263,6 @@ class SkillGraph extends BaseCollection {
     });
   }
 
-  /**
-   *
-   * @param {[String]} skills
-   * Adds all skills to the graph, connects all listed skills to each other each with a single edge.
-   */
-  addVertexList(skills) {
-    // add all vertices in skills to graph
-    _.each(skills, (skill) => {
-      skill = skill.toLowerCase();
-      this.addVertex(skill);
-    });
-
-    // add edges to graph
-    // all the skills get ONE undirected edge to the other skills mentioned in the skills array
-    // (excluding themselves and avoid double-counting)
-    for (let i = 0; i < skills.length - 1; i++) {
-      for (let j = i + 1; j < skills.length; j++) {
-        let edge = new Edge(skills[i], skills[j], 0);
-        // TODO: these edges are objects, which get passed by reference. Will there be a problem with these edge instances being destroyed and thus the collection doc. holding the references to them will no longer have that data?
-        this.addEdge(edge);
-      }
-    }
-  }
 
   /**
    * @param {string} skill
