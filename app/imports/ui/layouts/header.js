@@ -5,3 +5,10 @@ import {Template} from 'meteor/templating';
 Template.Header.onRendered(function enableDropDown() {
   this.$('.dropdown').dropdown();
 });
+
+// Here's how to do the required initialization for Semantic UI dropdown menus.
+Template.Header.onRendered(function enableDropDown() {
+  this.$('.dropdown').dropdown({
+    action: 'select',
+  });
+});
