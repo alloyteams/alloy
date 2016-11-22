@@ -6,13 +6,35 @@ import BaseCollection from '/imports/api/base/BaseCollection';
 import PriorityQueue from 'js-priority-queue';
 import {Meteor} from 'meteor/meteor';
 
-// I think can also import normal js libraries. see https://guide.meteor.com/structure.html#importing-from-packages
+// to import normal js libraries, see https://guide.meteor.com/structure.html#importing-from-packages
 
 /** @module SkillGraph */
 
 /**
  * @extends BaseCollection
  */
+
+/**
+ *
+ * @param {string} str
+ * @return {string} string intended to be equal to other strings with same
+ * sequence of characters, regaudless of whitespace and capitalization.
+ * @private
+ */
+function _makeUniform(str) {
+  // TODO: I made this so users can enter, eg. 'javascript' and 'Java Script' and get same results, can improve?
+  // FIXME: will this affect how Edges interact? I think so, go thru and check.
+  // suggestion:
+  //  Graph stores skills as lowercase-spaceremoved strings.
+  //  When returning project(s) based on skill graph edges,
+  //    convert the given search term/skill to lowercase-spaceremoved as well
+  //    (to get list of adj skills), then determine which projects have matching
+  //    skills by comparing THEIR lowercase-spaceremoved skills to these adj skills,
+  //    we then return those matching projects.
+
+  // converts to lowercase and removes all whitespaces. see http://stackoverflow.com/a/6623263
+  return str.toLowerCase().replace(/\s/g, '');
+}
 
 /**
  * edge object for skillgraph, where each vertex is a lowercase, whitespace-removed string
@@ -24,13 +46,14 @@ class Edge {
    * @param {String} w
    * @param {Number} weight
    * Creates edge object with the given params.
+   * Vertices as set as lowercase, whitespace-removed strings.
    */
   constructor(v, w, weight) {
     check(v, String);
     check(w, String);
     check(weight, Number);
-    this._v = v.toLowerCase();
-    this._w = w.toLowerCase();
+    this._v = _makeUniform(v);
+    this._w = _makeUniform(w);
     this._baseWeight = 0;
     this._weight = weight + this._baseWeight;
   }
@@ -158,36 +181,12 @@ class SkillGraph extends BaseCollection {
 
   /**
    *
-   * @param {string} str
-   * @return {string} string intended to be equal to other strings with same
-   * sequence of characters, regaudless of whitespace and capitalization.
-   * @private
-   */
-  _makeUniform(str) {
-    // TODO: I made this so users can enter, eg. 'javascript' and 'Java Script' and get same results, can improve?
-    // FIXME: will this affect how Edges interact? I think so, go thru and check.
-    // eg. does edge.other(v) still work when v has been madeUniform()ed from edge version.
-    // FIXME: Need it such that can still get the original string back
-    // suggestion:
-    //  Graph stores skills as lowercase-spaceremoved strings.
-    //  When returning project(s) based on skill graph edges,
-    //    convert the given search term/skill to lowercase-spaceremoved as well
-    //    (to get list of adj skills), then determine which projects have matching
-    //    skills by comparing THEIR lowercase-spaceremoved skills to these adj skills
-    //  Ask neil if this OK
-
-    // converts to lowercase and removes all whitespaces. see http://stackoverflow.com/a/6623263
-    return str.toLowerCase().replaceAll(/\s/g, '');
-  }
-
-  /**
-   *
    * @param skill
-   * adds the given skill to the graph if none with that label currently exists
+   * adds the given lowercase, whitespace-removed skill to the graph if none with that label currently exists
    */
   addVertex(skill) {
     check(skill, String);
-    skill = skill.toLowerCase();
+    skill = _makeUniform(skill);
     const exists = this._collection.findOne({ skill: skill });
     if (!exists) {
       const newSkill = {
@@ -204,11 +203,11 @@ class SkillGraph extends BaseCollection {
    *
    * @param {[String]} skills
    * Adds all skills to the graph, connects all listed skills to each other each with a single edge.
+   * All skills added as lowercase, whitespace-removed strings.
    */
   addVertexList(skills) {
     // add all vertices in skills to graph
     _.each(skills, (skill) => {
-      skill = skill.toLowerCase();
       this.addVertex(skill);
     });
 
@@ -227,7 +226,9 @@ class SkillGraph extends BaseCollection {
   /**
    * @param edge
    * Add an edge to the graph
-   * WARNING: assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill)
+   * WARNING:
+   * Assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill).
+   * Assumes that the edge being added was constructed using the default Edge constructor
    */
   addEdge(edge) {
     check(edge, Edge);
@@ -235,8 +236,6 @@ class SkillGraph extends BaseCollection {
     console.log(`addingEdge ${edge}`);
     let v = edge.either();
     let w = edge.other(v);
-    v = v.toLowerCase();
-    w = w.toLowerCase();
     const adjV = this.adjList(v);
     const adjW = this.adjList(w);
 
@@ -265,6 +264,7 @@ class SkillGraph extends BaseCollection {
   }
 
   _insertEdge(edge) {
+    // we don't _makeUniform() here b/c assume edges received have already been made uniform
     const v = edge.either();
     const w = edge.other(v);
     this._collection.update({ skill: v }, { $addToSet: { adj: edge } });
@@ -294,8 +294,8 @@ class SkillGraph extends BaseCollection {
    * @returns {[Edge]} the adjacency list associated with the given skill in the graph
    */
   adjList(skill) {
-    console.log(`In adjList(${skill})`);
-    skill = skill.toLowerCase();
+    //console.log(`In adjList(${skill})`);
+    skill = _makeUniform(skill);
     const skillVertex = this._collection.findOne({ skill: skill });
     // console.log(skillVertex);
     // console.log();
@@ -308,7 +308,7 @@ class SkillGraph extends BaseCollection {
    * @return {PriorityQueue} a 1-indexed priority queue of Edge objects by descending weights
    */
   adjMaxPQ(skill) {
-    skill = skill.toLowerCase();
+    skill = _makeUniform(skill);
     const adjList = this.adjList(skill);
 
     // see https://github.com/adamhooper/js-priority-queue#options
@@ -327,12 +327,11 @@ class SkillGraph extends BaseCollection {
 
   /**
    * @param {string} skill-vertex
-   *
    * @returns {string} string includes both vertices of edges and associated weight
    */
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;
-    skill = skill.toLowerCase();
+    skill = _makeUniform(skill);
     for (let edge of this.adjList(skill)) {
       str += `${edge.toString()}\n`;
     }

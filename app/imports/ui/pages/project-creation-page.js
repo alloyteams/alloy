@@ -7,6 +7,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
