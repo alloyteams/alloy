@@ -13,6 +13,10 @@ import {Meteor} from 'meteor/meteor';
 /**
  * @extends BaseCollection
  */
+
+/**
+ * edge object for skillgraph, where each vertex is a lowercase, whitespace-removed string
+ */
 class Edge {
 
   /**
@@ -25,8 +29,8 @@ class Edge {
     check(v, String);
     check(w, String);
     check(weight, Number);
-    this._v = v;
-    this._w = w;
+    this._v = v.toLowerCase();
+    this._w = w.toLowerCase();
     this._baseWeight = 0;
     this._weight = weight + this._baseWeight;
   }
@@ -39,14 +43,14 @@ class Edge {
    * returns undefined.
    */
   static objToEdge(obj) {
-    console.log("In objToEdge")
-    console.log(obj)
+    // console.log("In objToEdge")
+    // console.log(obj)
     if (obj.hasOwnProperty("_v") && obj.hasOwnProperty("_w") &&
         obj.hasOwnProperty("_baseWeight") && obj.hasOwnProperty("_weight")) {
       check(obj._v, String);
       check(obj._w, String);
       check(obj._weight, Number);
-      console.log("In objToEdge: returning new Edge")
+      // console.log("In objToEdge: returning new Edge")
       return new Edge(obj._v, obj._w, obj._weight);
     } else return undefined;
   }
@@ -197,16 +201,42 @@ class SkillGraph extends BaseCollection {
   }
 
   /**
+   *
+   * @param {[String]} skills
+   * Adds all skills to the graph, connects all listed skills to each other each with a single edge.
+   */
+  addVertexList(skills) {
+    // add all vertices in skills to graph
+    _.each(skills, (skill) => {
+      skill = skill.toLowerCase();
+      this.addVertex(skill);
+    });
+
+    // add edges to graph
+    // all the skills get ONE undirected edge to the other skills mentioned in the skills array
+    // (excluding themselves and avoid double-counting)
+    for (let i = 0; i < skills.length - 1; i++) {
+      for (let j = i + 1; j < skills.length; j++) {
+        let edge = new Edge(skills[i], skills[j], 0);
+        // TODO: these edges are objects, which get passed by reference. Will there be a problem with these edge instances being destroyed and thus the collection doc. holding the references to them will no longer have that data?
+        this.addEdge(edge);
+      }
+    }
+  }
+
+  /**
    * @param edge
    * Add an edge to the graph
    * WARNING: assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill)
    */
   addEdge(edge) {
     check(edge, Edge);
-    console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
+    // console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
     console.log(`addingEdge ${edge}`);
-    const v = edge.either().toLowerCase();
-    const w = edge.other(v).toLowerCase();
+    let v = edge.either();
+    let w = edge.other(v);
+    v = v.toLowerCase();
+    w = w.toLowerCase();
     const adjV = this.adjList(v);
     const adjW = this.adjList(w);
 
@@ -220,11 +250,11 @@ class SkillGraph extends BaseCollection {
         }
     );
     if (!existingEdge) {
-      console.log(`edge ${v}--${w} NOT exists`);
+      console.log(`edge ${v}--${w} NOT exists: inserting`);
       // if edge NOT already in adjLists of v and w, add it to BOTH those lists
       this._insertEdge(edge);
     } else {
-      console.log(`edge ${v}--${w} ALREADY exists`);
+      console.log(`edge ${v}--${w} ALREADY exists: updating`);
       // else edge v-w already in adj. of v AND w, update the weight on that edge for both vertices.
       // as long as we have been adding edges using addEdge(), there should be no case where v has an edge
       // v-w, but w does not.
@@ -258,29 +288,6 @@ class SkillGraph extends BaseCollection {
     });
   }
 
-  /**
-   *
-   * @param {[String]} skills
-   * Adds all skills to the graph, connects all listed skills to each other each with a single edge.
-   */
-  addVertexList(skills) {
-    // add all vertices in skills to graph
-    _.each(skills, (skill) => {
-      skill = skill.toLowerCase();
-      this.addVertex(skill);
-    });
-
-    // add edges to graph
-    // all the skills get ONE undirected edge to the other skills mentioned in the skills array
-    // (excluding themselves and avoid double-counting)
-    for (let i = 0; i < skills.length - 1; i++) {
-      for (let j = i + 1; j < skills.length; j++) {
-        let edge = new Edge(skills[i], skills[j], 0);
-        // TODO: these edges are objects, which get passed by reference. Will there be a problem with these edge instances being destroyed and thus the collection doc. holding the references to them will no longer have that data?
-        this.addEdge(edge);
-      }
-    }
-  }
 
   /**
    * @param {string} skill
@@ -290,8 +297,8 @@ class SkillGraph extends BaseCollection {
     console.log(`In adjList(${skill})`);
     skill = skill.toLowerCase();
     const skillVertex = this._collection.findOne({ skill: skill });
-    console.log(skillVertex);
-    console.log();
+    // console.log(skillVertex);
+    // console.log();
     return skillVertex.adj;
   }
 
@@ -308,7 +315,6 @@ class SkillGraph extends BaseCollection {
     const edgeMaxCompare = function (e1, e2) {
       return e2.getWeight() - e1.getWeight();
     };
-    // NOTE: this PQ implementation is 1-indexed
     const maxPQ = new PriorityQueue({
       comparator: edgeMaxCompare,
       initialValues: adjList,
@@ -320,16 +326,15 @@ class SkillGraph extends BaseCollection {
   }
 
   /**
-   *
    * @param {string} skill-vertex
+   *
    * @returns {string} string includes both vertices of edges and associated weight
    */
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;
     skill = skill.toLowerCase();
     for (let edge of this.adjList(skill)) {
-      // Meteor wont store the edge objects as Edge instances. see http://stackoverflow.com/a/8736980
-      str += `${edge.toString()}\n`;  // call arg sets context (eg. defines what 'this' refers to)
+      str += `${edge.toString()}\n`;
     }
     return str;
   }

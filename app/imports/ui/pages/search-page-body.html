@@ -1,0 +1,16 @@
+<template name="Search_Page_Body">
+  {{> Header}}
+
+  <div class="ui container" style="margin: 30px auto 0 auto;">
+    <a class="{{ isActiveRoute 'Search_Projects_Page'}}" href="{{ pathFor 'Search_Projects_Page' }}">
+      <button type="submit" class="register">Find Projects</button>
+    </a>
+
+    <a class="{{ isActiveRoute 'Search_Users_Page'}}" href="{{ pathFor 'Search_Users_Page' }}">
+      <button type="submit" class="register">Find Users</button>
+    </a>
+  </div>
+
+  {{>Template.dynamic template=search_main}}
+  {{> Footer}}
+</template>

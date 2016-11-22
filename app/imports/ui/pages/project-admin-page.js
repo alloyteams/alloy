@@ -5,13 +5,11 @@ import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
-import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
-import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
-
+import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
+import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
-
 
 Template.Project_Admin_Page.onCreated(function onCreated() {
   this.autorun(() => {
@@ -45,7 +43,16 @@ Template.Project_Admin_Page.helpers({
   },
   userId: function () {
     return Meteor.userId();
-  }
+  },
+  getSkillString: function() {
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    let skillString = '';
+    for (let i = 0; i < project.skillsWanted.length; i += 1) {
+      skillString += project.skillsWanted[i] + ',';
+    }
+    skillString = skillString.substring(0,skillString.length - 1);
+    return skillString;
+  },
 });
 
 Template.Project_Admin_Page.helpers({
@@ -67,12 +74,14 @@ Template.Project_Admin_Page.onRendered(function enableSemantic() {
   // instance.$('.ui.radio.checkbox').checkbox();
 
   // secondary menu logic FIXME: does not work
-  instance.$('select.ui.secondary.menu').ready(function () {
-    $('.ui .item').on('click', function () {
-      $('.ui .item').removeClass('active');
-      $(this).addClass('active');
-    });
-  });
+  /*
+   instance.$('select.ui.secondary.menu').ready(function () {
+   $('.ui .item').on('click', function () {
+   $('.ui .item').removeClass('active');
+   $(this).addClass('active');
+   });
+   });
+   */
 });
 
 Template.Project_Admin_Page.events({
@@ -83,6 +92,8 @@ Template.Project_Admin_Page.events({
     // Get contact info (text fields)
     const projectName = event.target.projectName.value;  // based on associated html id tags
     const bio = event.target.bio.value;
+    const skillsWanted = event.target.skillsWanted.value.split(',');
+    const url = event.target.projectUrl.value;
     // const address = event.target.address.value;
     // const phone = event.target.phone.value;
     // const email = event.target.email.value;
@@ -91,10 +102,13 @@ Template.Project_Admin_Page.events({
     //FIXME: currently, users track thier projects by name, so changing name makes projects unfindable to users
     //       this is only temp. problem since later implementations will have users track projects by doc. _id
     //       once they request to join on the project's profile page.
-    Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { projectName: projectName }});
-    Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio }});
+    console.log(skillsWanted);
+    Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { projectName: projectName } });
+    Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio } });
+    Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { skillsWanted: skillsWanted } });
+    Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { url: url } });
 
-    FlowRouter.go('Project_Profile_Page', {_id: FlowRouter.getParam('_id')});
+    FlowRouter.go('Project_Profile_Page', { _id: FlowRouter.getParam('_id') });
 
     //FIXME: this code below is for inserting a totally new project, out code just updates.
     //       need to modify to validate for updates.
@@ -116,4 +130,11 @@ Template.Project_Admin_Page.events({
     //   instance.messageFlags.set(displayErrorMessages, true);
     // }
   },
+});
+
+Template.Project_Admin_Page.onRendered(function onRendered() {
+  $('.ui.fluid.multiple.selection.search.dropdown')
+      .dropdown({
+        allowAdditions: true,
+      });
 });
