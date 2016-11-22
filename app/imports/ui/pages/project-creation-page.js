@@ -29,14 +29,14 @@ Template.Project_Creation_Page.helpers({
   },
 });
 
-Template.Project_Creation_Page.onRendered(function enableSemantic() {
-  const instance = this;
-  // instance.$('select.ui.dropdown').dropdown();
-  // instance.$('.ui.selection.dropdown').dropdown();
-  // instance.$('select.dropdown').dropdown();
-  // instance.$('.ui.checkbox').checkbox();
-  // instance.$('.ui.radio.checkbox').checkbox();
-});
+// Template.Project_Creation_Page.onRendered(function enableSemantic() {
+//   const instance = this;
+//   instance.$('select.ui.dropdown').dropdown();
+//   instance.$('.ui.selection.dropdown').dropdown();
+//   instance.$('select.dropdown').dropdown();
+//   instance.$('.ui.checkbox').checkbox();
+//   instance.$('.ui.radio.checkbox').checkbox();
+// });
 
 Template.Project_Creation_Page.events({
 //   // logic for 'submit' event for 'project-data-form' 'form submission' event
@@ -47,6 +47,7 @@ Template.Project_Creation_Page.events({
     const newProjectName = event.target.projectName.value;  // based on associated html id tags
     const newBio = event.target.bio.value;
     const newMembers = [Meteor.user().profile.name];
+    // split string of comma-seperated words into array of strings
     const newSkills = event.target.skills.value.split(",");
     const newUrl = event.target.projectUrl.value;
     const newProject = {
@@ -61,14 +62,6 @@ Template.Project_Creation_Page.events({
       createdAt: new Date(),
     };
 
-    //FIXME: currently, users track thier projects by name, so changing name makes projects unfindable to users
-    //       this is only temp. problem since later implementations will have users track projects by doc. _id
-    //       once they request to join on the project's profile page.
-    //Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { projectName: projectName }});
-    //Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio }});
-
-    //FlowRouter.go('Project_Profile_Page', {_id: FlowRouter.getParam('_id')});
-
     // Clear out any previous validation errors.
     instance.context.resetValidation();
     // Invoke clean so that newContact reflects what will be inserted.
@@ -81,6 +74,10 @@ Template.Project_Creation_Page.events({
       Projects.insert(newProject);
       instance.messageFlags.set(displayErrorMessages, false);
       console.log(Projects.find({ projectName: newProjectName }).fetch());
+
+      // use skills posted in this project to update skillgraph
+      // FIXME: currently causes error b/c attepmts to update collection docs. from client by name (rather than ID)
+      SkillGraphCollection.addVertexList(newSkills);
 
       // redirect back to Home_Page
       FlowRouter.go('Home_Page');
