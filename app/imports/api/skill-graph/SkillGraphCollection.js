@@ -206,21 +206,24 @@ class SkillGraph extends BaseCollection {
    * All skills added as lowercase, whitespace-removed strings.
    */
   addVertexList(skills) {
-    // add all vertices in skills to graph
-    _.each(skills, (skill) => {
-      this.addVertex(skill);
-    });
+    if(Array.isArray(skills)) {
+      // add all vertices in skills array to graph
+      _.each(skills, (skill) => {
+        skill = _makeUniform(skill);
+        this.addVertex(skill);
+      });
 
-    // add edges to graph
-    // all the skills get ONE undirected edge to the other skills mentioned in the skills array
-    // (excluding themselves and avoid double-counting)
-    for (let i = 0; i < skills.length - 1; i++) {
-      for (let j = i + 1; j < skills.length; j++) {
-        let edge = new Edge(skills[i], skills[j], 0);
-        // TODO: these edges are objects, which get passed by reference. Will there be a problem with these edge instances being destroyed and thus the collection doc. holding the references to them will no longer have that data?
-        this.addEdge(edge);
+      // create and add edges to graph
+      // all the skills get ONE undirected edge to the other skills mentioned in the skills array
+      // (excluding themselves and avoid double-counting)
+      for (let i = 0; i < skills.length - 1; i++) {
+        for (let j = i + 1; j < skills.length; j++) {
+          let edge = new Edge(skills[i], skills[j], 0);
+          // TODO: these edges are objects, which get passed by reference. Will there be a problem with these edge instances being destroyed and thus the collection doc. holding the references to them will no longer have that data?
+          this.addEdge(edge);
+        }
       }
-    }
+    } else console.log(`addVertexList: param skills = ${skills}\nis not an array\n`);
   }
 
   /**
