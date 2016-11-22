@@ -3,11 +3,7 @@ import {Accounts} from 'meteor/accounts-base';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 import {_} from 'meteor/underscore';
-import {BaseCollection} from '../../api/base/BaseCollection.js'
-import {
-    SkillGraphCollection,
-    Edge
-} from '../../api/skill-graph/SkillGraphCollection.js';
+import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
 
 /* eslint-disable no-console */
 
@@ -72,7 +68,6 @@ Accounts.onCreateUser(function (options, user) {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
 
-    SkillGraphCollection.adjMaxPQ('JavaScript');
     let pq = SkillGraphCollection.adjMaxPQ('clicking');
     const currSize = pq.length;
     console.log("'clicking' PQ");

@@ -7,6 +7,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -28,14 +29,14 @@ Template.Project_Creation_Page.helpers({
   },
 });
 
-Template.Project_Creation_Page.onRendered(function enableSemantic() {
-  const instance = this;
-  // instance.$('select.ui.dropdown').dropdown();
-  // instance.$('.ui.selection.dropdown').dropdown();
-  // instance.$('select.dropdown').dropdown();
-  // instance.$('.ui.checkbox').checkbox();
-  // instance.$('.ui.radio.checkbox').checkbox();
-});
+// Template.Project_Creation_Page.onRendered(function enableSemantic() {
+//   const instance = this;
+//   instance.$('select.ui.dropdown').dropdown();
+//   instance.$('.ui.selection.dropdown').dropdown();
+//   instance.$('select.dropdown').dropdown();
+//   instance.$('.ui.checkbox').checkbox();
+//   instance.$('.ui.radio.checkbox').checkbox();
+// });
 
 Template.Project_Creation_Page.events({
 //   // logic for 'submit' event for 'project-data-form' 'form submission' event
@@ -46,6 +47,7 @@ Template.Project_Creation_Page.events({
     const newProjectName = event.target.projectName.value;  // based on associated html id tags
     const newBio = event.target.bio.value;
     const newMembers = [Meteor.user().profile.name];
+    // split string of comma-seperated words into array of strings
     const newSkills = event.target.skills.value.split(",");
     const newUrl = event.target.projectUrl.value;
     const newProject = {
@@ -59,14 +61,6 @@ Template.Project_Creation_Page.events({
       url: newUrl,
       createdAt: new Date(),
     };
-
-    //FIXME: currently, users track thier projects by name, so changing name makes projects unfindable to users
-    //       this is only temp. problem since later implementations will have users track projects by doc. _id
-    //       once they request to join on the project's profile page.
-    //Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { projectName: projectName }});
-    //Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio }});
-
-    //FlowRouter.go('Project_Profile_Page', {_id: FlowRouter.getParam('_id')});
 
     // Clear out any previous validation errors.
     instance.context.resetValidation();
