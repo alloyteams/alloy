@@ -45,9 +45,6 @@ Template.Project_Creation_Page.events({
     // Get contact info (text fields)
     const newProjectName = event.target.projectName.value;  // based on associated html id tags
     const newBio = event.target.bio.value;
-    // const address = event.target.address.value;
-    // const phone = event.target.phone.value;
-    // const email = event.target.email.value;
     const newMembers = [Meteor.user().profile.name];
     const newSkills = event.target.skills.value.split(",");
     const newUrl = event.target.projectUrl.value;
