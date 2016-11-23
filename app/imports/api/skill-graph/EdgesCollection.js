@@ -4,6 +4,7 @@
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
 import {check} from 'meteor/check'
 import BaseCollection from '/imports/api/base/BaseCollection';
+import {SkillGraphCollection} from './SkillGraphCollection.js'
 
 /** @module EdgeCollection */
 
@@ -25,7 +26,9 @@ class Edges extends BaseCollection {
         'Edges',
         new SimpleSchema({
           // vertices are stored as the _ids of the skillgraph documents each edge connects
+          v: { label: 'v', optional: false, type: String },
           vID: { label: 'vID', optional: false, type: String },
+          w: { label: 'w', optional: false, type: String },
           wID: { label: 'wID', optional: false, type: String },
           weight: { label: 'weight', optional: false, type: Number },
           baseWeight: { label: 'baseWeight', optional: false, type: Number },
@@ -43,36 +46,43 @@ class Edges extends BaseCollection {
 
   /**
    *
-   * @param {string} vID: an _id string of a vertex doc
-   * @param {string} wID: an _id string of a vertex doc
+   * @param {doc} v: a vertex doc
+   * @param {doc} w: a vertex doc
    * @param {number} weight
    * Add an edge to the Edge collection w/ the given vertices and weight
    * WARNING:
    * Assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill).
    */
-  addEdge(vID, wID, weight) {
-    check(vID, String);
-    check(wID, String);
+  addEdge(v, w, weight) {
+    check(v.skill, String);
+    check(v._id, String);
+    check(w.skill, String);
+    check(w._id, String);
     check(weight, Number);
 
     // console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
-    console.log(`addingEdge ${vID}, ${wID}, ${weight}`);
-    // let vID = edge.either();
-    // let wID = edge.other(vID);
-    // const adjV = this.adjList(vID);
-    // const adjW = this.adjList(wID);
+    console.log(`addingEdge ${v.skill}, ${w.skill}, ${weight}`);
+    // let v = edge.either();
+    // let w = edge.other(v);
+    // const adjV = this.adjList(v);
+    // const adjW = this.adjList(w);
 
     // check that this connecting edge does not already exist, return the edge if exists
-    const existingEdge = this.connects(vID, wID);
+    const existingEdge = this.connects(v._id, w._id);
 
     if (!existingEdge) {
-      console.log(`edge ${vID}--${wID} does NOT exists: inserting`);
-      // if edge NOT already in adjLists of vID and wID, add it to BOTH those lists
-      const edge = { vID: vID, wID: wID, weight: weight, baseWeight: 0 };
+      console.log(`edge ${v.skill}--${w.skill} does NOT exists: inserting`);
+      // if edge NOT already in adjLists of v and w, add it to BOTH those lists
+      const edge = {
+        v: v.skill, vID: v._id,
+        w: w.skill, wID: w._id,
+        weight: weight,
+        baseWeight: 0
+      };
       this._insertEdge(edge);
     } else {
-      console.log(`edge ${vID}--${wID} ALREADY exists: updating`);
-      // else edge connecting vID and wID is already in the Edge collection.
+      console.log(`edge ${v.skill}--${w.skill} ALREADY exists: updating`);
+      // else edge connecting v and w is already in the Edge collection.
       // We then need to update this existing edge
       this._updateEdge(existingEdge);
     }
@@ -94,7 +104,7 @@ class Edges extends BaseCollection {
    * @returns {String} the _id of either of the vertices of this edge
    */
   either(doc) {
-    return doc.vID;
+    return doc.v;
   }
 
   /**
@@ -158,9 +168,7 @@ class Edges extends BaseCollection {
 
   // For debugging. Will depend on what is stored as v and w (would need to be printable things)
   docString(doc) {
-    const v = 0;  // TODO: get skill corresponding w/ _id from doc.v
-    const w = 0;  // TODO: get skill corresponding w/ _id from doc.w
-    return `(${doc.vID})--(${doc.wID}): ${doc.weight}`;
+    return `(${doc.v})--(${doc.w}): ${doc.weight}\n`;
   }
 
 }

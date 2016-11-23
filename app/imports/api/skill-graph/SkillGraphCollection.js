@@ -2,10 +2,10 @@
  * Created by reedvilanueva on 11/3/16.
  */
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
-import { check } from 'meteor/check'
+import {check} from 'meteor/check'
 import BaseCollection from '/imports/api/base/BaseCollection';
 import PriorityQueue from 'js-priority-queue';
-import { EdgesCollection } from './EdgesCollection.js';
+import {EdgesCollection} from './EdgesCollection.js';
 import {Meteor} from 'meteor/meteor';
 
 // load utility functions, see http://stackoverflow.com/a/9901097
@@ -36,7 +36,7 @@ class SkillGraph extends BaseCollection {
         'SkillGraph',
         new SimpleSchema({
           skill: { label: 'skill', optional: false, type: String },
-          skillReadable: {label: 'skillReadable', optional: false, type: String},
+          skillReadable: { label: 'skillReadable', optional: false, type: String },
           // Graph does not use an adjacency list, instead, all edges are maintained
           // in a separate collection of Edge docs. This Edge collection is used to answer
           // queries about edge properties of vertices. This extra level of indirection
@@ -61,6 +61,24 @@ class SkillGraph extends BaseCollection {
 
   vertexCount() {
     return this._vertexCount;
+  }
+
+  /**
+   *
+   * @param {Number} count
+   * @return {[Doc]}
+   * Array of count most recently added or updated vertex docs.
+   * If count undefined, count defaults to 100.
+   * This provides a form of caching where we can assume that the count most
+   * recently used or created skills are most likely to be requested.
+   */
+  getSkills(count) {
+    // FIXME: does $natural actually push recently updated docs to front (or just recently created ones)? Also, why does meteor give error 'unsupported sort key: $natural' when trying to explicitly use natural order?
+    // find() defaults to natural order, see https://docs.meteor.com/api/collections.html#Mongo-Collection-find
+    // see https://docs.mongodb.com/v3.0/reference/operator/meta/natural/
+    // see http://stackoverflow.com/a/17319402
+    count = (typeof count == "undefined") ? 100 : count;
+    return this._collection.find({}, { limit: count }).fetch();
   }
 
   /**
@@ -107,7 +125,7 @@ class SkillGraph extends BaseCollection {
           let weight = 0;
           console.log(`adding edge w/ ${v.skill}: ${v._id}`);
           console.log(`adding edge w/ ${w.skill}: ${w._id}`);
-          EdgesCollection.addEdge(v._id, w._id, weight);
+          EdgesCollection.addEdge(v, w, weight);
         }
       }
     } else console.log(`addVertexList: param skills = ${skills}\nis not an array\n`);
@@ -161,7 +179,7 @@ class SkillGraph extends BaseCollection {
     let str = `skill: ${skill}\n`;
     skill = utils.makeUniform(skill);
     for (let edgeDoc of this.adjList(skill)) {
-      str += `(${edgeDoc.vID})--(${edgeDoc.wID}): ${edgeDoc.weight}\n`;
+      str += EdgesCollection.docString(edgeDoc);
     }
     return str;
   }

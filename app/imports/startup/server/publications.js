@@ -4,6 +4,8 @@
 import { Contacts } from '../../api/contacts/contacts.js';
 import { Projects } from '../../api/projects/projects.js';
 import { Users } from '../../api/users/users.js';
+import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
+import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js';
 import { Meteor } from 'meteor/meteor';
 
 // 'autopublish' pkg has been removed
@@ -18,5 +20,8 @@ Meteor.publish('Users', function publishUsersData() {
 Meteor.publish('Projects', function publishProjectsData() {
   return Projects.find();
 });
+
+SkillGraphCollection.publish();
+EdgesCollection.publish();
 
 
