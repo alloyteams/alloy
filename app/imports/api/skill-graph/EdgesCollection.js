@@ -2,8 +2,8 @@
  * Created by reedvilanueva on 11/22/16.
  */
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import {check} from 'meteor/check'
 import BaseCollection from '/imports/api/base/BaseCollection';
-import {SkillGraphCollection} from './SkillGraphCollection.js';
 
 /** @module EdgeCollection */
 
@@ -34,15 +34,27 @@ class Edges extends BaseCollection {
     );
 
     this._edgeCount = 0;
+    this._incAmount = 10;
+  }
+
+  edgeCount() {
+    return this._edgeCount;
   }
 
   /**
-   * @param edge
-   * Add an edge to the graph
+   *
+   * @param {string} vID: an _id string of a vertex doc
+   * @param {string} wID: an _id string of a vertex doc
+   * @param {number} weight
+   * Add an edge to the Edge collection w/ the given vertices and weight
    * WARNING:
    * Assumes that the vertices of the inserting edge are already in the graph w/ addVertex(skill).
    */
   addEdge(vID, wID, weight) {
+    check(vID, String);
+    check(wID, String);
+    check(weight, Number);
+
     // console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
     console.log(`addingEdge ${vID}, ${wID}, ${weight}`);
     // let vID = edge.either();
@@ -54,17 +66,14 @@ class Edges extends BaseCollection {
     const existingEdge = this.connects(vID, wID);
 
     if (!existingEdge) {
-      console.log(`edge ${vID}--${wID} NOT exists: inserting`);
-
+      console.log(`edge ${vID}--${wID} does NOT exists: inserting`);
       // if edge NOT already in adjLists of vID and wID, add it to BOTH those lists
       const edge = { vID: vID, wID: wID, weight: weight, baseWeight: 0 };
       this._insertEdge(edge);
     } else {
       console.log(`edge ${vID}--${wID} ALREADY exists: updating`);
-
-      // else edge vID-wID already in adj. of vID AND wID, update the weight on that edge for both vertices.
-      // As long as we have been adding edges using addEdge(), there should be no case where vID has an edge
-      // vID-wID, but wID does not.
+      // else edge connecting vID and wID is already in the Edge collection.
+      // We then need to update this existing edge
       this._updateEdge(existingEdge);
     }
     console.log();
@@ -76,13 +85,13 @@ class Edges extends BaseCollection {
   }
 
   _updateEdge(edge) {
-    const incAmount = 10;
-    this._collection.update({ _id: edge._id }, { $inc: { weight: incAmount } });
+    this._collection.update({ _id: edge._id }, { $inc: { weight: this._incAmount } });
   }
 
+  //FIXME: why does intellij mark doc.vID as unresolved variable?
   /**
-   *
-   * @returns {String} either of the vertices of this edge
+   * @param {doc} doc: an Edge collection doc
+   * @returns {String} the _id of either of the vertices of this edge
    */
   either(doc) {
     return doc.vID;
@@ -90,18 +99,21 @@ class Edges extends BaseCollection {
 
   /**
    *
-   * @param vertex
-   * @returns {String} the vertex opposite to the one provided on this edge
+   * @param {doc} doc: an Edge collection doc
+   * @param {String} vID: vID: an _id string of a vertex doc
+   * @returns {String} the vertex doc _id opposite the given vID on this edge
    */
-  other(doc, vertex) {
-    return (vertex === doc.vID) ? doc.wID : doc.vID;
+  other(doc, vID) {
+    return (vID === doc.vID) ? doc.wID : doc.vID;
   }
 
   /**
    *
-   * @param {string} vID
-   * @param {string} wID
-   * @returns {EdgesCollection doc / undefined} true when this edge connects vertices vID and wID, else false
+   * @param {string} vID: an _id string of a vertex doc
+   * @param {string} wID: an _id string of a vertex doc
+   * @returns {doc}
+   * returns the Edge doc that connects the given vertexIDs if one exists,
+   * else returns undefined.
    */
   connects(vID, wID) {
     return this._collection.findOne({
@@ -114,8 +126,12 @@ class Edges extends BaseCollection {
 
   /**
    *
-   * @param thatEdge
-   * @returns {number} -1 if 'that' dominates this edge, +1 if this edge dominates 'that', else 0
+   * @param thisDoc
+   * @param thatDoc
+   * @returns {number}
+   * -1 if 'that' dominates 'this' edge doc,
+   * +1 if this edge doc dominates 'that',
+   * else 0
    */
   compareTo(thisDoc, thatDoc) {
     if (thisDoc.weight < thatDoc.weight)   return -1;
@@ -124,11 +140,27 @@ class Edges extends BaseCollection {
       else                                 return 0;
   }
 
+  /**
+   *
+   * @param {String} vID: an _id string of a vertex doc
+   * @return {Array}
+   * Returns array of Edge docs that vID is a vertex of
+   */
+  adjList(vID) {
+    // find all the docs where vID is one of the vertices
+    return this._collection.find({
+      $or: [
+        { vID: vID },
+        { wID: vID }
+      ]
+    }).fetch();
+  }
+
   // For debugging. Will depend on what is stored as v and w (would need to be printable things)
-  toString(doc) {
-    const v = 0;  // get skill corresponding w/ _id from doc.v
-    const w = 0;  // get skill corresponding w/ _id from doc.w
-    return `(${doc.v})--(${doc.w}): ${doc.weight}`;
+  docString(doc) {
+    const v = 0;  // TODO: get skill corresponding w/ _id from doc.v
+    const w = 0;  // TODO: get skill corresponding w/ _id from doc.w
+    return `(${doc.vID})--(${doc.wID}): ${doc.weight}`;
   }
 
 }

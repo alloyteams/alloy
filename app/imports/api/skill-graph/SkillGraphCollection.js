@@ -2,6 +2,7 @@
  * Created by reedvilanueva on 11/3/16.
  */
 import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import { check } from 'meteor/check'
 import BaseCollection from '/imports/api/base/BaseCollection';
 import PriorityQueue from 'js-priority-queue';
 import { EdgesCollection } from './EdgesCollection.js';
@@ -36,11 +37,17 @@ class SkillGraph extends BaseCollection {
         new SimpleSchema({
           skill: { label: 'skill', optional: false, type: String },
           skillReadable: {label: 'skillReadable', optional: false, type: String},
-          adj: { label: 'adj', optional: false, type: [String] },  // stores _ids of EdgesCollection documents
-          // TODO:
-          // graph does not use an adjacency list, instead, all edges are maintained
-          // in a separate collection of edges. This edge collection is used to answer
-          // queries about edge properties of vertices.
+          // Graph does not use an adjacency list, instead, all edges are maintained
+          // in a separate collection of Edge docs. This Edge collection is used to answer
+          // queries about edge properties of vertices. This extra level of indirection
+          // is done to avoid using a transform function to linearly go thru and
+          // transform each generic object representing edges (in an adjacency list)
+          // into Edge type objects every time a vertex is called from a the
+          // skillgraph collection.
+          //
+          // see imports/api/base/BaseCollection.js for more info about transform functions
+          // and why they would be necessary (in the case of just having an Edge class,
+          // rather than a collection, and storing Edge instances in an adjacency list).
         }),
         undefined
     );
@@ -49,7 +56,7 @@ class SkillGraph extends BaseCollection {
   }
 
   edgeCount() {
-    return this._edgeCount;
+    return EdgesCollection.edgeCount();
   }
 
   vertexCount() {
@@ -59,16 +66,17 @@ class SkillGraph extends BaseCollection {
   /**
    *
    * @param skill
-   * adds the given lowercase, whitespace-removed skill to the graph if none with that label currently exists
+   * adds the given skill to the graph (as lowercase, whitespace-removed)
+   * if none with that label currently exists
    */
   addVertex(skill) {
     check(skill, String);
+
     const exists = this._collection.findOne({ skill: skill });
     if (!exists) {
       const newSkill = {
         skill: utils.makeUniform(skill),
         skillReadable: utils.makeReadable(skill),
-        adj: [],
       };
       this._collection.insert(newSkill);
 
@@ -97,30 +105,35 @@ class SkillGraph extends BaseCollection {
           let v = this._collection.findOne({ skill: utils.makeUniform(skills[i]) });
           let w = this._collection.findOne({ skill: utils.makeUniform(skills[j]) });
           let weight = 0;
+          console.log(`adding edge w/ ${v.skill}: ${v._id}`);
+          console.log(`adding edge w/ ${w.skill}: ${w._id}`);
           EdgesCollection.addEdge(v._id, w._id, weight);
         }
       }
     } else console.log(`addVertexList: param skills = ${skills}\nis not an array\n`);
   }
 
-  //TODO: change this function to, instead, poll the EdgesCollection to get a cursor over all edges where the given string's _id (in this._collection) is either in the vID or wID field of the doc.
   /**
    * @param {string} skill
-   * @returns {[Edge]} the adjacency list associated with the given skill in the graph
+   * @returns {[doc]} an array of Edge collection docs
+   * The adjacency list associated with the given skill in the graph.
+   * Returns an array of Edge docs where vertices are the _ids of the skill docs
+   * that the edges connect.
    */
   adjList(skill) {
     //console.log(`In adjList(${skill})`);
     skill = utils.makeUniform(skill);
-    const skillVertex = this._collection.findOne({ skill: skill });
+    const skillDoc = this._collection.findOne({ skill: skill });
+    const adjList = EdgesCollection.adjList(skillDoc._id);
     // console.log(skillVertex);
     // console.log();
-    return skillVertex.adj;
+    return adjList;
   }
 
   /**
    *
    * @param {string} skill
-   * @return {PriorityQueue} a 1-indexed priority queue of Edge objects by descending weights
+   * @return {PriorityQueue} a priority queue of Edge collection docs by descending weights
    */
   adjMaxPQ(skill) {
     skill = utils.makeUniform(skill);
@@ -128,7 +141,7 @@ class SkillGraph extends BaseCollection {
 
     // see https://github.com/adamhooper/js-priority-queue#options
     const edgeMaxCompare = function (e1, e2) {
-      return e2.getWeight() - e1.getWeight();
+      return e2.weight - e1.weight;
     };
     const maxPQ = new PriorityQueue({
       comparator: edgeMaxCompare,
@@ -136,7 +149,7 @@ class SkillGraph extends BaseCollection {
       strategy: PriorityQueue.BinaryHeapStrategy
     });
 
-    console.log(maxPQ)
+    console.log(maxPQ);
     return maxPQ;
   }
 
@@ -146,9 +159,9 @@ class SkillGraph extends BaseCollection {
    */
   adjListToString(skill) {
     let str = `skill: ${skill}\n`;
-    skill = _makeUniform(skill);
-    for (let edge of this.adjList(skill)) {
-      str += `${edge.toString()}\n`;
+    skill = utils.makeUniform(skill);
+    for (let edgeDoc of this.adjList(skill)) {
+      str += `(${edgeDoc.vID})--(${edgeDoc.wID}): ${edgeDoc.weight}\n`;
     }
     return str;
   }
