@@ -4,4 +4,6 @@ import '/imports/api/stuff';
 import '/imports/api/contacts';
 import '/imports/api/users';
 import '/imports/api/projects';
+import '/imports/api/base';
+import '/imports/api/skill-graph';
 

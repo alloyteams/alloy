@@ -8,11 +8,20 @@ import {_} from 'meteor/underscore';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
+import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js'
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
 
 Template.Project_Creation_Page.onCreated(function onCreated() {
+  this.autorun(() => {
+    // this.subscribe('UserData');  // extended Meteor.user collection data
+    // FIXME: which of these subscriptions is actually necessary? Ask Prof.
+    SkillGraphCollection.subscribe();
+    EdgesCollection.subscribe();
+    this.subscribe('Projects');
+  });
+
   // use reactive dict to store error messages
   this.messageFlags = new ReactiveDict();  // recall, reactive dicts can store template key/vals w/out refreshing
   this.messageFlags.set(displayErrorMessages, false);
@@ -20,6 +29,10 @@ Template.Project_Creation_Page.onCreated(function onCreated() {
 });
 
 Template.Project_Creation_Page.helpers({
+  getGraphSkills() {
+    console.log(SkillGraphCollection.getSkills())
+    return SkillGraphCollection.getSkills();
+  },
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';  // empty string is falsey
   },
@@ -76,7 +89,6 @@ Template.Project_Creation_Page.events({
       console.log(Projects.find({ projectName: newProjectName }).fetch());
 
       // use skills posted in this project to update skillgraph
-      // FIXME: currently causes error b/c attepmts to update collection docs. from client by name (rather than ID)
       SkillGraphCollection.addVertexList(newSkills);
 
       // redirect back to Home_Page
