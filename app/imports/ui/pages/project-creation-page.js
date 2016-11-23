@@ -89,7 +89,6 @@ Template.Project_Creation_Page.events({
       console.log(Projects.find({ projectName: newProjectName }).fetch());
 
       // use skills posted in this project to update skillgraph
-      // FIXME: currently causes error b/c attepmts to update collection docs. from client by name (rather than ID)
       SkillGraphCollection.addVertexList(newSkills);
 
       // redirect back to Home_Page
