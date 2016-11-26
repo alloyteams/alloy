@@ -90,7 +90,7 @@ class SkillGraph extends BaseCollection {
   addVertex(skill) {
     check(skill, String);
 
-    const exists = this._collection.findOne({ skill: skill });
+    const exists = this._collection.findOne({ skill: utils.makeUniform(skill) });
     if (!exists) {
       const newSkill = {
         skill: utils.makeUniform(skill),

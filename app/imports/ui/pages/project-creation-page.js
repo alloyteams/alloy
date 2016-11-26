@@ -42,14 +42,15 @@ Template.Project_Creation_Page.helpers({
   },
 });
 
-// Template.Project_Creation_Page.onRendered(function enableSemantic() {
-//   const instance = this;
-//   instance.$('select.ui.dropdown').dropdown();
-//   instance.$('.ui.selection.dropdown').dropdown();
-//   instance.$('select.dropdown').dropdown();
-//   instance.$('.ui.checkbox').checkbox();
-//   instance.$('.ui.radio.checkbox').checkbox();
-// });
+Template.Project_Creation_Page.onRendered(function onRendered() {
+  // need to init. jquery plugins AFTER meteor done inserting (eg. with spacebars)
+  // in dynamic document. see http://stackoverflow.com/a/30834745
+  const instance = this;
+  instance.$('.ui.fluid.multiple.selection.search.dropdown')
+      .dropdown({
+        allowAdditions: true,
+      });
+});
 
 Template.Project_Creation_Page.events({
 //   // logic for 'submit' event for 'project-data-form' 'form submission' event
@@ -59,8 +60,8 @@ Template.Project_Creation_Page.events({
     // Get contact info (text fields)
     const newProjectName = event.target.projectName.value;  // based on associated html id tags
     const newBio = event.target.bio.value;
-    const newMembers = [Meteor.user().profile.name];
-    // split string of comma-seperated words into array of strings
+    const creator = [Meteor.user().profile.name];
+    // split string of comma-seperated strings into array of strings
     const newSkills = event.target.skills.value.split(",");
     const newUrl = event.target.projectUrl.value;
     const newProject = {
@@ -69,8 +70,8 @@ Template.Project_Creation_Page.events({
       events: [],
       skills: newSkills,
       skillsWanted: newSkills,
-      members: newMembers,
-      admins: [Meteor.user().profile.name],
+      members: creator,
+      admins: creator,
       url: newUrl,
       createdAt: new Date(),
     };
@@ -88,8 +89,11 @@ Template.Project_Creation_Page.events({
       instance.messageFlags.set(displayErrorMessages, false);
       console.log(Projects.find({ projectName: newProjectName }).fetch());
 
+      //TODO: update the account of the creating user to reflect new project
+
       // use skills posted in this project to update skillgraph
       SkillGraphCollection.addVertexList(newSkills);
+      // FIXME: debug messages from the addVertexList method are displayed on client console
 
       // redirect back to Home_Page
       FlowRouter.go('Home_Page');
@@ -99,11 +103,4 @@ Template.Project_Creation_Page.events({
       instance.messageFlags.set(displayErrorMessages, true);
     }
   },
-});
-
-Template.Project_Creation_Page.onRendered(function onRendered() {
-  $('.ui.fluid.multiple.selection.search.dropdown')
-      .dropdown({
-        allowAdditions: true,
-      });
 });

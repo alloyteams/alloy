@@ -27,8 +27,8 @@ class Edges extends BaseCollection {
         new SimpleSchema({
           // vertices are stored as the _ids of the skillgraph documents each edge connects
           v: { label: 'v', optional: false, type: String },
-          vID: { label: 'vID', optional: false, type: String },
           w: { label: 'w', optional: false, type: String },
+          vID: { label: 'vID', optional: false, type: String },
           wID: { label: 'wID', optional: false, type: String },
           weight: { label: 'weight', optional: false, type: Number },
           baseWeight: { label: 'baseWeight', optional: false, type: Number },
@@ -74,8 +74,10 @@ class Edges extends BaseCollection {
       console.log(`edge ${v.skill}--${w.skill} does NOT exists: inserting`);
       // if edge NOT already in adjLists of v and w, add it to BOTH those lists
       const edge = {
-        v: v.skill, vID: v._id,
-        w: w.skill, wID: w._id,
+        v: v.skill,
+        w: w.skill,
+        vID: v._id,
+        wID: w._id,
         weight: weight,
         baseWeight: 0
       };

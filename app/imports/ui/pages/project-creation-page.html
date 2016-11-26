@@ -1,5 +1,6 @@
 <template name="Project_Creation_Page">
-  {{#if Template.subscriptionsReady}}
+  <!--  FIXME: adding #if Template.subscriptionsReady causes the Skills Wanted dropdown not to work -->
+  {{#if currentUser}}
     <div class="ui container" style="margin-top: 30px;">
       <div class="ui raised padded segment">
         <h1>
@@ -20,7 +21,8 @@
           </div>
           <div class="field">
             <label>Project Description</label>
-            <textarea name="bio" id="bio" placeholder="Description"></textarea>
+            <textarea name="bio" id="bio"
+                      placeholder="Description"></textarea>
           </div>
           <div class="field">
             <label>Skills Wanted</label>
@@ -39,7 +41,8 @@
                   Information Architecture
                 </div>
                 <div class="item" data-value="Javascript">Javascript</div>
-                <div class="item" data-value="Mechanical Engineering">Mechanical
+                <div class="item" data-value="Mechanical Engineering">
+                  Mechanical
                   Engineering
                 </div>
                 <div class="item" data-value="Meteor">Meteor</div>
@@ -55,7 +58,7 @@
                 </div>
                 {{#each vertex in getGraphSkills}}
                   <div class="item"
-                       data-value="{{vertex.skill}}">{{vertex.skillReadable}}</div>
+                       data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}</div>
                 {{/each}}
 
               </div>
