@@ -13,7 +13,7 @@
   <div class="ui container">
     <!-- TODO: currently goes thru all projects (for testing), needs way to decide which will be featured / suggested -->
     {{#if Template.subscriptionsReady}}
-      <div class="ui small cards">
+      <div class="ui raised three cards">
         {{#each project in projectsList}}
         <div class="ui card">
           <div class="image">
@@ -22,7 +22,7 @@
           </div>
           <div class="content">
             <!--TODO: add project image-->
-            <a class="header">{{ project.projectName }}</a>
+            <a class="header" href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
             <!--TODO: add a created date-->
             <div class="meta">
               <span
