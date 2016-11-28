@@ -22,6 +22,9 @@ import './list-stuff-page.js';
 import './user-profile-page.html';
 import './user-profile-page.js';
 
+import './user-profile-page2.html';
+import './user-profile-page2.js';
+
 import './project-profile-page.html';
 import './project-profile-page.js';
 

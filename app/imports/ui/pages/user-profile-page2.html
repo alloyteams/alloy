@@ -1,0 +1,68 @@
+<template name="User_Profile_Page_2">
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+  {{#if currentUser}}
+  <div class="ui container"
+       style="margin-top: 30px;">
+    <!--TODO: add project title-->
+    <div class="item"><h2>{{ userDataField "username" }}</h2>
+      <hr/>
+    </div>
+    <div class="ui grid">
+      <div class="five wide column">
+        <!--TODO: replace with profile image if we want to use profile images-->
+        <img class="ui rounded image"
+             src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
+        <!--TODO: display this button iff viewer is project owner-->
+        <br/>
+        {{#if isAdmin}}
+        <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField " _id")}}">
+        <div class="ui button">
+          <i class="edit icon"></i>
+          Edit Project Info
+        </div>
+        </a>
+        {{/if}}
+      </div>
+
+      <div class="eleven wide column">
+        <div class="ui segment">
+          <a class="ui ribbon label"
+             style="background-color:#27aae1; color:white;"><h3>About this Project</h3>
+          </a>
+          <p>Bio here</p>
+        </div>
+        <div class="ui segment">
+          <a class="ui ribbon label"
+             style="background-color:#27bae1; color:white;"><h3>Skills Wanted</h3></a>
+          <br/>
+          <br/>
+          <div class="ui labels">
+          </div>
+        </div>
+        <div class="ui segment">
+          <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
+          <a class="ui ribbon label"
+             style="background-color:#27c9e1; color:white;"><h3>Project
+            Admins</h3></a>
+          <div class="ui relaxed divided list">
+          </div>
+        </div>
+        <div class="ui segment">
+          <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
+          <a class="ui ribbon label"
+             style="background-color:#27d9e1; color:white;"><h3>Members</h3>
+          </a>
+          <div class="ui relaxed divided list">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- DEBUG -->
+  {{/if}}
+  {{/if}}
+</template>
