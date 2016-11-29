@@ -14,7 +14,7 @@
       {{#if currentUser}}
 
       <a class="{{ isActiveRoute 'User_Profile_Page'}} right item"
-         href="{{ pathFor 'User_Profile_Page' }}"><i class="user icon"></i>My Profile</a>
+         href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}"><i class="user icon"></i>My Profile</a>
 
       <a class="{{ isActiveRoute 'Project_Creation_Page'}} item"
          href="{{ pathFor 'Project_Creation_Page' }}"><i class="edit icon"></i>Create Project</a>
