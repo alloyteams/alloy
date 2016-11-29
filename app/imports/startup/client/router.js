@@ -16,6 +16,20 @@ FlowRouter.route('/user-profile', {
   },
 });
 
+FlowRouter.route('/edit-profile/:_id', {
+  name: 'Edit_Profile_Page',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'Edit_Profile_Page' });
+  },
+});
+
+FlowRouter.route('/user-profile2/:_id', {
+  name: 'User_Profile_Page_2',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'User_Profile_Page_2' });
+  },
+});
+
 FlowRouter.route('/project-profile/:_id', {
   name: 'Project_Profile_Page',
   action() {

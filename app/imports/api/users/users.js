@@ -18,6 +18,21 @@ export const UsersSchema = new SimpleSchema({
     optional: false,
     max: 200,
   },
+
+  firstName: {  // assumes that usernames will be uniq. else need to store user's _id
+    label: 'firstName',
+    type: String,
+    optional: true,
+    max: 50,
+  },
+
+  lastName: {  // assumes that usernames will be uniq. else need to store user's _id
+    label: 'lastName',
+    type: String,
+    optional: true,
+    max: 50,
+  },
+
   bio: {
     label: 'bio',
     type: String,

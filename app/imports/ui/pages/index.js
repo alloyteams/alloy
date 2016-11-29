@@ -10,6 +10,9 @@ import './edit-contact-page.js';
 import './edit-stuff-page.html';
 import './edit-stuff-page.js';
 
+import './edit-user-profile.html';
+import './edit-user-profile.js';
+
 import './home-page.html';
 import './home-page.js';
 
@@ -21,6 +24,9 @@ import './list-stuff-page.js';
 
 import './user-profile-page.html';
 import './user-profile-page.js';
+
+import './user-profile-page2.html';
+import './user-profile-page2.js';
 
 import './project-profile-page.html';
 import './project-profile-page.js';
