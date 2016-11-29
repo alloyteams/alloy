@@ -22,14 +22,14 @@ export const UsersSchema = new SimpleSchema({
   firstName: {  // assumes that usernames will be uniq. else need to store user's _id
     label: 'firstName',
     type: String,
-    optional: false,
+    optional: true,
     max: 50,
   },
 
   lastName: {  // assumes that usernames will be uniq. else need to store user's _id
     label: 'lastName',
     type: String,
-    optional: false,
+    optional: true,
     max: 50,
   },
 
