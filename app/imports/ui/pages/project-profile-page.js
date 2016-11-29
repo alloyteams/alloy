@@ -159,6 +159,6 @@ Template.Project_Profile_Page.events({
 });
 
 Template.Project_Profile_Page.onRendered(function onRendered() {
-  $('.dropdown')
+  $('.ui.dropdown')
       .dropdown();
 });
