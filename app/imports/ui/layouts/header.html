@@ -3,7 +3,7 @@
        style="max-height: 150px" -->
 
   <!-- side menu / TOC -->
-  <div class="ui top tabular menu"
+  <div class="ui top inverted tabular menu"
        style="margin-top: 0px; margin-bottom: 0px; border-radius: 0px; color:white; background-color: #27AAE1">
     <div class="ui container">
 
@@ -12,27 +12,24 @@
       </a>
 
       {{#if currentUser}}
-      <a class="{{ isActiveRoute 'Search_Page'}} item"
-         href="{{ pathFor 'Search_Page' }}">Search</a>
 
       <a class="{{ isActiveRoute 'User_Profile_Page'}} right item"
-         href="{{ pathFor 'User_Profile_Page' }}">My Profile</a>
+         href="{{ pathFor 'User_Profile_Page' }}"><i class="user icon"></i>My Profile</a>
 
       <a class="{{ isActiveRoute 'Project_Creation_Page'}} item"
-         href="{{ pathFor 'Project_Creation_Page' }}">Create Project</a>
+         href="{{ pathFor 'Project_Creation_Page' }}"><i class="edit icon"></i>Create Project</a>
 
-        <!-- TODO: these should be behind clubAdmin and siteAdmin checks, respectively-->
-        <a class="{{ isActiveRoute 'Project_Admin_Page'}} item"
-           href="{{ pathFor 'Project_Admin_Page' }}">Project Admin</a>
-        <a class="{{ isActiveRoute 'Site_Admin_Page'}} item"
-           href="{{ pathFor 'Site_Admin_Page' }}">Site Admin</a>
+      <!-- TODO: these should be behind clubAdmin and siteAdmin checks, respectively-->
+      <!--<a class="{{ isActiveRoute 'Project_Admin_Page'}} item"
+         href="{{ pathFor 'Project_Admin_Page' }}">Project Admin</a>-->
+      <a class="{{ isActiveRoute 'Search_Page'}} item"
+         href="{{ pathFor 'Search_Page' }}"><i class="search icon"></i>Search</a>
+      <!-- TODO: these helpers have not yet been implemented -->
+      {{#if isProjectAdmin}}
+      {{/if}}
 
-        <!-- TODO: these helpers have not yet been implemented -->
-        {{#if isProjectAdmin}}
-        {{/if}}
-
-        {{#if isSiteAdmin}}
-        {{/if}}
+      {{#if isSiteAdmin}}
+      {{/if}}
 
       {{/if}}
 

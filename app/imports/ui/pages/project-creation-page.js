@@ -9,14 +9,20 @@ import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
+import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js'
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
 
 Template.Project_Creation_Page.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('Users');  // extended Meteor.user collection data
+    // this.subscribe('UserData');  // extended Meteor.user collection data
+    // FIXME: which of these subscriptions is actually necessary? Ask Prof.
+    SkillGraphCollection.subscribe();
+    EdgesCollection.subscribe();
+    this.subscribe('Projects');
   });
+
   // use reactive dict to store error messages
   this.messageFlags = new ReactiveDict();  // recall, reactive dicts can store template key/vals w/out refreshing
   this.messageFlags.set(displayErrorMessages, false);
@@ -24,6 +30,10 @@ Template.Project_Creation_Page.onCreated(function onCreated() {
 });
 
 Template.Project_Creation_Page.helpers({
+  getGraphSkills() {
+    console.log(SkillGraphCollection.getSkills())
+    return SkillGraphCollection.getSkills();
+  },
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';  // empty string is falsey
   },
@@ -31,6 +41,16 @@ Template.Project_Creation_Page.helpers({
     const errorKeys = Template.instance().context.invalidKeys();
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
   },
+});
+
+Template.Project_Creation_Page.onRendered(function onRendered() {
+  // need to init. jquery plugins AFTER meteor done inserting (eg. with spacebars)
+  // in dynamic document. see http://stackoverflow.com/a/30834745
+  const instance = this;
+  instance.$('.ui.fluid.multiple.selection.search.dropdown')
+      .dropdown({
+        allowAdditions: true,
+      });
 });
 
 Template.Project_Creation_Page.events({
@@ -41,8 +61,8 @@ Template.Project_Creation_Page.events({
     // Get project info (text fields)
     const newProjectName = event.target.projectName.value;  // based on associated html id tags
     const newBio = event.target.bio.value;
-    const newMember = Meteor.user().profile.name;
-    // split string of comma-seperated words into array of strings
+    const creator = [Meteor.user().profile.name];
+    // split string of comma-seperated strings into array of strings
     const newSkills = event.target.skills.value.split(",");
     const newUrl = event.target.projectUrl.value;
     const newProject = {
@@ -51,8 +71,8 @@ Template.Project_Creation_Page.events({
       events: [],
       skills: newSkills,
       skillsWanted: newSkills,
-      members: [newMember],
-      admins: [newMember],
+      members: creator,
+      admins: creator,
       url: newUrl,
       createdAt: new Date(),
     };
@@ -69,15 +89,12 @@ Template.Project_Creation_Page.events({
       Projects.insert(newProject);
       instance.messageFlags.set(displayErrorMessages, false);
 
-      // Update the user to reflect new project
-      const user = Users.find({ username: newMember }).fetch()[0];
-      const userID = user['_id'];
-      let projects = user['projects'];
-      projects.push(newProjectName);
-      let adminProjects = user['adminProjects'];
-      adminProjects.push(newProjectName);
-      Users.update({ _id: userID }, { $set: { projects: projects } });
-      Users.update({ _id: userID }, { $set: { adminProjects: adminProjects } });
+      //TODO: update the account of the creating user to reflect new project
+
+      // use skills posted in this project to update skillgraph
+      SkillGraphCollection.addVertexList(newSkills);
+      // FIXME: debug messages from the addVertexList method are displayed on client console
+
       // redirect back to Home_Page
       FlowRouter.go('Home_Page');
     } else {
@@ -86,11 +103,4 @@ Template.Project_Creation_Page.events({
       instance.messageFlags.set(displayErrorMessages, true);
     }
   },
-});
-
-Template.Project_Creation_Page.onRendered(function onRendered() {
-  $('.ui.fluid.multiple.selection.search.dropdown')
-      .dropdown({
-        allowAdditions: true,
-      });
 });

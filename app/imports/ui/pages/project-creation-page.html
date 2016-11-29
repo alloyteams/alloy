@@ -1,72 +1,88 @@
 <template name="Project_Creation_Page">
-  <div class="ui container" style="margin-top: 30px;">
-    <div class="ui raised padded segment">
-      <h1>
-        <img style="height:30px; width:auto"
-             src="/images/alloy-icon.png"> Create Project
-        <hr/>
-      </h1>
-      <form class="ui form project-data-form">
-        <div class="field">
-          <label>Project Title</label>
-          <input type="text" name="projectName" id="projectName"
-                 placeholder="Project Name">
-        </div>
-        <div class="field">
-          <label>Upload Project Image</label>
-          <input type="file" name="project-image"
-                 placeholder="Upload a photo for your project...">
-        </div>
-        <div class="field">
-          <label>Project Description</label>
-          <textarea name="bio" id="bio" placeholder="Description"></textarea>
-        </div>
-        <div class="field">
-          <label>Skills Wanted</label>
-          <div class="ui fluid multiple search selection dropdown">
-            <input name="skills" id="skills" type="hidden">
-            <i class="dropdown icon"></i>
-            <div class="default text">Skills</div>
-            <div class="menu">
-              <div class="item" data-value="Angular">Angular</div>
-              <div class="item" data-value="CSS">CSS</div>
-              <div class="item" data-value="Graphic Design">Graphic Design</div>
-              <div class="item" data-value="Ember">Ember</div>
-              <div class="item" data-value="HTML">HTML</div>
-              <div class="item" data-value="Information Architecture">Information Architecture</div>
-              <div class="item" data-value="Javascript">Javascript</div>
-              <div class="item" data-value="Mechanical Engineering">Mechanical Engineering</div>
-              <div class="item" data-value="Meteor">Meteor</div>
-              <div class="item" data-value="NodeJS">NodeJS</div>
-              <div class="item" data-value="Plumbing">Plumbing</div>
-              <div class="item" data-value="Python">Python</div>
-              <div class="item" data-value="Rails">Rails</div>
-              <div class="item" data-value="React">React</div>
-              <div class="item" data-value="Repair">Kitchen Repair</div>
-              <div class="item" data-value="Ruby">Ruby</div>
-              <div class="item" data-value="UI Design">UI Design</div>
-              <div class="item" data-value="User Experience">User Experience</div>
+  <!--  FIXME: adding #if Template.subscriptionsReady causes the Skills Wanted dropdown not to work -->
+  {{#if currentUser}}
+    <div class="ui container" style="margin-top: 30px;">
+      <div class="ui raised padded segment">
+        <h1>
+          <img style="height:30px; width:auto"
+               src="/images/alloy-icon.png"> Create Project
+          <hr/>
+        </h1>
+        <form class="ui form project-data-form">
+          <div class="field">
+            <label>Project Title</label>
+            <input type="text" name="projectName" id="projectName"
+                   placeholder="Project Name">
+          </div>
+          <div class="field">
+            <label>Upload Project Image</label>
+            <input type="file" name="project-image"
+                   placeholder="Upload a photo for your project...">
+          </div>
+          <div class="field">
+            <label>Project Description</label>
+            <textarea name="bio" id="bio"
+                      placeholder="Description"></textarea>
+          </div>
+          <div class="field">
+            <label>Skills Wanted</label>
+            <div class="ui fluid multiple search selection dropdown">
+              <input name="skills" id="skills" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">Skills</div>
+              <div class="menu">
+                <div class="item" data-value="Angular">Angular</div>
+                <div class="item" data-value="CSS">CSS</div>
+                <div class="item" data-value="Graphic Design">Graphic Design
+                </div>
+                <div class="item" data-value="Ember">Ember</div>
+                <div class="item" data-value="HTML">HTML</div>
+                <div class="item" data-value="Information Architecture">
+                  Information Architecture
+                </div>
+                <div class="item" data-value="Javascript">Javascript</div>
+                <div class="item" data-value="Mechanical Engineering">
+                  Mechanical
+                  Engineering
+                </div>
+                <div class="item" data-value="Meteor">Meteor</div>
+                <div class="item" data-value="NodeJS">NodeJS</div>
+                <div class="item" data-value="Plumbing">Plumbing</div>
+                <div class="item" data-value="Python">Python</div>
+                <div class="item" data-value="Rails">Rails</div>
+                <div class="item" data-value="React">React</div>
+                <div class="item" data-value="Repair">Kitchen Repair</div>
+                <div class="item" data-value="Ruby">Ruby</div>
+                <div class="item" data-value="UI Design">UI Design</div>
+                <div class="item" data-value="User Experience">User Experience
+                </div>
+                {{#each vertex in getGraphSkills}}
+                  <div class="item"
+                       data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}</div>
+                {{/each}}
+
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field">
+          <div class="field">
 
-        </div>
-        <div class="field">
-          <label>Project Website</label>
-          <input type="text" name="projectUrl" id="projectUrl"
-                 placeholder="www.github.com">
-        </div>
-        <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
-        <button class="ui primary blue button" type="submit">
-          <i class="save icon"></i>
-          Submit
-        </button>
-        <div class="ui gray button">
-          <i class="trash icon"></i>
-          Abandon Changes
-        </div>
-      </form>
+          </div>
+          <div class="field">
+            <label>Project Website</label>
+            <input type="text" name="projectUrl" id="projectUrl"
+                   placeholder="www.github.com">
+          </div>
+          <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
+          <button class="ui primary blue button" type="submit">
+            <i class="save icon"></i>
+            Submit
+          </button>
+          <div class="ui gray button">
+            <i class="trash icon"></i>
+            Abandon Changes
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  {{/if}}
 </template>
