@@ -1,12 +1,12 @@
 <template name="Member_Dropdown">
   <div class="ui labeled icon top right pointing dropdown button">
     <i class="users icon"></i>
-    <span class="text">Manage Members</span>
+    <span class="member">Manage Members</span>
     <div class="menu">
       <div class="header">
         <div class="ui action input">
           <input type="text" placeholder="New Member">
-          <button class="ui icon button">
+          <button class="ui plus icon button">
             <i class="plus icon"></i>
           </button>
         </div>
@@ -16,7 +16,7 @@
         <span class="text">Current Members</span>
       </div>
       {{#each member in projectMemberList _id}}
-      <div class="item">
+      <div class="member item">
           <div class="ui basic label">
             {{member}}
           </div>
@@ -25,6 +25,25 @@
           </div>
       </div>
       {{/each}}
+    </div>
+  </div>
+  <div class="ui basic modal">
+    <div style="color: #A6CE39" class="header">
+      Invalid Username
+    </div>
+    <div class="image content">
+      <div class="image">
+        <i style="color: #A6CE39" class="user icon"></i>
+      </div>
+      <div style="color: #A6CE39" class="description">
+        <p>The Username you've entered cannot be found. Please try again.</p>
+      </div>
+    </div>
+    <div class="actions">
+        <div class="ui ok green basic inverted button">
+          <i class="checkmark icon"></i>
+          OK
+        </div>
     </div>
   </div>
 </template>
