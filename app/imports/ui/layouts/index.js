@@ -16,3 +16,5 @@ import './suggested-projects.html';
 import './suggested-projects.js';
 import './loggedin-body.html';
 import './loggedin-menu.html'
+import './member_dropdown.html'
+import './member_dropdown'

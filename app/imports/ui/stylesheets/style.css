@@ -23,3 +23,8 @@ body {
   filter: blur(0px);
   height: 600px;
 }
+
+.ui.negative.button:hover {
+  color: red;
+  background-color: white;
+}

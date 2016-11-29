@@ -4,9 +4,9 @@
 import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
 import {FlowRouter} from 'meteor/kadira:flow-router';
-import { _ } from 'meteor/underscore';
-import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
-import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
+import {_} from 'meteor/underscore';
+import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -77,15 +77,8 @@ Template.Project_Profile_Page.helpers({
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
   },
 });
-
+/*
 Template.Project_Profile_Page.onRendered(function enableSemantic() {
-  const instance = this;
-  // instance.$('select.ui.dropdown').dropdown();
-  // instance.$('.ui.selection.dropdown').dropdown();
-  // instance.$('select.dropdown').dropdown();
-  // instance.$('.ui.checkbox').checkbox();
-  // instance.$('.ui.radio.checkbox').checkbox();
-
   // secondary menu logic FIXME: does not work (used events and helpers instead)
   instance.$('select.ui.secondary.menu').ready(function () {
     $('.ui .item').on('click', function () {
@@ -94,7 +87,7 @@ Template.Project_Profile_Page.onRendered(function enableSemantic() {
     });
   });
 });
-
+*/
 Template.Project_Profile_Page.events({
   // change what nav menu tab is active (I know this is an ugly way to do it, but can fix later)
   'click .homeTab' (event, instance) {
@@ -131,7 +124,7 @@ Template.Project_Profile_Page.events({
       // see https://docs.mongodb.com/manual/reference/operator/update/pull/#up._S_pull
       console.log(`adding ${memberToAdd} to ${project.projectName}`)
       Projects.update({ _id: project._id }, { $addToSet: { members: memberToAdd } });
-      Projects.update( {"_id": project._id }, { $pull: { joinRequests : memberToAdd } } );  // assumes uniq. usernames
+      Projects.update({ "_id": project._id }, { $pull: { joinRequests: memberToAdd } });  // assumes uniq. usernames
     }
   },
 //   // logic for 'submit' event for 'contact-data-form' 'button'
@@ -163,4 +156,9 @@ Template.Project_Profile_Page.events({
 //       instance.messageFlags.set(displayErrorMessages, true);
 //     }
 //   },
+});
+
+Template.Project_Profile_Page.onRendered(function onRendered() {
+  $('.ui.dropdown')
+      .dropdown();
 });
