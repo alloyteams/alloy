@@ -10,6 +10,9 @@ import './edit-contact-page.js';
 import './edit-stuff-page.html';
 import './edit-stuff-page.js';
 
+import './edit-user-profile.html';
+import './edit-user-profile.js';
+
 import './home-page.html';
 import './home-page.js';
 

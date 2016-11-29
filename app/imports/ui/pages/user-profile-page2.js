@@ -51,8 +51,12 @@ Template.User_Profile_Page_2.helpers({
   },
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
-    const user = Users.findOne(FlowRouter.getParam('_id'));
-    return _.contains(user.admins, Meteor.user().user.name);
+    const userId = Users.findOne(FlowRouter.getParam('_id'))['_id'];
+    const userName = Meteor.user().profile.name;
+    const userNameId = Users.find({'username':userName}).fetch()[0]['_id'];
+    console.log(userId);
+    console.log(userNameId);
+    return userId == userNameId;
   },
   userId: function () {
     return Meteor.userId();
