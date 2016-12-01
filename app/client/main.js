@@ -5,6 +5,7 @@ import '/imports/api/contacts';
 import '/imports/api/users';
 import '/imports/api/projects';
 import '/imports/api/base';
+import '/imports/api/categories-dict';
 import '/imports/api/skill-graph';
 import '/imports/ui/layouts';
 import '/imports/ui/pages';

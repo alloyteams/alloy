@@ -7,6 +7,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
+import { CategoriesDict, CategoriesDictSchema } from '../../api/categories-dict/categories-dict.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
 import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js'
@@ -17,6 +18,8 @@ const displayErrorMessages = 'displayErrorMessages';
 Template.Project_Creation_Page.onCreated(function onCreated() {
   this.autorun(() => {
     // this.subscribe('UserData');  // extended Meteor.user collection data
+    this.subscribe('CategoriesDict');
+
     // FIXME: which of these subscriptions is actually necessary? Ask Prof.
     SkillGraphCollection.subscribe();
     EdgesCollection.subscribe();
