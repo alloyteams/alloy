@@ -123,8 +123,8 @@ class SkillGraph extends BaseCollection {
           let v = this._collection.findOne({ skill: utils.makeUniform(skills[i]) });
           let w = this._collection.findOne({ skill: utils.makeUniform(skills[j]) });
           let weight = 0;
-          console.log(`adding edge w/ ${v.skill}: ${v._id}`);
-          console.log(`adding edge w/ ${w.skill}: ${w._id}`);
+          // console.log(`adding edge w/ ${v.skill}: ${v._id}`);
+          // console.log(`adding edge w/ ${w.skill}: ${w._id}`);
           EdgesCollection.addEdge(v, w, weight);
         }
       }

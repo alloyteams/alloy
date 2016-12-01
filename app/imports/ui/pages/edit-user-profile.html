@@ -59,6 +59,10 @@
             <div class="item" data-value="Ruby">Ruby</div>
             <div class="item" data-value="UI Design">UI Design</div>
             <div class="item" data-value="User Experience">User Experience</div>
+            {{#each vertex in getGraphSkills}}
+              <div class="item"
+                   data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}</div>
+            {{/each}}
           </div>
         </div>
       </div>

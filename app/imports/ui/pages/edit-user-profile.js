@@ -8,6 +8,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import { Users, UsersSchema } from '../../api/users/users.js';
+import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
+import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js'
 
 /* eslint-disable object-shorthand, no-unused-vars */
 
@@ -16,6 +18,8 @@ const displayErrorMessages = 'displayErrorMessages';
 Template.Edit_Profile_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
+    SkillGraphCollection.subscribe();
+    EdgesCollection.subscribe();
   });
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displayErrorMessages, false);
@@ -24,6 +28,10 @@ Template.Edit_Profile_Page.onCreated(function onCreated() {
 
 
 Template.Edit_Profile_Page.helpers({
+  getGraphSkills() {
+    console.log(SkillGraphCollection.getSkills())
+    return SkillGraphCollection.getSkills();
+  },
   userDataField(fieldVal) {
     // app/imports/startup/client/router.js defines the 'id' vs '_id' bindings
     //   see app/imports/ui/pages/home-page.html
@@ -51,7 +59,7 @@ Template.Edit_Profile_Page.helpers({
     for (let i = 0; i < user.skills.length; i += 1) {
       skillString += user.skills[i] + ',';
     }
-    skillString = skillString.substring(0,skillString.length - 1);
+    skillString = skillString.substring(0, skillString.length - 1);
     console.log(skillString);
     return skillString;
   },
@@ -90,12 +98,16 @@ Template.Edit_Profile_Page.events({
     // Determine validity.
     //instance.context.validate(updatedUser);
     console.log(skills);
-      Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { firstName: firstName } });
-      Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { lastName: lastName } });
-      Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio } });
-      Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { skills: skills } });
+    Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { firstName: firstName } });
+    Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { lastName: lastName } });
+    Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio } });
+    Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { skills: skills } });
 
-      FlowRouter.go('User_Profile_Page_2', { _id: FlowRouter.getParam('_id') });
+    // use skills posted in this project to update skillgraph
+    SkillGraphCollection.addVertexList(skills);
+    // FIXME: debug messages from the addVertexList method are displayed on client console
+
+    FlowRouter.go('User_Profile_Page_2', { _id: FlowRouter.getParam('_id') });
   },
 });
 
