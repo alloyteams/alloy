@@ -344,6 +344,7 @@ const seeds = [
   },
   {
     category:  'Molecular and Cell Biology',
+    related: [],
   },
   {
     category:  'Molecular Bioscience and Bioengineering',
