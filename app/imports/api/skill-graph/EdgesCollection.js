@@ -112,11 +112,12 @@ class Edges extends BaseCollection {
   /**
    *
    * @param {doc} doc: an Edge collection doc
-   * @param {String} vID: vID: an _id string of a vertex doc
+   * @param {String} v: a uniform string of a vertex doc
    * @returns {String} the vertex doc _id opposite the given vID on this edge
    */
-  other(doc, vID) {
-    return (vID === doc.vID) ? doc.wID : doc.vID;
+  other(doc, v) {
+    v = utils.makeUniform(v);
+    return (v === doc.v) ? doc.w : doc.v;
   }
 
   /**
