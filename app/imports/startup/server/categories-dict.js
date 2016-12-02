@@ -6,7 +6,7 @@ import { CategoriesDict, CategoriesDictSchema } from '../../api/categories-dict/
 import { _ } from 'meteor/underscore';
 
 /**
- * A list of Stuff to pre-fill the Collection.
+ * A list of Categories to pre-fill the Collection.
  * @type {*[]}
  */
 const seeds = [
@@ -19,7 +19,7 @@ const seeds = [
     related: [],
   },
   {
-    category: 'Aerospace Studies'
+    category: 'Aerospace Studies',
     related: [],
   },
   {
@@ -43,67 +43,67 @@ const seeds = [
     related: [],
   },
   {
-    category: Architecture,
+    category: 'Architecture',
     related: [],
   },
   {
-    category: Art,
+    category: 'Art',
     related: [],
   },
   {
-    category: Asian Studies,
+    category: 'Asian Studies',
     related: [],
   },
   {
-    category: Astronomy,
+    category: 'Astronomy',
     related: [],
   },
   {
-    category: Atmospheric Sciences,
+    category: 'Atmospheric Sciences',
     related: [],
   },
   {
-    category: Biochemistry,
+    category: 'Biochemistry',
     related: [],
   },
   {
-    category: Bioengineering,
+    category: 'Bioengineering',
     related: [],
   },
   {
-    category: Biology,
+    category: 'Biology',
     related: [],
   },
   {
-    category: Biomedical Science,
+    category: 'Biomedical Science',
     related: [],
   },
   {
-    category: Botany,
+    category: 'Botany',
     related: [],
   },
   {
-    category: Business,
+    category: 'Business',
     related: [],
   },
   {
-    category: Business Law,
+    category: 'Business Law',
     related: [],
   },
   {
-    category: Cambodian,
+    category: 'Cambodian',
     related: [],
   },
   {
-    category: Cell and Molecular Biology,
+    category: 'Cell and Molecular Biology',
     related: [],
   },
   {
-    category: Chamorro,
+    category: 'Chamorro',
     related: [],
   },
   {
-    category: Chemistry,
+    category: 'Chemistry',
     related: [],
   },
   {
@@ -119,421 +119,410 @@ const seeds = [
     related: [],
   },
   {
-    category:  Dance,
+    category:  'Dance',
     related: [],
   },
   {
-    category:  Dental Hygiene,
+    category:  'Dental Hygiene',
     related: [],
   },
   {
-    category:  Developmental & Repro Biology,
+    category:  'Developmental & Repro Biology',
     related: [],
   },
   {
-    category:  Disability Studies,
+    category:  'Disability Studies',
     related: [],
   },
   {
-    category:  East Asian Languages and Lit,
+    category:  'East Asian Languages and Lit',
     related: [],
   },
   {
-    category:  Economics,
+    category:  'Economics',
     related: [],
   },
   {
-    category:  Educational Administration,
+    category:  'Educational Administration',
     related: [],
   },
   {
-    category:  Educational Psychology,
+    category:  'Educational Psychology',
     related: [],
   },
   {
-    category:  Electrical Engineering,
+    category:  'Electrical Engineering',
     related: [],
   },
   {
-    category:  English,
+    category:  'English',
     related: [],
   },
   {
-    category:  Ethnic Studies,
+    category:  'Ethnic Studies',
     related: [],
   },
   {
-    category:  Family Medicine and Community Health,
+    category:  'Family Medicine and Community Health',
     related: [],
   },
   {
-    category:  Family Resources,
+    category:  'Family Resources',
     related: [],
   },
   {
-    category:  Fashion Design Textiles,
+    category:  'Fashion Design Textiles',
     related: [],
   },
   {
-    category:  Filipino,
+    category:  'Filipino',
     related: [],
   },
   {
-    category:  Finance,
+    category:  'Finance',
     related: [],
   },
   {
-    category:  Food Science and Human Nutrition,
+    category:  'Food Science and Human Nutrition',
     related: [],
   },
   {
-    category:  French,
+    category:  'French',
     related: [],
   },
   {
-    category:  Geography,
+    category:  'Geography',
     related: [],
   },
   {
-    category:  Geology and Geophysics,
+    category:  'Geology and Geophysics',
     related: [],
   },
   {
-    category:  Geriatric Medicine,
+    category:  'Geriatric Medicine',
     related: [],
   },
   {
-    category:  German,
+    category:  'German',
     related: [],
   },
   {
-    category:  Greek,
+    category:  'Greek',
     related: [],
   },
   {
-    category:  Hawaiian,
+    category:  'Hawaiian Studies',
     related: [],
   },
   {
-    category:  Hawaiian Studies,
+    category:  'Hindi',
     related: [],
   },
   {
-    category:  Hindi,
+    category:  'History',
     related: [],
   },
   {
-    category:  History,
+    category:  'Human Resources Managment',
     related: [],
   },
   {
-    category:  Human Resources Managment,
+    category:  'Ilokano',
     related: [],
   },
   {
-    category:  Ilokano,
+    category:  'Indo - Pacific Languages',
     related: [],
   },
   {
-    category:  Indo - Pacific Languages,
+    category:  'Indonesian',
     related: [],
   },
   {
-    category:  Indonesian,
+    category:  'Information Technology Managment',
     related: [],
   },
   {
-    category:  Information Technology Managment,
+    category:  'Information and Computer Sciences',
     related: [],
   },
   {
-    category:  Information and Computer Sciences,
+    category:  'Insurance',
     related: [],
   },
   {
-    category:  Insurance,
+    category:  'Italian',
     related: [],
   },
   {
-    category:  Italian,
+    category:  'Japanese Language and Literature',
     related: [],
   },
   {
-    category:  Japanese Language and Literature,
+    category:  'Journalism',
     related: [],
   },
   {
-    category:  Journalism,
+    category:  'Kinesiology & Rehab Science',
     related: [],
   },
   {
-    category:  Kinesiology & Rehab Science,
+    category:  'Korean',
     related: [],
   },
   {
-    category:  Korean,
+    category:  'American and European Language and Literature',
     related: [],
   },
   {
-    category:  American and European Language and Literature,
+    category:  'Latin',
     related: [],
   },
   {
-    category:  Latin,
+    category:  'Latin American and Iberian Studies',
     related: [],
   },
   {
-    category:  Latin American and Iberian Studies,
+    category:  'Law',
     related: [],
   },
   {
-    category:  Law,
+    category:  'Learning Design and Technology',
     related: [],
   },
   {
-    category:  Law - Environmental,
+    category:  'Library and Information Science',
     related: [],
   },
   {
-    category:  Learning Design and Technology,
+    category:  'Linguistics',
     related: [],
   },
   {
-    category:  Library and Information Science,
+    category:  'Management',
     related: [],
   },
   {
-    category:  Linguistics,
+    category:  'Maori',
     related: [],
   },
   {
-    category:  Management,
+    category:  'Marine Biology',
     related: [],
   },
   {
-    category:  Maori,
+    category:  'Marketing',
     related: [],
   },
   {
-    category:  Marine Biology,
+    category:  'Mathematics',
     related: [],
   },
   {
-    category:  Marketing,
+    category:  'Mechanical Engineering',
     related: [],
   },
   {
-    category:  Mathematics,
+    category:  'Medical Education',
     related: [],
   },
   {
-    category:  Mechanical Engineering,
+    category:  'Medical Technology',
     related: [],
   },
   {
-    category:  Medical Education,
+    category:  'Medicine',
     related: [],
   },
   {
-    category:  Medical Technology,
+    category:  'Microbiology',
     related: [],
   },
   {
-    category:  Medicine,
+    category:  'Military Science and Leadership',
     related: [],
   },
   {
-    category:  Microbiology,
-    related: [],
-  },
-  {
-    category:  Military Science and Leadership,
-    related: [],
-  },
-  {
-    category:  Molecular
-    and
-    Cell
-    Biology
+    category:  'Molecular and Cell Biology',
   },
   {
-    category:  Molecular Bioscience and Bioengineering,
+    category:  'Molecular Bioscience and Bioengineering',
     related: [],
   },
   {
-    category:  Music,
+    category:  'Music',
     related: [],
   },
   {
-    category:  Natural Resources and Environmental Management,
+    category:  'Natural Resources and Environmental Management',
     related: [],
   },
   {
-    category:  Nursing,
+    category:  'Nursing',
     related: [],
   },
   {
-    category:  Obstetrics & Gynecology,
+    category:  'Obstetrics & Gynecology',
     related: [],
   },
   {
-    category:  Ocean and Resources Engineering,
+    category:  'Ocean and Resources Engineering',
     related: [],
   },
   {
-    category:  Oceanography,
+    category:  'Oceanography',
     related: [],
   },
   {
-    category:  Pacific Islands Studies,
+    category:  'Pacific Islands Studies',
     related: [],
   },
   {
-    category:  Pathology,
+    category:  'Pathology',
     related: [],
   },
   {
-    category:  Peace and Conflict Education,
+    category:  'Peace and Conflict Education',
     related: [],
   },
   {
-    category:  Pediatrics,
+    category:  'Pediatrics',
     related: [],
   },
   {
-    category:  Persian,
+    category:  'Persian',
     related: [],
   },
   {
-    category:  Pharmacology,
+    category:  'Pharmacology',
     related: [],
   },
   {
-    category:  Philosophy,
+    category:  'Philosophy',
     related: [],
   },
   {
-    category:  Physics,
+    category:  'Physics',
     related: [],
   },
   {
-    category:  Physiology,
+    category:  'Physiology',
     related: [],
   },
   {
-    category:  Plant & Environmental Protection Science,
+    category:  'Plant and Environmental Protection Science',
     related: [],
   },
   {
-    category:  Political Science,
+    category:  'Political Science',
     related: [],
   },
   {
-    category:  Portuguese,
+    category:  'Portuguese',
     related: [],
   },
   {
-    category:  Psychiatry,
+    category:  'Psychiatry',
     related: [],
   },
   {
-    category:  Psychology,
+    category:  'Psychology',
     related: [],
   },
   {
-    category:  Public Administration,
+    category:  'Public Administration',
     related: [],
   },
   {
-    category:  Public Health,
+    category:  'Public Health',
     related: [],
   },
   {
-    category:  Public Policy Center,
+    category:  'Public Policy Center',
     related: [],
   },
   {
-    category:  Real Estate,
+    category:  'Real Estate',
     related: [],
   },
   {
-    category:  Religion,
+    category:  'Religion',
     related: [],
   },
   {
-    category:  Russian,
+    category:  'Russian',
     related: [],
   },
   {
-    category:  Samoan,
+    category:  'Samoan',
     related: [],
   },
   {
-    category:  Sanskrit,
+    category:  'Sanskrit',
     related: [],
   },
   {
-    category:  Social Science,
+    category:  'Social Science',
     related: [],
   },
   {
-    category:  Social Work,
+    category:  'Social Work',
     related: [],
   },
   {
-    category:  Sociology,
+    category:  'Sociology',
     related: [],
   },
   {
-    category:  Spanish,
+    category:  'Spanish',
     related: [],
   },
   {
-    category:  Special Education,
+    category:  'Special Education',
     related: [],
   },
   {
-    category:  Surgery,
+    category:  'Surgery',
     related: [],
   },
   {
-    category:  Tahitian,
+    category:  'Tahitian',
     related: [],
   },
   {
-    category:  Thai,
+    category:  'Thai',
     related: [],
   },
   {
-    category:  Theatre,
+    category:  'Theatre',
     related: [],
   },
   {
-    category:  Tongan,
+    category:  'Tongan',
     related: [],
   },
   {
-    category:  Translation & Interpretation,
+    category:  'Translation & Interpretation',
     related: [],
   },
   {
-    category:  Travel Industry Management,
+    category:  'Travel Industry Management',
     related: [],
   },
   {
-    category:  Tropical Med and Medcl Micro,
+    category:  'Tropical Med and Medcl Micro',
     related: [],
   },
   {
-    category:  Tropical Plant and Soil Sciences,
+    category:  'Tropical Plant and Soil Sciences',
     related: [],
   },
   {
-    category:  Urban & Regional Planning,
+    category:  'Urban & Regional Planning',
     related: [],
   },
   {
-    category:  Vietnamese,
+    category:  'Vietnamese',
     related: [],
   },
   {
