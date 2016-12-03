@@ -4,18 +4,28 @@
 import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
 import {FlowRouter} from 'meteor/kadira:flow-router';
-import { _ } from 'meteor/underscore';
-import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
-import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
-import { Users, UsersSchema } from '../../api/users/users.js';
+import {_} from 'meteor/underscore';
+import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
+import {Users, UsersSchema} from '../../api/users/users.js';
+import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
+import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js';
+import PriorityQueue from 'js-priority-queue';
+
+const utils = require('../../api/skill-graph/graphUtilities');
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
+const displayLimit = 10;
+const relatedPerSkill = 5;
+const suggestionsPerSkill = 5;  // must be <= displayLimit
 
 Template.Suggested_Projects.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
     this.subscribe('Projects');
+    SkillGraphCollection.subscribe();
+    EdgesCollection.subscribe();
   });
 
   // use reactive dict to store error messages
@@ -33,8 +43,86 @@ Template.Suggested_Projects.helpers({
     // TODO: currently chooses docs. in natural / default order (may want to change this later)
     // TODO: currently subscribes to all docs. and filters only 10, can set subscription limit if desired
     // see http://stackoverflow.com/questions/19161000/how-to-use-meteor-limit-properly
-    const displayLimit = 4;
-    return Projects.find({}, {limit: displayLimit});
+    return Projects.find({}, { limit: displayLimit });
+  },
+
+  // does not necessarily only return array of displayLimit or less project suggestions
+  // FIXME: current latency potentially very high b/c duplicates in arrays that are filtered out too late
+  // TODO: add feature for user to decide how many of these suggestions to see
+  suggestedProjects() {
+    // here, we search by logged-in username (using the Meteor.users collection),
+    // which we assume to be uniq. and in Users. Returns undefined if no matching doc. found
+    const user = Users.findOne({ username: Meteor.user().profile.name });  // if not using UH cas, use: Meteor.user().username
+    console.log(user);
+
+    // get suggestionsPerSkill number of most weighted related skills for each skill
+    let relatedSkills = _.flatten(
+        _.map(user.skills, (seed) => {
+          console.log(`suggested-projects: suggestedProjects: relatedSkills: seed: ${seed}`);
+          let pq = SkillGraphCollection.adjMaxPQ(seed);
+          console.log(pq);
+          let related = [];
+          for (let i = 0; i < relatedPerSkill && pq.length > 0; i++) {
+            let edgeDoc = pq.dequeue();
+            related.push(EdgesCollection.other(edgeDoc, seed));
+          }
+          return related;
+        })
+    );
+    console.log('relatedSkills');
+    console.log(relatedSkills);
+    // account for different skills being related to the same thing
+    relatedSkills = _.uniq(relatedSkills);
+    relatedSkills = _.map(relatedSkills, (skill) => {
+      return utils.makeReadable(skill);
+    });
+    // relies on assumption that all projects have skills in 'readable' form (defined in api/skill-graph/graphUtilities.js)
+
+    // For each suggestedSkill, get suggestionsPerSkill projects with that skill in skillsWanted and skills field
+    // The each loops are seperate here to prioritize 'skillsWanted' over the more general 'skills' of projects
+    let suggestions = [];
+    _.each(relatedSkills, (skill) => {
+      console.log(skill);
+      console.log(Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch());
+      suggestions = suggestions.concat(
+          Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch()
+      );
+    });
+    _.each(relatedSkills, (skill) => {
+      console.log(skill);
+      console.log(Projects.find({ skills: skill }, { limit: suggestionsPerSkill }).fetch());
+      suggestions = suggestions.concat(
+          Projects.find({ skills: skill }, { limit: suggestionsPerSkill }).fetch()
+      );
+    });
+    console.log('suggestions');
+    console.log(suggestions);
+    suggestions = _.uniq(suggestions, (project) => {
+      return project._id;
+    });
+
+    // TODO: need efficient way to enforce a displayLimit on the number of suggestions displayed
+    // /**
+    //  * function to return a random integer between min (inclusive) and max (inclusive)
+    //  * Using Math.round() will give you a non-uniform distribution.
+    //  */
+    // function getRandomInt(min, max) {
+    //   return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+    //
+    // // generate array of random indices fo the suggestions array to display
+    // let indices = [];
+    // let displayCount = 0;
+    // while (indices.length < displayLimit && displayCount < suggestions.length) {
+    //   let randomnumber = getRandomInt(0, suggestions.length - 1);
+    //   if (indices.indexOf(randomnumber) > -1) continue;
+    //   indices[indices.length] = randomnumber;
+    //   displayCount++;
+    // }
+
+    suggestions = _.shuffle(suggestions);
+
+    return (suggestions.length < displayLimit) ? suggestions : _.first(suggestions, displayLimit);
   },
 
 });

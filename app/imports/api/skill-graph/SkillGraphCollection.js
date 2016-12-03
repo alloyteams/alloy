@@ -92,6 +92,7 @@ class SkillGraph extends BaseCollection {
 
     const exists = this._collection.findOne({ skill: utils.makeUniform(skill) });
     if (!exists) {
+      console.log(`skillgraph: addvertex: adding vertex "${skill}"`);
       const newSkill = {
         skill: utils.makeUniform(skill),
         skillReadable: utils.makeReadable(skill),
@@ -115,19 +116,23 @@ class SkillGraph extends BaseCollection {
         this.addVertex(skill);
       });
 
-      // create and add edges to graph
-      // all the skills get ONE undirected edge to the other skills mentioned in the skills array
-      // (excluding themselves and avoid double-counting)
-      for (let i = 0; i < skills.length - 1; i++) {
-        for (let j = i + 1; j < skills.length; j++) {
-          let v = this._collection.findOne({ skill: utils.makeUniform(skills[i]) });
-          let w = this._collection.findOne({ skill: utils.makeUniform(skills[j]) });
-          let weight = 0;
-          // console.log(`adding edge w/ ${v.skill}: ${v._id}`);
-          // console.log(`adding edge w/ ${w.skill}: ${w._id}`);
-          EdgesCollection.addEdge(v, w, weight);
+      // check for group of skill to add/inc. weight edges between
+      if(skills.length > 1){
+        // create and add edges to graph
+        // all the skills get ONE undirected edge to the other skills mentioned in the skills array
+        // (excluding themselves and avoid double-counting)
+        for (let i = 0; i < skills.length - 1; i++) {
+          for (let j = i + 1; j < skills.length; j++) {
+            let v = this._collection.findOne({ skill: utils.makeUniform(skills[i]) });
+            let w = this._collection.findOne({ skill: utils.makeUniform(skills[j]) });
+            let weight = 0;
+            // console.log(`adding edge w/ ${v.skill}: ${v._id}`);
+            // console.log(`adding edge w/ ${w.skill}: ${w._id}`);
+            EdgesCollection.addEdge(v, w, weight);
+          }
         }
       }
+
     } else console.log(`addVertexList: param skills = ${skills}\nis not an array\n`);
   }
 
@@ -142,6 +147,14 @@ class SkillGraph extends BaseCollection {
     //console.log(`In adjList(${skill})`);
     skill = utils.makeUniform(skill);
     const skillDoc = this._collection.findOne({ skill: skill });
+
+    if(!skillDoc) {
+      console.log(`The vertex "${skill}" could not be found in skillgraph`);
+      return skillDoc;
+    }
+
+    console.log("SkillGraphCollection: adjList: skillDoc");
+    console.log(skillDoc);
     const adjList = EdgesCollection.adjList(skillDoc._id);
     // console.log(skillVertex);
     // console.log();
