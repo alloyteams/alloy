@@ -1,4 +1,4 @@
-<template name="Home_Page">
+<template name="Home_Page" xmlns="http://www.w3.org/1999/html">
   {{#if Template.subscriptionsReady}}
     <div class="ui container" id="Splash_Top">
       <div class="ui grid">
@@ -58,9 +58,11 @@
       </div>
     </div>
 
-  {{else}}
-    {{> Loading}}
-  {{/if}}
 
-  </div>
+  {{else}}
+    <div class="ui container">
+      {{> Loading}}
+    </div>
+  {{/if}}
+  
 </template>

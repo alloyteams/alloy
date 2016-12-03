@@ -11,6 +11,8 @@ import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
 import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js'
 
+const utils = require('../../api/skill-graph/graphUtilities');  // to use the makereadable function
+
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
 
@@ -82,9 +84,10 @@ Template.Project_Creation_Page.events({
     // Invoke clean so that newContact reflects what will be inserted.
     ProjectsSchema.clean(newProject);
 
-    // Determine validity against schema.
+    // Determine validity against schema and check if a project already using given name
+    const exists = Projects.findOne({ projectName: newProjectName });
     instance.context.validate(newProject);
-    if (instance.context.isValid()) {
+    if (instance.context.isValid() && !exists) {
       // insert new contact data into collection
       Projects.insert(newProject);
       instance.messageFlags.set(displayErrorMessages, false);

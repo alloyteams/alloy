@@ -6,6 +6,8 @@ import {check} from 'meteor/check'
 import BaseCollection from '/imports/api/base/BaseCollection';
 import {SkillGraphCollection} from './SkillGraphCollection.js'
 
+const utils = require('./graphUtilities');
+
 /** @module EdgeCollection */
 
 /**
@@ -113,7 +115,7 @@ class Edges extends BaseCollection {
    *
    * @param {doc} doc: an Edge collection doc
    * @param {String} v: a uniform string of a vertex doc
-   * @returns {String} the vertex doc _id opposite the given vID on this edge
+   * @returns {String} the vertex string opposite the given string on this edge
    */
   other(doc, v) {
     v = utils.makeUniform(v);

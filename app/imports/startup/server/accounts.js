@@ -51,7 +51,7 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
-    skills: ['JavaScript', 'joining', 'clicking'],
+    skills: ['JavaScript', 'Joining', 'Clicking'],
     skillsWanted: ['public speaking', 'hand clapping'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
@@ -77,7 +77,7 @@ Accounts.onCreateUser(function (options, user) {
   // initialize newUser account info with some default/test info and add to Users collection
   const newUser = {
     username: user.services.cas.id,  // if not using UH cas, use: user.username
-    skills: ['hugging'],
+    skills: ['Hugging'],
     interests: ['working together'],
     events: ['The Null Event-1', 'The Null Event-2'],
     projects: [defaultProject.projectName],
@@ -90,6 +90,7 @@ Accounts.onCreateUser(function (options, user) {
   Users.insert(newUser);  // this means User documents will have different _id than the Meteor.user._id
                           // unless we create our own _id or Meteor.users.
                           // see https://guide.meteor.com/accounts.html#adding-fields-on-registration
+  SkillGraphCollection.addVertexList(newUser.skills);
 
   // This is a test of adding members to projects dynamically, rather than at project declaration.
   // add this user as a member and admin of the default project array fields
@@ -113,7 +114,7 @@ if (Meteor.users.find().count() === 0) {
     projectName: 'joinableNull Project',
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
-    skills: ['finding', 'clicking', 'joining'],
+    skills: ['Finding', 'Clicking', 'Joining'],
     skillsWanted: ['clicking2.0', 'joining2.0'],
     url: 'https://join.us',
     createdAt: new Date(),

@@ -11,6 +11,8 @@ import { Users, UsersSchema } from '../../api/users/users.js';
 import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
 import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js'
 
+const utils = require('../../api/skill-graph/graphUtilities');  // to use the make readable function
+
 /* eslint-disable object-shorthand, no-unused-vars */
 
 const displayErrorMessages = 'displayErrorMessages';
@@ -87,7 +89,8 @@ Template.Edit_Profile_Page.events({
     const firstName = event.target.firstName.value;  // based on associated html id tags
     const lastName = event.target.lastName.value;
     const bio = event.target.bio.value;
-    const skills = event.target.skills.value.split(',');
+    let skills = event.target.skills.value.split(',');
+    skills = _.map(skills, (skill) => { return utils.makeReadable(skill); });
 
     //const updatedUser = { firstName, lastName, bio, skills };
 
@@ -106,6 +109,7 @@ Template.Edit_Profile_Page.events({
     // use skills posted in this project to update skillgraph
     SkillGraphCollection.addVertexList(skills);
     // FIXME: debug messages from the addVertexList method are displayed on client console
+    // FIXME: groups of skills get edge weights increased even if they are not 'new' to the user's skills
 
     FlowRouter.go('User_Profile_Page_2', { _id: FlowRouter.getParam('_id') });
   },

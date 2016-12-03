@@ -13,40 +13,85 @@
   <div class="ui container">
     {{#if Template.subscriptionsReady}}
       <div class="ui raised three cards">
-        {{#each project in projectsList}}
-          <div class="ui card">
-            <div class="image">
-              <!-- project image-->
-              <img src="/images/alloy-wordmark.png">
-            </div>
-            <div class="content">
-              <!--TODO: add project image-->
-              <a class="header"
-                 href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
-              <!--TODO: add a created date-->
-              <div class="meta">
+        {{#if currentUser}}
+          {{#each project in suggestedProjects}}
+            <div class="ui card">
+              <div class="image">
+                <!-- project image-->
+                <img src="/images/alloy-wordmark.png">
+              </div>
+              <div class="content">
+                <!--TODO: add project image-->
+                <a class="header"
+                   href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
+                <!--TODO: add a created date-->
+                <div class="meta">
               <span
                   class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
-              </div>
-              <!-- description of the project-->
-              <div class="description">
-                {{ project.bio }}
-              </div>
-            </div>
-            <!--TODO: add skills relevant to that project-->
-            <div class="extra content">
-              {{#each skill in (project.skills)}}
-                <div class="ui small label">
-                  {{ skill }}
                 </div>
-              {{/each}}
+                <!-- description of the project-->
+                <div class="description">
+                  {{ project.bio }}
+                </div>
+              </div>
+              <!--TODO: add skills relevant to that project-->
+              <div class="extra content">
+                {{#each skill in (project.skills)}}
+                  <div class="ui small label">
+                    {{ skill }}
+                  </div>
+                {{/each}}
+              </div>
+              <div class="extra content">
+                Members:
+                {{#if project.members}}
+                  {{ project.members.length }}
+                {{else}}
+                  0
+                {{/if}}
+              </div>
             </div>
-            <div class="extra content">
-              Members: {{#if project.members}} {{ project.members.length }} {{else}}
-              0 {{/if}}
+          {{/each}}
+        {{else}}
+          {{#each project in projectsList}}
+            <div class="ui card">
+              <div class="image">
+                <!-- project image-->
+                <img src="/images/alloy-wordmark.png">
+              </div>
+              <div class="content">
+                <!--TODO: add project image-->
+                <a class="header"
+                   href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
+                <!--TODO: add a created date-->
+                <div class="meta">
+              <span
+                  class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
+                </div>
+                <!-- description of the project-->
+                <div class="description">
+                  {{ project.bio }}
+                </div>
+              </div>
+              <!--TODO: add skills relevant to that project-->
+              <div class="extra content">
+                {{#each skill in (project.skills)}}
+                  <div class="ui small label">
+                    {{ skill }}
+                  </div>
+                {{/each}}
+              </div>
+              <div class="extra content">
+                Members:
+                {{#if project.members}}
+                  {{ project.members.length }}
+                {{else}}
+                  0
+                {{/if}}
+              </div>
             </div>
-          </div>
-        {{/each}}
+          {{/each}}
+        {{/if}}
       </div>
     {{/if}}
   </div>
