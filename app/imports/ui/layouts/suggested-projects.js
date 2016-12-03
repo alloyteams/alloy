@@ -17,8 +17,8 @@ const utils = require('../../api/skill-graph/graphUtilities');
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
 const displayLimit = 10;
-const relatedPerSkill = 2;
-const suggestionsPerSkill = 2;  // must be <= displayLimit
+const relatedPerSkill = 5;
+const suggestionsPerSkill = 5;  // must be <= displayLimit
 
 Template.Suggested_Projects.onCreated(function onCreated() {
   this.autorun(() => {
@@ -47,7 +47,8 @@ Template.Suggested_Projects.helpers({
   },
 
   // does not necessarily only return array of displayLimit or less project suggestions
-  // (TODO add feature for user to decide how many of these suggestions to see)
+  // FIXME: current latency potentially very high b/c duplicates in arrays that are filtered out too late
+  // TODO: add feature for user to decide how many of these suggestions to see
   suggestedProjects() {
     // here, we search by logged-in username (using the Meteor.users collection),
     // which we assume to be uniq. and in Users. Returns undefined if no matching doc. found
@@ -72,27 +73,56 @@ Template.Suggested_Projects.helpers({
     console.log(relatedSkills);
     // account for different skills being related to the same thing
     relatedSkills = _.uniq(relatedSkills);
-    relatedSkills = _.map(relatedSkills, (skill) => { return utils.makeReadable(skill); });
+    relatedSkills = _.map(relatedSkills, (skill) => {
+      return utils.makeReadable(skill);
+    });
     // relies on assumption that all projects have skills in 'readable' form (defined in api/skill-graph/graphUtilities.js)
 
-    // for each suggestedSkill, get suggestionsPerSkill projects with that skill in skillsWanted and skills field
+    // For each suggestedSkill, get suggestionsPerSkill projects with that skill in skillsWanted and skills field
+    // The each loops are seperate here to prioritize 'skillsWanted' over the more general 'skills' of projects
     let suggestions = [];
     _.each(relatedSkills, (skill) => {
-      console.log(Projects.find({ skillsWanted: skill }, { limit: 10 }).fetch());
+      console.log(skill);
+      console.log(Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch());
       suggestions = suggestions.concat(
-          Projects.find({ skillsWanted: skill }, { limit: 10 }).fetch()
+          Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch()
       );
     });
     _.each(relatedSkills, (skill) => {
-      console.log(Projects.find({ skills: skill }, { limit: 10/*suggestionsPerSkill*/ }).fetch());
+      console.log(skill);
+      console.log(Projects.find({ skills: skill }, { limit: suggestionsPerSkill }).fetch());
       suggestions = suggestions.concat(
-          Projects.find({ skills: skill }, { limit: 10/*suggestionsPerSkill*/ }).fetch()
+          Projects.find({ skills: skill }, { limit: suggestionsPerSkill }).fetch()
       );
     });
     console.log('suggestions');
     console.log(suggestions);
+    suggestions = _.uniq(suggestions, (project) => {
+      return project._id;
+    });
 
-    return _.uniq(suggestions, (project) => { return project._id; });
+    // TODO: need efficient way to enforce a displayLimit on the number of suggestions displayed
+    // /**
+    //  * function to return a random integer between min (inclusive) and max (inclusive)
+    //  * Using Math.round() will give you a non-uniform distribution.
+    //  */
+    // function getRandomInt(min, max) {
+    //   return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+    //
+    // // generate array of random indices fo the suggestions array to display
+    // let indices = [];
+    // let displayCount = 0;
+    // while (indices.length < displayLimit && displayCount < suggestions.length) {
+    //   let randomnumber = getRandomInt(0, suggestions.length - 1);
+    //   if (indices.indexOf(randomnumber) > -1) continue;
+    //   indices[indices.length] = randomnumber;
+    //   displayCount++;
+    // }
+
+    suggestions = _.shuffle(suggestions);
+
+    return (suggestions.length < displayLimit) ? suggestions : _.first(suggestions, displayLimit);
   },
 
 });
