@@ -10,6 +10,7 @@ Template.Cas_Login.events({
   'click .cas-logout': function casLogout(event) {
     event.preventDefault();
     Meteor.logout();
+    FlowRouter.go('Home_Page');
     return false;
   },
 
@@ -28,11 +29,4 @@ Template.Cas_Login.events({
     Meteor.loginWithCas(callback);
     return false;
   },
-});
-
-// Here's how to do the required initialization for Semantic UI dropdown menus.
-Template.Cas_Login.onRendered(function enableDropDown() {
-  this.$('.dropdown').dropdown({
-    action: 'select',
-  });
 });

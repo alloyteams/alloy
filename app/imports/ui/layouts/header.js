@@ -4,20 +4,15 @@ import {Users, UsersSchema} from '../../api/users/users.js';
 // The Header menu does not use dropdown menus, but most menus do.
 // Here's how to do the required initialization for Semantic UI dropdown menus.
 Template.Header.onRendered(function enableDropDown() {
-  this.$('.dropdown').dropdown();
+  this.$('.dropdown').dropdown({
+    action: 'select',
+  });
 });
 
 Template.Header.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
   });
-  });
-
-// Here's how to do the required initialization for Semantic UI dropdown menus.
-  Template.Header.onRendered(function enableDropDown() {
-    this.$('.dropdown').dropdown({
-      action: 'select',
-    });
   });
 
   Template.Header.helpers({
