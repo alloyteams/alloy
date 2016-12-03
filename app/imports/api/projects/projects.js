@@ -79,7 +79,3 @@ export const ProjectsSchema = new SimpleSchema({
   }
 });
 Projects.attachSchema(ProjectsSchema);
-
-
-// NOTE: rather than adding methods to an api/collection file to give certain collections different behaviors
-// this (http://stackoverflow.com/a/21546609) seems to be to offical way to do it.
