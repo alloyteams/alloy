@@ -11,20 +11,16 @@ import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
 
-const homeActive = 'homeActive';
-const eventsActive = 'eventsActive';
-const friendsActive = 'friendsActive';
-
-let getInput = '';
-let myCursor = Projects.find();
-Session.set("countFoundProjects", 0);
-let countFoundProjects = Session.get("countFoundProjects");
+var results = [];
+var countFoundProjects = Session.get("countFoundProjects");
 
 Template.Search_Projects_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
     this.subscribe('Projects');
   });
+
+  Session.set("countFoundProjects", 0);
 });
 
 Template.Search_Projects_Page.onRendered(function enableSemantic() {
@@ -43,9 +39,9 @@ Template.Search_Projects_Page.helpers({
       return false;
     }
   },
-  'iterateProjects': function() {
-    return myCursor.fetch();
-  },
+  getProjects() {
+    return results;
+  }
 });
 
 Template.Search_Projects_Page.events({
@@ -53,27 +49,20 @@ Template.Search_Projects_Page.events({
     event.preventDefault();
 
     countFoundProjects = Session.set("countFoundProjects", 0);
-    getInput = event.target.searchInput.value;
+    let searchTerms = event.target.searchInput.value.split(",");
+    searchTerms = _.map(searchTerms, (skill) => { return utils.makeReadable(skill); });
 
-    console.log('search input: ' + getInput);
+    console.log('search input: ' + searchTerms);
 
-    myCursor = Projects.find({skills: getInput});
-    countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
+    results = _.map(searchTerms, (term) => { return Projects.find({ skillsWanted: term }).fetch(); });
+    results = results.concat(_.map(searchTerms, (term) => { return Projects.find({ skills: term }).fetch(); }));
+    results = _.flatten(results);
 
-    // // Prints to console the number of found projects
-    // console.log('found projects: ' + Session.get("countFoundProjects"));
-    // // .fetch() makes an object Array of what is inside the myCursor variable
-    // console.log(myCursor.fetch());
-    // // _.size() counts the number of items in the array
-    // console.log(_.size(myCursor.fetch()));
-    // // i'm calling on the first item in the myCursor.fetch() array
-    // console.log(myCursor.fetch()[0]);
-    // console.log(myCursor.fetch()[0].projectName);
+    countFoundProjects = Session.set("countFoundProjects", results.length);
+
   },
   'submit .form-clear': function (event, template) {
     event.preventDefault();
     countFoundProjects = Session.set("countFoundProjects", 0);
-    myCursor = Projects.find({skills: ''});
-    countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
   },
 });

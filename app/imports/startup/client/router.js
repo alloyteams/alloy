@@ -51,27 +51,6 @@ FlowRouter.route('/project-admin-profile/:_id', {
   },
 });
 
-FlowRouter.route('/site-admin-profile', {
-  name: 'Site_Admin_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Site_Admin_Page' });
-  },
-});
-
-FlowRouter.route('/add-contact', {
-  name: 'Add_Contact_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Add_Contact_Page' });
-  },
-});
-
-FlowRouter.route('/edit-contact/:id', {
-  name: 'Edit_Contact_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Edit_Contact_Page' });
-  },
-});
-
 FlowRouter.route('/categories', {
   name: 'Categories_Page',
   action() {
@@ -79,35 +58,6 @@ FlowRouter.route('/categories', {
   },
 });
 
-FlowRouter.route('/list', {
-  name: 'List_Stuff_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'List_Stuff_Page' });
-  },
-});
-
-FlowRouter.route('/add', {
-  name: 'Add_Stuff_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Add_Stuff_Page' });
-  },
-});
-
-FlowRouter.route('/stuff/:_id', {
-  name: 'Edit_Stuff_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Edit_Stuff_Page' });
-  },
-});
-
-FlowRouter.notFound = {
-  action() {
-    BlazeLayout.render('App_Body', { main: 'App_Not_Found' });
-  },
-};
-
-
-// TODO: CREATING DYNAMIC SEARCH PAGES FOR SEARCHING PROJECTS OR USERS
 FlowRouter.route('/search', {
   name: 'Search_Page',
   action() {
@@ -128,3 +78,9 @@ FlowRouter.route('/search/search_users', {
     BlazeLayout.render('Search_Page_Body', { search_main: 'Search_Users_Page' });
   },
 });
+
+FlowRouter.notFound = {
+  action() {
+    BlazeLayout.render('App_Body', { main: 'App_Not_Found' });
+  },
+};
