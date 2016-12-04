@@ -68,7 +68,8 @@ Template.Project_Creation_Page.events({
     const newBio = event.target.bio.value;
     const creator = [Meteor.user().profile.name];
     // split string of comma-seperated strings into array of strings
-    const newSkills = event.target.skills.value.split(",");
+    let newSkills = event.target.skills.value.split(",");
+    newSkills = _.map(newSkills, (skill) => { return utils.makeReadable(skill); });
     const newUrl = event.target.projectUrl.value;
     const newProject = {
       projectName: newProjectName,

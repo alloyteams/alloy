@@ -52,7 +52,7 @@ Accounts.onCreateUser(function (options, user) {
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
     skills: ['JavaScript', 'Joining', 'Clicking'],
-    skillsWanted: ['public speaking', 'hand clapping'],
+    skillsWanted: ['Public Speaking', 'Hand Clapping'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
