@@ -78,7 +78,6 @@ Template.Project_Creation_Page.events({
       projectName: newProjectName,
       bio: newBio,
       events: [],
-      skills: newSkills,
       skillsWanted: newSkills,
       members: [creator],
       admins: [creator],
