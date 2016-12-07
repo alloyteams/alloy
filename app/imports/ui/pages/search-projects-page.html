@@ -1,26 +1,72 @@
 <template name="Search_Projects_Page">
 
-  <div class="ui centered container" style="margin: 30px auto 0 auto;">
-    <div class="ui icon input">
-      <form class="form-register">
-        <input type="text" name="searchInput" placeholder="Find projects">
-        <button type="submit" class="register">search <i
-            class="inverted circular search link icon"></i></button>
-      </form>
-    </div>
-    <div class="ui icon input">
-      <form class="form-clear">
-        <button type="submit" class="register">clear <i
-            class="inverted circular undo icon"></i></button>
-      </form>
+  <div class="ui div container" style="margin: 30px auto 0 auto;">
+    <div class="ui raised padded segment">
+      <div class="ui container" style="margin: 5px auto 0 auto;">
+        <form class="form-register">
+          <!--<input type="text" name="searchInput" placeholder="Find projects">-->
+          <div class="field">
+            <div class="ui fluid multiple search selection dropdown">
+              <input name="skills" id="skills" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">Skills</div>
+              <div class="menu">
+                <div class="item" data-value="Angular">Angular</div>
+                <div class="item" data-value="CSS">CSS</div>
+                <div class="item" data-value="Graphic Design">Graphic Design
+                </div>
+                <div class="item" data-value="Ember">Ember</div>
+                <div class="item" data-value="HTML">HTML</div>
+                <div class="item" data-value="Information Architecture">
+                  Information Architecture
+                </div>
+                <div class="item" data-value="Javascript">Javascript</div>
+                <div class="item" data-value="Mechanical Engineering">
+                  Mechanical
+                  Engineering
+                </div>
+                <div class="item" data-value="Meteor">Meteor</div>
+                <div class="item" data-value="NodeJS">NodeJS</div>
+                <div class="item" data-value="Plumbing">Plumbing</div>
+                <div class="item" data-value="Python">Python</div>
+                <div class="item" data-value="Rails">Rails</div>
+                <div class="item" data-value="React">React</div>
+                <div class="item" data-value="Repair">Kitchen Repair</div>
+                <div class="item" data-value="Ruby">Ruby</div>
+                <div class="item" data-value="UI Design">UI Design</div>
+                <div class="item" data-value="User Experience">User Experience
+                </div>
+                {{#each vertex in getGraphSkills}}
+                <div class="item"
+                     data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+                </div>
+                {{/each}}
+
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="ui primary blue button" style="margin: 15px auto 0 auto;">
+            search
+          </button>
+        </form>
+      </div>
+
+      <div class="ui container">
+        <form class="form-clear">
+          <button type="submit" class="ui primary blue button" style="margin: 10px auto 0 auto;">
+            clear
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 
   <!--Verifying the number of projects found after entering your search input-->
   <!--Here for testing purposes. Delete later.-->
-  <div class="ui text container">
-    Projects Found: {{projNum}}
-  </div>
+  <!--<div class="ui text container">-->
+  <!--Projects Found: {{projNum}}-->
+  <!--</div>-->
 
   {{#if compareFound}}
   {{#each iterateProjects}}
