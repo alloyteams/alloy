@@ -7,9 +7,10 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
+import {CategoriesDict, CategoriesDictSchema} from '../../api/categories-dict/categories-dict.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
-import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
-import { EdgesCollection } from '../../api/skill-graph/EdgesCollection.js'
+import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
+import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js'
 
 const utils = require('../../api/skill-graph/graphUtilities');  // to use the makereadable function
 
@@ -19,10 +20,13 @@ const displayErrorMessages = 'displayErrorMessages';
 Template.Project_Creation_Page.onCreated(function onCreated() {
   this.autorun(() => {
     // this.subscribe('UserData');  // extended Meteor.user collection data
+    this.subscribe('CategoriesDict');
+
     // FIXME: which of these subscriptions is actually necessary? Ask Prof.
     SkillGraphCollection.subscribe();
     EdgesCollection.subscribe();
     this.subscribe('Projects');
+    this.subscribe('Users');
   });
 
   // use reactive dict to store error messages
@@ -63,9 +67,12 @@ Template.Project_Creation_Page.events({
     // Get project info (text fields)
     const newProjectName = event.target.projectName.value;  // based on associated html id tags
     const newBio = event.target.bio.value;
-    const creator = [Meteor.user().profile.name];
+    const creator = Meteor.user().profile.name;
     // split string of comma-seperated strings into array of strings
-    const newSkills = event.target.skills.value.split(",");
+    let newSkills = event.target.skills.value.split(",");
+    newSkills = _.map(newSkills, (skill) => {
+      return utils.makeReadable(skill);
+    });
     const newUrl = event.target.projectUrl.value;
     const newProject = {
       projectName: newProjectName,
@@ -73,8 +80,8 @@ Template.Project_Creation_Page.events({
       events: [],
       skills: newSkills,
       skillsWanted: newSkills,
-      members: creator,
-      admins: creator,
+      members: [creator],
+      admins: [creator],
       url: newUrl,
       createdAt: new Date(),
     };
@@ -93,6 +100,15 @@ Template.Project_Creation_Page.events({
       instance.messageFlags.set(displayErrorMessages, false);
 
       //TODO: update the account of the creating user to reflect new project
+      // Update the user to reflect new project
+      const user = Users.find({ username: creator }).fetch()[0];
+      const userID = user['_id'];
+      let projects = user['projects'];
+      projects.push(newProjectName);
+      let adminProjects = user['adminProjects'];
+      adminProjects.push(newProjectName);
+      Users.update({ _id: userID }, { $set: { projects: projects } });
+      Users.update({ _id: userID }, { $set: { adminProjects: adminProjects } });
 
       // use skills posted in this project to update skillgraph
       SkillGraphCollection.addVertexList(newSkills);

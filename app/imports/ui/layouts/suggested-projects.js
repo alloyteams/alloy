@@ -80,7 +80,7 @@ Template.Suggested_Projects.helpers({
     // relies on assumption that all projects have skills in 'readable' form (defined in api/skill-graph/graphUtilities.js)
 
     // For each suggestedSkill, get suggestionsPerSkill projects with that skill in skillsWanted and skills field
-    // The each loops are seperate here to prioritize 'skillsWanted' over the more general 'skills' of projects
+    // The each loops are separate here to prioritize 'skillsWanted' over the more general 'skills' of projects
     let suggestions = [];
     _.each(relatedSkills, (skill) => {
       console.log(skill);
@@ -122,8 +122,9 @@ Template.Suggested_Projects.helpers({
     // }
 
     suggestions = _.shuffle(suggestions);
+    suggestions = (suggestions.length < displayLimit) ? suggestions : _.first(suggestions, displayLimit);
 
-    return (suggestions.length < displayLimit) ? suggestions : _.first(suggestions, displayLimit);
+    return suggestions;
   },
 
 });
