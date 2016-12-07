@@ -115,11 +115,14 @@ class Edges extends BaseCollection {
    *
    * @param {doc} doc: an Edge collection doc
    * @param {String} v: a uniform string of a vertex doc
-   * @returns {String} the vertex string opposite the given string on this edge
+   * @returns {String} the vertex document opposite the given string on this edge
+   * from the associated skillgraph collection
    */
   other(doc, v) {
     v = utils.makeUniform(v);
-    return (v === doc.v) ? doc.w : doc.v;
+    return (v === doc.v)
+        ? SkillGraphCollection.findDoc({ _id: doc.wID})
+        : SkillGraphCollection.findDoc({ _id: doc.vID});
   }
 
   /**
