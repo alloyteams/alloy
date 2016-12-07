@@ -51,7 +51,7 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
-    skillsWanted: ['Javascript', 'Joining', 'Clicking', 'Public Speaking', 'Hand Clapping'],
+    skillsWanted: ['Javascript', 'Joining', 'Clicking'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
@@ -62,8 +62,8 @@ Accounts.onCreateUser(function (options, user) {
     Projects.insert(defaultProject);
 
     // TESTING: update SkillGraphCollection with this new defaultProject
-    SkillGraphCollection.addVertexList(defaultProject.skills);
-    _.each(defaultProject.skills, (skill) => {
+    SkillGraphCollection.addVertexList(defaultProject.skillsWanted);
+    _.each(defaultProject.skillsWanted, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
 
@@ -125,9 +125,9 @@ if (Meteor.users.find().count() === 0) {
 
     // TESTING: update SkillGraphCollection with this new defaultProject
     // adding vertcies to SkillGraphCollection
-    SkillGraphCollection.addVertexList(joinableNullProject.skills);
+    SkillGraphCollection.addVertexList(joinableNullProject.skillsWanted);
 
-    _.each(joinableNullProject.skills, (skill) => {
+    _.each(joinableNullProject.skillsWanted, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
 
