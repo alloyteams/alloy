@@ -66,6 +66,7 @@ Template.Member_Dropdown.events({
       //console.log(Users.findOne(userId));
     }
   },
+  /** New Add User method using notifications **/
   'click .ui.plus.icon.button': function (event, instance) {
     /** Adding User Event **/
     //Debug Console Log
@@ -77,36 +78,18 @@ Template.Member_Dropdown.events({
     console.log(userToAdd);
     /** Check if user exists **/
     const user = Users.find({ 'username': userToAdd }).fetch()[0];
-    /** If User exists, proceed to add **/
+    console.log(user);
+    /** If User exists, proceed to request to add **/
     if (user != null) {
-      const project = Projects.findOne(this.projectId);
-      let newMembers = project['members'];
-      //console.log(newMembers);
-      let indexOfUser = newMembers.indexOf(userToAdd);
-      //console.log(indexOfUser);
-      if (indexOfUser === -1) {
-        newMembers.push(userToAdd);
-        newMembers.sort();
-      }
-      /** For Future admin support
-       let newAdmins = project.admins;
-       indexOfUser = newAdmins.indexOf(userToAdd);
-       if (indexOfUser > -1) {
-      newAdmins.splice(indexOfUser, 1);
-    }
-       **/
-      /** Add user to project **/
-      Projects.update({ _id: this.projectId }, { $set: { members: newMembers } });
-      /** Add project from User **/
       const userId = user['_id'];
-      let userProjects = user['projects'];
-      const indexOfProject = userProjects.indexOf(project.projectName);
-      if (indexOfProject === -1) {
-        userProjects.push(project.projectName);
-        userProjects.sort();
+      const project = Projects.findOne(this.projectId);
+      let userRequests = user['pendingRequests'];
+      console.log(userRequests);
+      let indexOfProj = userRequests.indexOf(project['projectName']);
+      if (indexOfProj === -1) {
+        userRequests.push(project['projectName']);
       }
-      //console.log(userProjects);
-      Users.update({ _id: userId }, { $set: { projects: userProjects } });
+      Users.update({ _id: userId }, { $set: { pendingRequests: userRequests } });
     }
     else {
       $('.ui.basic.modal')
@@ -115,7 +98,8 @@ Template.Member_Dropdown.events({
     }
     event.currentTarget.parentNode.children[0].value = '';
   },
-});
+})
+;
 
 Template.Member_Dropdown.onRendered(function onRendered() {
   this.$('.ui.dropdown')
