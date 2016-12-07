@@ -44,7 +44,10 @@ Template.Suggested_Projects.helpers({
     // see https://docs.mongodb.com/manual/reference/operator/aggregation/sort/#ascending-descending-sort
     // TODO: currently subscribes to all docs. and filters only 10, can set subscription limit if desired
     // see http://stackoverflow.com/questions/19161000/how-to-use-meteor-limit-properly
-    return Projects.find({}, { limit: displayLimit });
+    return Projects.find({}, {
+      $sort: { modifiedAt: -1 },
+      limit: displayLimit
+    });
   },
 
   // does not necessarily only return array of displayLimit or less project suggestions

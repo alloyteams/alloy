@@ -47,6 +47,7 @@ Template.User_Profile_Page_2.helpers({
   },
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
+    // TODO: check that this function actually checks if current user is allowed admin permissions
     const userId = Users.findOne(FlowRouter.getParam('_id'))['_id'];
     const userName = Meteor.user().profile.name;
     const userNameId = Users.find({'username':userName}).fetch()[0]['_id'];

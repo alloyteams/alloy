@@ -99,16 +99,12 @@ Template.Project_Creation_Page.events({
       Projects.insert(newProject);
       instance.messageFlags.set(displayErrorMessages, false);
 
-      //TODO: update the account of the creating user to reflect new project
       // Update the user to reflect new project
-      const user = Users.find({ username: creator }).fetch()[0];
+      const user = Users.findOne({ username: creator });
       const userID = user['_id'];
-      let projects = user['projects'];
-      projects.push(newProjectName);
-      let adminProjects = user['adminProjects'];
-      adminProjects.push(newProjectName);
-      Users.update({ _id: userID }, { $set: { projects: projects } });
-      Users.update({ _id: userID }, { $set: { adminProjects: adminProjects } });
+      const projectId = Projects.findOne({ projectName: newProjectName })._id;
+      Users.update({ _id: userID }, { $addToSet: { projects: projectId } });
+      Users.update({ _id: userID }, { $addToSet: { adminProjects: projectId } });
 
       // use skills posted in this project to update skillgraph
       SkillGraphCollection.addVertexList(newSkills);
