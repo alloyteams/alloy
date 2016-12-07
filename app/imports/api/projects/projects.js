@@ -76,6 +76,11 @@ export const ProjectsSchema = new SimpleSchema({
     label: 'createdAt',
     type: Date,      // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
     optional: false,
+  },
+  modifiedAt: {
+    label: 'modifiedAt',
+    type: Date,      // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+    optional: true,
   }
 });
 Projects.attachSchema(ProjectsSchema);

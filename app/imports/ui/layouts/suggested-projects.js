@@ -40,7 +40,8 @@ Template.Suggested_Projects.helpers({
    * @returns {*} 10 of the Projects documents.
    */
   projectsList() {
-    // TODO: currently chooses docs. in natural / default order (may want to change this later)
+    // TODO: choose docs. in natural / default order
+    // see https://docs.mongodb.com/manual/reference/operator/aggregation/sort/#ascending-descending-sort
     // TODO: currently subscribes to all docs. and filters only 10, can set subscription limit if desired
     // see http://stackoverflow.com/questions/19161000/how-to-use-meteor-limit-properly
     return Projects.find({}, { limit: displayLimit });

@@ -80,7 +80,7 @@ Accounts.onCreateUser(function (options, user) {
     skills: ['Hugging'],
     interests: ['working together'],
     events: ['The Null Event-1', 'The Null Event-2'],
-    projects: [defaultProject.projectName],
+    projects: [Projects.findOne({ projectName: defaultProject.projectName })._id],
     adminProjects: [defaultProject.projectName],
     followedPeople: ['edwardNullen123'],  // In real cases, would need guarantee that added user existed
     followedProjects: [defaultProject.projectName],

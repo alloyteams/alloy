@@ -52,12 +52,11 @@
           <a class="ui ribbon label"
              style="background-color:#b7d760; color:white;"><h3>Current Projects</h3></a>
           <div class="ui relaxed divided list">
-            {{#each project in (userDataField "projects")}}
+            {{#each projectId in (userDataField "projects")}}
             <div class="item">
               <i class="sticky note middle aligned icon"></i>
               <div class="content">
-                <!-- assumes using UH naming/email scheme -->
-                <div class="description">{{ project }}</div>
+                <div class="description">{{ projectDataField projectId bio }}</div>
               </div>
             </div>
             {{/each}}

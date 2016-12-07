@@ -94,10 +94,6 @@ Template.Project_Admin_Page.events({
     const bio = event.target.bio.value;
     const skillsWanted = event.target.skillsWanted.value.split(',');
     const url = event.target.projectUrl.value;
-    // const address = event.target.address.value;
-    // const phone = event.target.phone.value;
-    // const email = event.target.email.value;
-    // const newContact = { firstName, lastName, address, phone, email };
 
     //FIXME: currently, users track thier projects by name, so changing name makes projects unfindable to users
     //       this is only temp. problem since later implementations will have users track projects by doc. _id
@@ -107,10 +103,11 @@ Template.Project_Admin_Page.events({
     Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio } });
     Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { skillsWanted: skillsWanted } });
     Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { url: url } });
+    Projects.update({ _id: FlowRouter.getParam('_id') }, { $set: { modifiedAt: new Date() } });
 
     FlowRouter.go('Project_Profile_Page', { _id: FlowRouter.getParam('_id') });
 
-    //FIXME: this code below is for inserting a totally new project, out code just updates.
+    //FIXME: this code below is for inserting a totally new project, our code just updates.
     //       need to modify to validate for updates.
     // // Clear out any previous validation errors.
     // instance.context.resetValidation();
