@@ -37,13 +37,6 @@ export const ProjectsSchema = new SimpleSchema({
     optional: true,
     max: 200,
   },
-  skills: {
-    label: 'skills',
-    type: [String],
-    optional: true,
-    max: 200,
-    maxCount: 200,
-  },
   skillsWanted: {
     label: 'skillsWanted',
     type: [String],
@@ -76,6 +69,11 @@ export const ProjectsSchema = new SimpleSchema({
     label: 'createdAt',
     type: Date,      // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
     optional: false,
+  },
+  modifiedAt: {
+    label: 'modifiedAt',
+    type: Date,      // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+    optional: true,
   }
 });
 Projects.attachSchema(ProjectsSchema);

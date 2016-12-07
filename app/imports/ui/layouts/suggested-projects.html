@@ -36,7 +36,7 @@
               </div>
               <!--TODO: add skills relevant to that project-->
               <div class="extra content">
-                {{#each skill in (project.skills)}}
+                {{#each skill in (project.skillsWanted)}}
                   <div class="ui small label">
                     {{ skill }}
                   </div>
@@ -52,6 +52,7 @@
               </div>
             </div>
           {{/each}}
+
         {{else}}
           {{#each project in projectsList}}
             <div class="ui card">
@@ -75,7 +76,7 @@
               </div>
               <!--TODO: add skills relevant to that project-->
               <div class="extra content">
-                {{#each skill in (project.skills)}}
+                {{#each skill in (project.skillsWanted)}}
                   <div class="ui small label">
                     {{ skill }}
                   </div>
