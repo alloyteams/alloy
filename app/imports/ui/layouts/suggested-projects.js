@@ -68,7 +68,9 @@ Template.Suggested_Projects.helpers({
           console.log(`suggested-projects: suggestedProjects: relatedSkills: seed: ${seed}`);
           let pq = SkillGraphCollection.adjMaxPQ(seed);
           console.log(pq);
-          let related = [];
+          // relies on assumption that seed is in 'readable' form (defined in api/skill-graph/graphUtilities.js)
+          // ie. assumes all user.skills entered in edit-user-profile page and that the page enforces 'readable'
+          let related = [seed];
           for (let i = 0; i < relatedPerSkill && pq.length > 0; i++) {
             let edgeDoc = pq.dequeue();
             let otherVertex = EdgesCollection.other(edgeDoc, seed);
