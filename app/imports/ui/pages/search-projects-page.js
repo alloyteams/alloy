@@ -70,12 +70,11 @@ Template.Search_Projects_Page.events({
     event.preventDefault();
 
     countFoundProjects = Session.set("countFoundProjects", 0);
-    // getInput = event.target.searchInput.value;
     getInput = event.target.skills.value;
 
-    console.log('search input: ' + getInput);
+    // console.log('search input: ' + getInput);
 
-    myCursor = Projects.find({skills: getInput});
+    myCursor = Projects.find({skillsWanted: getInput});
     countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
 
     // // Prints to console the number of found projects
