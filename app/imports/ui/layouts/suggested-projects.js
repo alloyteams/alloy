@@ -16,6 +16,8 @@ const utils = require('../../api/skill-graph/graphUtilities');
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
+
+// These values must be 0 <= relatedPerSkill, suggestionsPerSkill <= displayLimit < INF
 const displayLimit = 10;
 const relatedPerSkill = 5;
 const suggestionsPerSkill = 5;  // must be <= displayLimit
@@ -40,9 +42,14 @@ Template.Suggested_Projects.helpers({
    * @returns {*} 10 of the Projects documents.
    */
   projectsList() {
-    // TODO: currently subscribes to all docs. and filters only 10, can set subscription limit if desired, set this to sort by a modifideDate field for the Projects collection
+    // TODO: choose docs. in natural / default order
+    // see https://docs.mongodb.com/manual/reference/operator/aggregation/sort/#ascending-descending-sort
+    // TODO: currently subscribes to all docs. and filters only 10, can set subscription limit if desired
     // see http://stackoverflow.com/questions/19161000/how-to-use-meteor-limit-properly
-    return Projects.find({}, { limit: displayLimit });
+    return Projects.find({}, {
+      $sort: { modifiedAt: -1 },
+      limit: displayLimit
+    });
   },
 
   // does not necessarily only return array of displayLimit or less project suggestions
@@ -55,15 +62,19 @@ Template.Suggested_Projects.helpers({
     console.log(user);
 
     // get suggestionsPerSkill number of most weighted related skills for each skill
+    // store as array of 'readable' versions of the skills as taken from skillgraph
     let relatedSkills = _.flatten(
         _.map(user.skills, (seed) => {
           console.log(`suggested-projects: suggestedProjects: relatedSkills: seed: ${seed}`);
           let pq = SkillGraphCollection.adjMaxPQ(seed);
           console.log(pq);
-          let related = [];
+          // relies on assumption that seed is in 'readable' form (defined in api/skill-graph/graphUtilities.js)
+          // ie. assumes all user.skills entered in edit-user-profile page and that the page enforces 'readable'
+          let related = [seed];
           for (let i = 0; i < relatedPerSkill && pq.length > 0; i++) {
             let edgeDoc = pq.dequeue();
-            related.push(EdgesCollection.other(edgeDoc, seed));
+            let otherVertex = EdgesCollection.other(edgeDoc, seed);
+            related.push(otherVertex.skillReadable);
           }
           return related;
         })
@@ -72,13 +83,9 @@ Template.Suggested_Projects.helpers({
     console.log(relatedSkills);
     // account for different skills being related to the same thing
     relatedSkills = _.uniq(relatedSkills);
-    relatedSkills = _.map(relatedSkills, (skill) => {
-      return utils.makeReadable(skill);
-    });
     // relies on assumption that all projects have skills in 'readable' form (defined in api/skill-graph/graphUtilities.js)
 
     // For each suggestedSkill, get suggestionsPerSkill projects with that skill in skillsWanted and skills field
-    // The each loops are separate here to prioritize 'skillsWanted' over the more general 'skills' of projects
     let suggestions = [];
     _.each(relatedSkills, (skill) => {
       console.log(skill);
@@ -87,18 +94,9 @@ Template.Suggested_Projects.helpers({
           Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch()
       );
     });
-    _.each(relatedSkills, (skill) => {
-      console.log(skill);
-      console.log(Projects.find({ skills: skill }, { limit: suggestionsPerSkill }).fetch());
-      suggestions = suggestions.concat(
-          Projects.find({ skills: skill }, { limit: suggestionsPerSkill }).fetch()
-      );
-    });
     console.log('suggestions');
     console.log(suggestions);
-    suggestions = _.uniq(suggestions, (project) => {
-      return project._id;
-    });
+    suggestions = _.uniq(suggestions, (project) => { return project._id; });
 
     // TODO: need efficient way to enforce a displayLimit on the number of suggestions displayed
     // /**

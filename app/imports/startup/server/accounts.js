@@ -51,8 +51,7 @@ Accounts.onCreateUser(function (options, user) {
     projectName: 'The Null Project',
     bio: 'This is the null project,\nwere all in it!',
     events: ['nullProject event-1', 'nullProject event-2'],
-    skills: ['Javascript', 'Joining', 'Clicking'],
-    skillsWanted: ['Public Speaking', 'Hand Clapping'],
+    skillsWanted: ['Javascript', 'Joining', 'Clicking'],
     url: 'https://theNullProject.org',
     createdAt: new Date(),  // could immediately get string with: new Date().toString().split(' ').splice(0, 4).join(' ')
   };
@@ -63,8 +62,8 @@ Accounts.onCreateUser(function (options, user) {
     Projects.insert(defaultProject);
 
     // TESTING: update SkillGraphCollection with this new defaultProject
-    SkillGraphCollection.addVertexList(defaultProject.skills);
-    _.each(defaultProject.skills, (skill) => {
+    SkillGraphCollection.addVertexList(defaultProject.skillsWanted);
+    _.each(defaultProject.skillsWanted, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
 
@@ -80,8 +79,8 @@ Accounts.onCreateUser(function (options, user) {
     skills: ['Hugging'],
     interests: ['working together'],
     events: ['The Null Event-1', 'The Null Event-2'],
-    projects: [defaultProject.projectName],
-    adminProjects: [defaultProject.projectName],
+    projects: [Projects.findOne({ projectName: defaultProject.projectName })._id],
+    adminProjects: [Projects.findOne({ projectName: defaultProject.projectName })._id],
     followedPeople: ['edwardNullen123'],  // In real cases, would need guarantee that added user existed
     followedProjects: [defaultProject.projectName],
     followedBy: ['edwardNullen123'],
@@ -114,8 +113,7 @@ if (Meteor.users.find().count() === 0) {
     projectName: 'joinableNull Project',
     bio: 'Cross over children. All are welcome',
     events: ['Bad B-Movies', 'Chair Stackathon'],
-    skills: ['Finding', 'Clicking', 'Joining'],
-    skillsWanted: ['clicking2.0', 'joining2.0'],
+    skillsWanted: ['Finding', 'Clicking', 'Joining'],
     url: 'https://join.us',
     createdAt: new Date(),
   };
@@ -127,9 +125,9 @@ if (Meteor.users.find().count() === 0) {
 
     // TESTING: update SkillGraphCollection with this new defaultProject
     // adding vertcies to SkillGraphCollection
-    SkillGraphCollection.addVertexList(joinableNullProject.skills);
+    SkillGraphCollection.addVertexList(joinableNullProject.skillsWanted);
 
-    _.each(joinableNullProject.skills, (skill) => {
+    _.each(joinableNullProject.skillsWanted, (skill) => {
       console.log(`${SkillGraphCollection.adjListToString(skill)}`);
     });
 
