@@ -20,7 +20,6 @@ const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
 
-let getInput = '';
 let myCursor = Projects.find();
 Session.set("countFoundProjects", 0);
 let countFoundProjects = Session.get("countFoundProjects");
@@ -46,7 +45,7 @@ Template.Search_Projects_Page.onRendered(function onRendered() {
 
 Template.Search_Projects_Page.helpers({
   getGraphSkills() {
-    console.log(SkillGraphCollection.getSkills())
+    console.log(SkillGraphCollection.getSkills());
     return SkillGraphCollection.getSkills();
   },
   projNum() {
@@ -70,11 +69,12 @@ Template.Search_Projects_Page.events({
     event.preventDefault();
 
     countFoundProjects = Session.set("countFoundProjects", 0);
-    getInput = event.target.skills.value;
+    let getInput = event.target.skills.value.split(',');
+    getInput = _.map(getInput, (skill) => { return utils.makeReadable(skill); });
 
     // console.log('search input: ' + getInput);
 
-    myCursor = Projects.find({skillsWanted: getInput});
+    myCursor = Projects.find({skillsWanted: { $in: getInput }});
     countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
 
     // // Prints to console the number of found projects

@@ -14,7 +14,6 @@ import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js'
 const utils = require('../../api/skill-graph/graphUtilities');
 
 // consts to use in reactive dicts
-let getInput = '';
 let myCursor = Users.find();
 Session.set("countFoundUsers", 0);
 let countFoundUsers = Session.get("countFoundUsers");
@@ -39,7 +38,7 @@ Template.Search_Users_Page.onRendered(function onRendered() {
 
 Template.Search_Users_Page.helpers({
   getGraphSkills() {
-    console.log(SkillGraphCollection.getSkills())
+    console.log(SkillGraphCollection.getSkills());
     return SkillGraphCollection.getSkills();
   },
   projNum() {
@@ -63,12 +62,12 @@ Template.Search_Users_Page.events({
     event.preventDefault();
 
     countFoundUsers = Session.set("countFoundUsers", 0);
-    // getInput = event.target.searchInput.value;
-    getInput = event.target.skills.value;
+    let getInput = event.target.skills.value.split(',');
+    getInput = _.map(getInput, (skill) => { return utils.makeReadable(skill); });
 
     console.log('search input: ' + getInput);
 
-    myCursor = Users.find({skills: getInput});
+    myCursor = Users.find({skills: { $in: getInput }});
     countFoundUsers = Session.set("countFoundUsers", _.size(myCursor.fetch()));
 
     // // Prints to console the number of found projects
