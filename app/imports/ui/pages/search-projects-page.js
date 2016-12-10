@@ -7,6 +7,11 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'; // to access Meteor.users collection
 import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
+import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
+import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js'
+
+// to use the makereadable function
+const utils = require('../../api/skill-graph/graphUtilities');
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -15,7 +20,6 @@ const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
 
-let getInput = '';
 let myCursor = Projects.find();
 Session.set("countFoundProjects", 0);
 let countFoundProjects = Session.get("countFoundProjects");
@@ -24,14 +28,26 @@ Template.Search_Projects_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
     this.subscribe('Projects');
+    SkillGraphCollection.subscribe();
+    EdgesCollection.subscribe();
   });
 });
 
-Template.Search_Projects_Page.onRendered(function enableSemantic() {
-  // TODO:
+Template.Search_Projects_Page.onRendered(function onRendered() {
+  // need to init. jquery plugins AFTER meteor done inserting (eg. with spacebars)
+  // in dynamic document. see http://stackoverflow.com/a/30834745
+  const instance = this;
+  instance.$('.ui.fluid.multiple.selection.search.dropdown')
+      .dropdown({
+        allowAdditions: true,
+      });
 });
 
 Template.Search_Projects_Page.helpers({
+  getGraphSkills() {
+    console.log(SkillGraphCollection.getSkills());
+    return SkillGraphCollection.getSkills();
+  },
   projNum() {
     return countFoundProjects = Session.get("countFoundProjects");
   },
@@ -53,11 +69,12 @@ Template.Search_Projects_Page.events({
     event.preventDefault();
 
     countFoundProjects = Session.set("countFoundProjects", 0);
-    getInput = event.target.searchInput.value;
+    let getInput = event.target.skills.value.split(',');
+    getInput = _.map(getInput, (skill) => { return utils.makeReadable(skill); });
 
-    console.log('search input: ' + getInput);
+    // console.log('search input: ' + getInput);
 
-    myCursor = Projects.find({skills: getInput});
+    myCursor = Projects.find({skillsWanted: { $in: getInput }});
     countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
 
     // // Prints to console the number of found projects

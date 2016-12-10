@@ -92,7 +92,8 @@ Template.Project_Admin_Page.events({
     // Get contact info (text fields)
     const projectName = event.target.projectName.value;  // based on associated html id tags
     const bio = event.target.bio.value;
-    const skillsWanted = event.target.skillsWanted.value.split(',');
+    let skillsWanted = event.target.skillsWanted.value.split(',');
+    skillsWanted = _.map(skillsWanted, (skill) => { return utils.makeReadable(skill); });
     const url = event.target.projectUrl.value;
 
     console.log(skillsWanted);
