@@ -18,16 +18,16 @@
                     <div class="card">
                       <div class="content">
                         <div class="header">
-                          {{ request}}
+                          {{ projectName request}}
                         </div>
                         <div class="description">
-                          {{request}} has invited you to join their project!
+                          {{projectName request}} has invited you to join their project!
                         </div>
                       </div>
                       <div class="extra content">
                         <div class="ui two buttons">
-                          <div class="ui basic green button">Approve</div>
-                          <div class="ui basic red button">Decline</div>
+                          <div class="ui basic green button" id={{request}}>Approve</div>
+                          <div class="ui basic red button" id={{request}}>Decline</div>
                         </div>
                       </div>
                     </div>
