@@ -57,7 +57,7 @@ Template.Member_Dropdown.events({
       //console.log(user);
       const userId = user['_id'];
       let userProjects = user['projects'];
-      const indexOfProject = userProjects.indexOf(project.projectName);
+      const indexOfProject = userProjects.indexOf(project._id);
       if (indexOfProject > -1) {
         userProjects.splice(indexOfProject, 1);
       }

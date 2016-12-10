@@ -60,14 +60,14 @@ export const UsersSchema = new SimpleSchema({
   },
   projects: {  // used to reference what project user is part of
     label: 'projects',
-    type: [String],  // assumes all projects names uniq. else need other identifier
+    type: [String],  // stores projectId
     optional: true,
     max: 200,
     maxCount: 200,
   },
   adminProjects: {  // used to reference what projects user if admin/leader of
     label: 'adminProjects',
-    type: [String],  // assumes all projects names uniq. else need other identifier
+    type: [String],  // stores projectId
     optional: true,
     max: 200,
     maxCount: 200,
