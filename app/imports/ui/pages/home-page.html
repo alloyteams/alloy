@@ -12,6 +12,7 @@
                   <hr/>
                 </h1>
                 <div class="ui padded grid">
+                  {{#if hasRequests}}
                   {{#each request in (userDataField "pendingRequests")}}
                     <div class="padded row">
                       <div class="ui container">
@@ -41,6 +42,13 @@
                       </div>
                     </div>
                   {{/each}}
+                  {{else}}
+                    <div class="padded row">
+                      <div class="ui container">
+                        You have no Notifications
+                      </div>
+                    </div>
+                  {{/if}}
                 </div>
               </div>
             </div>
