@@ -3,103 +3,108 @@
   <h1><img style="height:30px; width:auto"
            src="/images/alloy-icon.png">
     {{#if currentUser}}
-      Suggested Projects
+    Suggested Projects
     {{else}}
-      Featured Projects
+    Featured Projects
     {{/if}}
     <hr/>
   </h1>
 
   <div class="ui container">
     {{#if Template.subscriptionsReady}}
-      <div class="ui raised three cards">
-        {{#if currentUser}}
-          {{#if suggestedProjects.length}}
-          {{#each project in suggestedProjects}}
-            <div class="ui card">
-              <div class="image">
-                <!-- project image-->
-                <img src="/images/alloy-wordmark.png">
-              </div>
-              <div class="content">
-                <!--TODO: add project image-->
-                <a class="header"
-                   href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
-                <!--TODO: add a created date-->
-                <div class="meta">
-              <span
-                  class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
-                </div>
-                <!-- description of the project-->
-                <div class="description">
-                  {{ project.bio }}
-                </div>
-              </div>
-              <!--TODO: add skills relevant to that project-->
-              <div class="extra content">
-                {{#each skill in (project.skillsWanted)}}
-                  <div class="ui small label">
-                    {{ skill }}
-                  </div>
-                {{/each}}
-              </div>
-              <div class="extra content">
-                Members:
-                {{#if project.members}}
-                  {{ project.members.length }}
-                {{else}}
-                  0
-                {{/if}}
-              </div>
-            </div>
-          {{/each}}
-
-        {{else}}
-        <div class="ui very padded centered grid container" style="padding-top:15px;">
-          <button class="ui large button"><i class="edit icon"></i>Edit Profile Info</button>
+    <div class="ui raised three cards">
+      {{#if currentUser}}
+      {{#if suggestedProjects.length}}
+      {{#each project in suggestedProjects}}
+      <div class="ui card">
+        <div class="image">
+          <!-- project image-->
+          <img src="/images/alloy-wordmark.png">
         </div>
-        {{/if}}
-        {{else}}
-          {{#each project in projectsList}}
-            <div class="ui card">
-              <div class="image">
-                <!-- project image-->
-                <img src="/images/alloy-wordmark.png">
-              </div>
-              <div class="content">
-                <!--TODO: add project image-->
-                <a class="header"
-                   href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
-                <!--TODO: add a created date-->
-                <div class="meta">
+        <div class="content">
+          <!--TODO: add project image-->
+          <a class="header"
+             href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
+          <!--TODO: add a created date-->
+          <div class="meta">
               <span
                   class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
-                </div>
-                <!-- description of the project-->
-                <div class="description">
-                  {{ project.bio }}
-                </div>
-              </div>
-              <!--TODO: add skills relevant to that project-->
-              <div class="extra content">
-                {{#each skill in (project.skillsWanted)}}
-                  <div class="ui small label">
-                    {{ skill }}
-                  </div>
-                {{/each}}
-              </div>
-              <div class="extra content">
-                Members:
-                {{#if project.members}}
-                  {{ project.members.length }}
-                {{else}}
-                  0
-                {{/if}}
-              </div>
-            </div>
+          </div>
+          <!-- description of the project-->
+          <div class="description">
+            {{ project.bio }}
+          </div>
+        </div>
+        <!--TODO: add skills relevant to that project-->
+        <div class="extra content">
+          {{#each skill in (project.skillsWanted)}}
+          <div class="ui small label">
+            {{ skill }}
+          </div>
           {{/each}}
-        {{/if}}
+        </div>
+        <div class="extra content">
+          Members:
+          {{#if project.members}}
+          {{ project.members.length }}
+          {{else}}
+          0
+          {{/if}}
+        </div>
       </div>
+      {{/each}}
+
+      {{else}}
+      <div class="ui very padded centered grid container" style="padding-top:15px;">
+        <div class="ui large raised segment">
+          Update your profile to see suggested projects and get connected with your dream team!<br/><br/><br/>
+          <a href="{{pathFor 'Edit_Profile_Page' _id=(getMyId)}}">
+          <button class="ui large button"><i class="edit icon"></i>Edit Profile</button>
+          </a>
+        </div>
+      </div>
+      {{/if}}
+      {{else}}
+      {{#each project in projectsList}}
+      <div class="ui card">
+        <div class="image">
+          <!-- project image-->
+          <img src="/images/alloy-wordmark.png">
+        </div>
+        <div class="content">
+          <!--TODO: add project image-->
+          <a class="header"
+             href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
+          <!--TODO: add a created date-->
+          <div class="meta">
+              <span
+                  class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
+          </div>
+          <!-- description of the project-->
+          <div class="description">
+            {{ project.bio }}
+          </div>
+        </div>
+        <!--TODO: add skills relevant to that project-->
+        <div class="extra content">
+          {{#each skill in (project.skillsWanted)}}
+          <div class="ui small label">
+            {{ skill }}
+          </div>
+          {{/each}}
+        </div>
+        <div class="extra content">
+          Members:
+          {{#if project.members}}
+          {{ project.members.length }}
+          {{else}}
+          0
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+      {{/if}}
+    </div>
     {{/if}}
   </div>
 </template>
