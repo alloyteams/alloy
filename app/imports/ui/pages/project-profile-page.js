@@ -56,7 +56,17 @@ Template.Project_Profile_Page.helpers({
   },
   userId: function () {
     return Meteor.userId();
-  }
+  },
+  hasRequests() {
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    const requests = project['joinRequests'];
+    if (requests.length == 0) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
 });
 
 Template.Project_Profile_Page.helpers({
@@ -124,7 +134,7 @@ Template.Project_Profile_Page.events({
       // see https://docs.mongodb.com/manual/reference/operator/update/pull/#up._S_pull
       console.log(`adding ${memberToAdd} to ${project.projectName}`)
       Projects.update({ _id: project._id }, { $addToSet: { members: memberToAdd } });
-      Projects.update({ "_id": project._id }, { $pull: { joinRequests: memberToAdd } });  // assumes uniq. usernames
+      Projects.update({ _id: project._id }, { $pull: { joinRequests: memberToAdd } });  // assumes uniq. usernames
     }
   },
   'click .ui.green.button' (event, instance){
@@ -138,6 +148,58 @@ Template.Project_Profile_Page.events({
       Projects.update({ _id: project._id }, { $addToSet: { joinRequests: memberToAdd } });
       console.log("added to joinRequests");
     }
+  },
+  'click .ui.basic.green.button': function (event, instance) {
+    /** Accept request to join event **/
+    event.preventDefault();
+    const userToAdd = event.currentTarget.id;
+    console.log(userToAdd);
+    /** Check if user exists **/
+    const user = Users.find({ 'username': userToAdd }).fetch()[0];
+    /** If User exists, proceed to add **/
+    if (user != null) {
+      const project = Projects.findOne(FlowRouter.getParam('_id'));
+      let newMembers = project['members'];
+      //console.log(newMembers);
+      let indexOfUser = newMembers.indexOf(userToAdd);
+      //console.log(indexOfUser);
+      if (indexOfUser === -1) {
+        newMembers.push(userToAdd);
+        newMembers.sort();
+      }
+      /** Add user to project **/
+      Projects.update({ _id: project['_id'] }, { $set: { members: newMembers } });
+      /** Add project from User **/
+      const userId = user['_id'];
+      let userProjects = user['projects'];
+      const indexOfProject = userProjects.indexOf(project._id);
+      if (indexOfProject === -1) {
+        userProjects.push(project._id);
+        userProjects.sort();
+      }
+      //console.log(userProjects);
+      Users.update({ _id: userId }, { $set: { projects: userProjects } });
+
+      /** Remove request **/
+      let pendingRequests = project['joinRequests'];
+      const index = pendingRequests.indexOf(userToAdd);
+      if (index > -1) {
+        pendingRequests.splice(index, 1);
+      }
+      Projects.update({ _id: project['_id'] }, { $set: { joinRequests: pendingRequests } });
+    }
+  },
+  /** Decline Join Request **/
+  'click .ui.basic.red.button': function (event, instance) {
+    /** Remove request from project **/
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    const declinedUser = event.currentTarget.id;
+    let pendingRequests = project['joinRequests'];
+    const index = pendingRequests.indexOf(declinedUser);
+    if (index > -1) {
+      pendingRequests.splice(index, 1);
+    }
+    Projects.update({ _id: project['_id'] }, { $set: { joinRequests: pendingRequests } });
   },
 //   // logic for 'submit' event for 'contact-data-form' 'button'
 //   'submit .contact-data-form'(event, instance) {
