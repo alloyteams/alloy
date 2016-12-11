@@ -14,6 +14,7 @@
     {{#if Template.subscriptionsReady}}
       <div class="ui raised three cards">
         {{#if currentUser}}
+          {{#if suggestedProjects.length}}
           {{#each project in suggestedProjects}}
             <div class="ui card">
               <div class="image">
@@ -53,6 +54,11 @@
             </div>
           {{/each}}
 
+        {{else}}
+        <div class="ui very padded centered grid container" style="padding-top:15px;">
+          <button class="ui large button"><i class="edit icon"></i>Edit Profile Info</button>
+        </div>
+        {{/if}}
         {{else}}
           {{#each project in projectsList}}
             <div class="ui card">

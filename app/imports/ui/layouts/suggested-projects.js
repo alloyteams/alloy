@@ -122,7 +122,6 @@ Template.Suggested_Projects.helpers({
 
     return suggestions;
   },
-
 });
 
 Template.Suggested_Projects.helpers({
