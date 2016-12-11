@@ -84,7 +84,8 @@ Accounts.onCreateUser(function (options, user) {
     followedPeople: ['edwardNullen123'],  // In real cases, would need guarantee that added user existed
     followedProjects: [defaultProject.projectName],
     followedBy: ['edwardNullen123'],
-    isSiteAdmin: false
+    isSiteAdmin: false,
+    pendingRequests: [],
   };
   Users.insert(newUser);  // this means User documents will have different _id than the Meteor.user._id
                           // unless we create our own _id or Meteor.users.

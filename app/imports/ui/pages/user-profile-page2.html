@@ -1,81 +1,81 @@
 <template name="User_Profile_Page_2">
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
   {{#if Template.subscriptionsReady}}
-    {{#if currentUser}}
-      <div class="ui container"
-           style="margin-top: 30px;">
-        <!--TODO: add project title-->
-        <div class="item">
-          <h2>{{ userDataField "firstName" }} {{ userDataField "lastName" }}</h2>
-          <hr/>
+  {{#if currentUser}}
+  <div class="ui container"
+       style="margin-top: 30px;">
+    <!--TODO: add project title-->
+    <div class="item">
+      <h2>{{ userDataField "firstName" }} {{ userDataField "lastName" }}</h2>
+      <hr/>
+    </div>
+    <div class="ui grid">
+      <div class="five wide column">
+        <!--TODO: replace with profile image if we want to use profile images-->
+        <img class="ui rounded image"
+             src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
+        <!--TODO: display this button iff viewer is project owner-->
+        <br/>
+        {{#if isAdmin}}
+        <a href="{{pathFor 'Edit_Profile_Page' _id=(userDataField "_id")}}">
+        <div class="ui button">
+          <i class="edit icon"></i>
+          Edit Profile Info
         </div>
-        <div class="ui grid">
-          <div class="five wide column">
-            <!--TODO: replace with profile image if we want to use profile images-->
-            <img class="ui rounded image"
-                 src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
-            <!--TODO: display this button iff viewer is project owner-->
-            <br/>
-            {{#if isAdmin}}
-              <a href="{{pathFor 'Edit_Profile_Page' _id=(userDataField "_id")}}">
-                <div class="ui button">
-                  <i class="edit icon"></i>
-                  Edit Profile Info
-                </div>
-              </a>
-            {{/if}}
-          </div>
-
-          <div class="eleven wide column">
-            <div class="ui segment">
-              <a class="ui ribbon label"
-                 style="background-color:#a6ce39; color:white;"><h3>
-                Biography</h3>
-              </a>
-              <br/>
-              <br/>
-              <i class="mail icon"></i><a>{{ userDataField "username" }}
-              @hawaii.edu</a>
-              <br/>
-              <p>{{ userDataField "bio" }}</p>
-            </div>
-            <div class="ui segment">
-              <a class="ui ribbon label"
-                 style="background-color:#aed24c; color:white;"><h3>My
-                Skills</h3></a>
-              <br/>
-              <br/>
-              <div class="ui labels">
-                {{#each skill in (userDataField "skills")}}
-                  <a class="ui label">{{ skill }}</a>
-                {{/each}}
-              </div>
-            </div>
-            <div class="ui segment">
-              <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
-              <a class="ui ribbon label"
-                 style="background-color:#b7d760; color:white;"><h3>Current
-                Projects</h3></a>
-              <div class="ui relaxed divided list">
-                {{#each projectId in (userDataField "projects")}}
-                  <div class="item">
-                    <i class="sticky note middle aligned icon"></i>
-                    <div class="content">
-                      <a class="description"
-                           href="{{pathFor 'Project_Profile_Page' _id=projectId}}">
-                        {{ projectDataField projectId "projectName" }}</a>
-                    </div>
-                  </div>
-                {{/each}}
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+        </a>
+        {{/if}}
       </div>
 
-      <!-- DEBUG -->
-    {{/if}}
+      <div class="eleven wide column">
+        <div class="ui segment">
+          <a class="ui ribbon label"
+             style="background-color:#a6ce39; color:white;"><h3>
+            Biography</h3>
+          </a>
+          <br/>
+          <br/>
+          <i class="mail icon"></i><a>{{ userDataField "username" }}
+          @hawaii.edu</a>
+          <br/>
+          <p>{{ userDataField "bio" }}</p>
+        </div>
+        <div class="ui segment">
+          <a class="ui ribbon label"
+             style="background-color:#aed24c; color:white;"><h3>My
+            Skills</h3></a>
+          <br/>
+          <br/>
+          <div class="ui labels">
+            {{#each skill in (userDataField "skills")}}
+            <a class="ui label">{{ skill }}</a>
+            {{/each}}
+          </div>
+        </div>
+        <div class="ui segment">
+          <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
+          <a class="ui ribbon label"
+             style="background-color:#b7d760; color:white;"><h3>Current
+            Projects</h3></a>
+          <div class="ui relaxed divided list">
+            {{#each projectId in (userDataField "projects")}}
+            <div class="item">
+              <i class="sticky note middle aligned icon"></i>
+              <div class="content">
+                <a class="description"
+                   href="{{pathFor 'Project_Profile_Page' _id=projectId}}">
+                  {{ projectDataField projectId "projectName" }}</a>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- DEBUG -->
+  {{/if}}
   {{/if}}
 </template>

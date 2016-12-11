@@ -77,7 +77,7 @@ Template.User_Profile_Page_2.onRendered(function enableSemantic() {
   // instance.$('select.dropdown').dropdown();
   // instance.$('.ui.checkbox').checkbox();
   // instance.$('.ui.radio.checkbox').checkbox();
-
+  const user = Users.findOne(FlowRouter.getParam('_id'));
   // secondary menu logic FIXME: does not work (used events and helpers instead)
   instance.$('select.ui.secondary.menu').ready(function () {
     $('.ui .item').on('click', function () {
