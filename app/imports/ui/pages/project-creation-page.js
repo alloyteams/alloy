@@ -81,6 +81,7 @@ Template.Project_Creation_Page.events({
       skillsWanted: newSkills,
       members: [creator],
       admins: [creator],
+      joinRequests: [],
       url: newUrl,
       createdAt: new Date(),
     };
