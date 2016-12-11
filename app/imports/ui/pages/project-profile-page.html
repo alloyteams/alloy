@@ -74,12 +74,21 @@
             </div>
           </div>
           {{else}}
+          {{#if notMember}}
           <div class="item">
+            {{#if notRequestedToJoin}}
             <div class="ui green button">
               <i class="external icon"></i>
               Request to Join Project!
             </div>
+            {{else}}
+            <div class="ui disabled green button">
+              <i class="external icon"></i>
+              You have requested to join!
+            </div>
+            {{/if}}
           </div>
+          {{/if}}
           {{/if}}
         </div>
 

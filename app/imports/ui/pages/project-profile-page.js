@@ -67,6 +67,24 @@ Template.Project_Profile_Page.helpers({
       return true;
     }
   },
+  notRequestedToJoin() {
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    if (_.contains(project.joinRequests, Meteor.user().profile.name)) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
+  notMember() {
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    if (_.contains(project.members, Meteor.user().profile.name)) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
 });
 
 Template.Project_Profile_Page.helpers({
