@@ -29,6 +29,50 @@
           <div class="item">
             {{> Member_Dropdown _id=(projectDataField "_id")}}
           </div>
+          <div class="row" style="padding-top: 30px;">
+            <h1>
+              Requests to Join
+              <hr/>
+            </h1>
+            <div class="ui padded grid">
+              {{#if hasRequests}}
+              {{#each request in (projectDataField "joinRequests")}}
+              <div class="padded row">
+                <div class="ui container">
+                  <div class="ui cards">
+                    <div class="card">
+                      <div class="content">
+                        <div class="header">
+                          Join Request
+                        </div>
+                        <div class="description">
+                          {{request}} wants to join the project!
+                        </div>
+                      </div>
+                      <div class="extra content">
+                        <div class="ui two buttons">
+                          <div class="ui basic green button"
+                               id={{request}}>Approve
+                          </div>
+                          <div class="ui basic red button" id={{request}}>
+                            Decline
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+              {{else}}
+              <div class="padded row">
+                <div class="ui container">
+                  There are no join requests
+                </div>
+              </div>
+              {{/if}}
+            </div>
+          </div>
           {{else}}
           <div class="item">
             <div class="ui green button">
