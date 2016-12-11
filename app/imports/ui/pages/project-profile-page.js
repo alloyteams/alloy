@@ -78,16 +78,16 @@ Template.Project_Profile_Page.helpers({
   },
 });
 /*
-Template.Project_Profile_Page.onRendered(function enableSemantic() {
-  // secondary menu logic FIXME: does not work (used events and helpers instead)
-  instance.$('select.ui.secondary.menu').ready(function () {
-    $('.ui .item').on('click', function () {
-      $('.ui .item').removeClass('active');
-      $(this).addClass('active');
-    });
-  });
-});
-*/
+ Template.Project_Profile_Page.onRendered(function enableSemantic() {
+ // secondary menu logic FIXME: does not work (used events and helpers instead)
+ instance.$('select.ui.secondary.menu').ready(function () {
+ $('.ui .item').on('click', function () {
+ $('.ui .item').removeClass('active');
+ $(this).addClass('active');
+ });
+ });
+ });
+ */
 Template.Project_Profile_Page.events({
   // change what nav menu tab is active (I know this is an ugly way to do it, but can fix later)
   'click .homeTab' (event, instance) {
@@ -125,6 +125,18 @@ Template.Project_Profile_Page.events({
       console.log(`adding ${memberToAdd} to ${project.projectName}`)
       Projects.update({ _id: project._id }, { $addToSet: { members: memberToAdd } });
       Projects.update({ "_id": project._id }, { $pull: { joinRequests: memberToAdd } });  // assumes uniq. usernames
+    }
+  },
+  'click .ui.green.button' (event, instance){
+    event.preventDefault();
+    const memberToAdd = Meteor.user().profile.name;
+    const project = Projects.findOne(FlowRouter.getParam('_id'));
+    if (_.contains(project.joinRequests, memberToAdd)) {
+      console.log("User has already requested to join");
+    }
+    else {
+      Projects.update({ _id: project._id }, { $addToSet: { joinRequests: memberToAdd } });
+      console.log("added to joinRequests");
     }
   },
 //   // logic for 'submit' event for 'contact-data-form' 'button'

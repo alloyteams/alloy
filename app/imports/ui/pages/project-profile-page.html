@@ -15,8 +15,9 @@
              src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
         <!--TODO: display this button iff viewer is project owner-->
         <br/>
-        {{#if isAdmin}}
+
         <div class="ui list">
+          {{#if isAdmin}}
           <div class="item">
             <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
             <div class="ui button">
@@ -28,8 +29,16 @@
           <div class="item">
             {{> Member_Dropdown _id=(projectDataField "_id")}}
           </div>
+          {{else}}
+          <div class="item">
+            <div class="ui green button">
+              <i class="external icon"></i>
+              Request to Join Project!
+            </div>
+          </div>
+          {{/if}}
         </div>
-        {{/if}}
+
       </div>
 
       <div class="eleven wide column">
