@@ -10,7 +10,7 @@ import {Users, UsersSchema} from '../../api/users/users.js';
 import {CategoriesDict, CategoriesDictSchema} from '../../api/categories-dict/categories-dict.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
-import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js'
+import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js';
 
 const utils = require('../../api/skill-graph/graphUtilities');  // to use the makereadable function
 

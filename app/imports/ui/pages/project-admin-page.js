@@ -7,6 +7,8 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
+import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -14,6 +16,9 @@ const displayErrorMessages = 'displayErrorMessages';
 Template.Project_Admin_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Projects');  // extended Meteor.user collection data
+
+    SkillGraphCollection.subscribe();
+    EdgesCollection.subscribe();
   });
 
   // use reactive dict to store error messages
@@ -52,6 +57,10 @@ Template.Project_Admin_Page.helpers({
     }
     skillString = skillString.substring(0, skillString.length - 1);
     return skillString;
+  },
+  getGraphSkills() {
+    console.log(SkillGraphCollection.getSkills());
+    return SkillGraphCollection.getSkills();
   },
 });
 
