@@ -12,6 +12,7 @@ import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
+const utils = require('../../api/skill-graph/graphUtilities');  // to use the makereadable function
 
 Template.Project_Admin_Page.onCreated(function onCreated() {
   this.autorun(() => {
