@@ -52,6 +52,12 @@ Template.Suggested_Projects.helpers({
     });
   },
 
+  getMyId: function() {
+    const userName = Meteor.user().profile.name;
+    const userNameId = Users.find({ 'username': userName }).fetch()[0]['_id'];
+    return userNameId;
+  },
+
   // does not necessarily only return array of displayLimit or less project suggestions
   // FIXME: current latency potentially very high b/c duplicates in arrays that are filtered out too late
   // TODO: add feature for user to decide how many of these suggestions to see
@@ -122,7 +128,6 @@ Template.Suggested_Projects.helpers({
 
     return suggestions;
   },
-
 });
 
 Template.Suggested_Projects.helpers({
