@@ -90,9 +90,12 @@ Template.Member_Dropdown.events({
         userRequests.push(project['_id']);
       }
       Users.update({ _id: userId }, { $set: { pendingRequests: userRequests } });
+      $('.ui.basic.success.modal')
+          .modal('show')
+      ;
     }
     else {
-      $('.ui.basic.modal')
+      $('.ui.basic.invalid.modal')
           .modal('show')
       ;
     }

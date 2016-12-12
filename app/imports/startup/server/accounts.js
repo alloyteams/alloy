@@ -3,7 +3,7 @@ import {Accounts} from 'meteor/accounts-base';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 import {_} from 'meteor/underscore';
-import { SkillGraphCollection } from '../../api/skill-graph/SkillGraphCollection.js';
+import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
 
 /* eslint-disable no-console */
 
@@ -13,7 +13,7 @@ Accounts.validateNewUser(function (user) {
   if (user) {
     // get username from uh-cas login service (if valid)
     const username = user.services.cas.id;
-    if(username) return true;
+    if (username) return true;
   } else throw new Meteor.Error(403, 'User not allowed / valid');
 });
 
@@ -43,7 +43,23 @@ Accounts.onCreateUser(function (options, user) {
 
   // create a default club to be joined by all users (for testing)
   // FIXME: is this the bet way to have a default collection obj. accessable at startup (may also want to add validation)?
-
+  const defaultUser = {
+    username: 'default',  // if not using UH cas, use: user.username
+    skills: ['Hugging'],
+    interests: ['working together'],
+    events: [],
+    projects: [],
+    adminProjects: [],
+    followedPeople: [],  // In real cases, would need guarantee that added user existed
+    followedProjects: [],
+    followedBy: [],
+    isSiteAdmin: false,
+    pendingRequests: [],
+  };
+  let defaultUserExists = Users.findOne({ username: defaultUser.username });
+  if (!(defaultUserExists)) {
+    Users.insert(defaultUser);
+  }
   // NOTE: The const declaration creates a read-only reference to a value.
   // It does not mean the value it holds is immutable, just that the variable
   // identifier cannot be reassigned
@@ -70,7 +86,9 @@ Accounts.onCreateUser(function (options, user) {
     let pq = SkillGraphCollection.adjMaxPQ('clicking');
     const currSize = pq.length;
     console.log("'clicking' PQ");
-    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
+    for (let i = 0; i < currSize; i++) {
+      console.log(pq.dequeue());
+    }
   }
 
   // initialize newUser account info with some default/test info and add to Users collection
@@ -135,6 +153,8 @@ if (Meteor.users.find().count() === 0) {
     let pq = SkillGraphCollection.adjMaxPQ('clicking');
     const currSize = pq.length;
     console.log("'clicking' PQ");
-    for(let i=0; i < currSize; i++) {console.log(pq.dequeue());}
+    for (let i = 0; i < currSize; i++) {
+      console.log(pq.dequeue());
+    }
   }
 }
