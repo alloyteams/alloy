@@ -113,9 +113,7 @@ Template.Home_Page.events({
         pendingRequests.splice(index, 1);
       }
       Users.update({ _id: userId }, { $set: { pendingRequests: pendingRequests } });
-    }
-    else {
-      $('.ui.basic.modal')
+      $('.ui.basic.success.modal')
           .modal('show')
       ;
     }
@@ -133,7 +131,9 @@ Template.Home_Page.events({
       pendingRequests.splice(index, 1);
     }
     Users.update({ _id: userId }, { $set: { pendingRequests: pendingRequests } });
-
+    $('.ui.basic.invalid.modal')
+        .modal('show')
+    ;
   },
 })
 ;
