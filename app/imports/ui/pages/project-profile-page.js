@@ -7,6 +7,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
+import {Users, UsersSchema} from '../../api/users/users.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -155,7 +156,7 @@ Template.Project_Profile_Page.events({
       Projects.update({ _id: project._id }, { $pull: { joinRequests: memberToAdd } });  // assumes uniq. usernames
     }
   },
-  'click .ui.green.button' (event, instance){
+  'click .ui.green.join.button' (event, instance){
     event.preventDefault();
     const memberToAdd = Meteor.user().profile.name;
     const project = Projects.findOne(FlowRouter.getParam('_id'));
