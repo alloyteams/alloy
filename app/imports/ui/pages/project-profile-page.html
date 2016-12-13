@@ -123,7 +123,7 @@
               <i class="large user middle aligned icon"></i>
               <div class="content">
                 <!-- assumes using UH naming/email scheme -->
-                <div class="description">{{ admin }}</div>
+                <a class="description" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">{{ admin }}</a>
                 <a class="header">{{admin}}@hawaii.edu</a>
               </div>
             </div>
@@ -141,7 +141,7 @@
               <i class="large user middle aligned icon"></i>
               <div class="content">
                 <!-- assumes using UH naming/email scheme -->
-                <div class="description">{{ member }}</div>
+                <a class="description" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">{{ member }}</a>
                 <a class="header">{{member}}@hawaii.edu</a>
               </div>
             </div>

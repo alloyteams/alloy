@@ -50,6 +50,21 @@ Template.Project_Profile_Page.helpers({
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return project && project[fieldVal];
   },
+  userDataField(fieldVal) {
+    // app/imports/startup/client/router.js defines the 'id' vs '_id' bindings
+    //   see app/imports/ui/pages/home-page.html
+    // uses the id param specified in page that routed to this page
+    //   see https://github.com/kadirahq/flow-router#routes-definition
+    const user = Users.findOne({ _id: FlowRouter.getParam('_id') });
+    // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
+    // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
+    return user && user[fieldVal];
+  },
+  getMyId: function() {
+    const userName = Meteor.user().profile.name;
+    const userNameId = Users.find({ 'username': userName }).fetch()[0]['_id'];
+    return userNameId;
+  },
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
     const project = Projects.findOne(FlowRouter.getParam('_id'));
