@@ -16,13 +16,9 @@ const utils = require('../../api/skill-graph/graphUtilities');
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
 
-const homeActive = 'homeActive';
-const eventsActive = 'eventsActive';
-const friendsActive = 'friendsActive';
-
-let myCursor = Projects.find();
+var foundProjects = [];
 Session.set("countFoundProjects", 0);
-let countFoundProjects = Session.get("countFoundProjects");
+var countFoundProjects = Session.get("countFoundProjects");
 
 Template.Search_Projects_Page.onCreated(function onCreated() {
   this.autorun(() => {
@@ -59,8 +55,8 @@ Template.Search_Projects_Page.helpers({
       return false;
     }
   },
-  'iterateProjects': function() {
-    return myCursor.fetch();
+  'foundProjects': function() {
+    return foundProjects;
   },
 });
 
@@ -69,13 +65,13 @@ Template.Search_Projects_Page.events({
     event.preventDefault();
 
     countFoundProjects = Session.set("countFoundProjects", 0);
-    let getInput = event.target.skills.value.split(',');
-    getInput = _.map(getInput, (skill) => { return utils.makeReadable(skill); });
+    let terms = event.target.skills.value.split(',');
+    terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
 
     // console.log('search input: ' + getInput);
 
-    myCursor = Projects.find({skillsWanted: { $in: getInput }});
-    countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
+    foundProjects = Projects.find({skillsWanted: { $in: terms }}).fetch();
+    countFoundProjects = Session.set("countFoundProjects", foundProjects.length);
 
     // // Prints to console the number of found projects
     // console.log('found projects: ' + Session.get("countFoundProjects"));
@@ -87,10 +83,10 @@ Template.Search_Projects_Page.events({
     // console.log(myCursor.fetch()[0]);
     // console.log(myCursor.fetch()[0].projectName);
   },
-  'submit .form-clear': function (event, template) {
-    event.preventDefault();
-    countFoundProjects = Session.set("countFoundProjects", 0);
-    myCursor = Projects.find({skills: ''});
-    countFoundProjects = Session.set("countFoundProjects", _.size(myCursor.fetch()));
-  },
+
+});
+
+Template.Search_Projects_Page.onDestroyed(function () {
+  foundProjects = [];
+  countFoundProjects = Session.set("countFoundProjects", foundProjects.length);
 });

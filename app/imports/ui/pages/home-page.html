@@ -2,6 +2,7 @@
   {{#if Template.subscriptionsReady}}
     <div class="ui container" id="Splash_Top">
       <div class="ui grid">
+
         {{#if currentUser}}
           <div class="six wide column">
             <div id="Splash_Page" class="ui five row grid">
@@ -52,6 +53,7 @@
               </div>
             </div>
           </div>
+
         {{else}}
           <div class="six wide column">
             <div id="Splash_Page" class="ui five row grid">
@@ -105,6 +107,7 @@
             </div>
           </div>
         {{/if}}
+
         <div class="ten wide column">
           <div class="ui very padded row container" style="padding-top: 15px;">
             {{>Suggested_Projects}}

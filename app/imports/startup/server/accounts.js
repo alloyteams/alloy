@@ -40,9 +40,6 @@ Accounts.onCreateUser(function (options, user) {
    * */
 
   /* initialize a new user */
-
-  // create a default club to be joined by all users (for testing)
-  // FIXME: is this the bet way to have a default collection obj. accessable at startup (may also want to add validation)?
   const defaultUser = {
     username: 'default',  // if not using UH cas, use: user.username
     skills: ['Hugging'],
@@ -60,6 +57,10 @@ Accounts.onCreateUser(function (options, user) {
   if (!(defaultUserExists)) {
     Users.insert(defaultUser);
   }
+
+  // create a default club to be joined by all users (for testing)
+  // FIXME: is this the bet way to have a default collection obj. accessable at startup (may also want to add validation)?
+
   // NOTE: The const declaration creates a read-only reference to a value.
   // It does not mean the value it holds is immutable, just that the variable
   // identifier cannot be reassigned
@@ -113,7 +114,6 @@ Accounts.onCreateUser(function (options, user) {
   // This is a test of adding members to projects dynamically, rather than at project declaration.
   // add this user as a member and admin of the default project array fields
   // see https://docs.mongodb.com/manual/reference/operator/update/
-  // TODO: add function to Projects collection api that allows user.projects and project.members to be set simultaneously
   Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { members: newUser.username } });
   Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { admins: newUser.username } });
 
