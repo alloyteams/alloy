@@ -5,7 +5,14 @@
   <div class="ui container"
        style="margin-top: 30px;">
     <!--TODO: add project title-->
-    <div class="item"><h2>{{ projectDataField "projectName" }}</h2>
+    <div class="item">
+      <h2 class="ui header">
+        <i class="user icon"></i>
+        <div class="content">
+          {{ projectDataField "projectName" }}
+          <div class="sub header"><a href="{{projectDataField "url" }}">{{ projectDataField "url" }}</a></div>
+        </div>
+      </h2>
       <hr/>
     </div>
     <div class="ui grid">
