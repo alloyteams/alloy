@@ -16,9 +16,11 @@ const utils = require('../../api/skill-graph/graphUtilities');
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
 
-var foundProjects = [];
+var foundProjects;
 Session.set("countFoundProjects", 0);
 var countFoundProjects = Session.get("countFoundProjects");
+
+var _dep = new Deps.Dependency();  // allows search result to update reactivley
 
 Template.Search_Projects_Page.onCreated(function onCreated() {
   this.autorun(() => {
@@ -56,6 +58,8 @@ Template.Search_Projects_Page.helpers({
     }
   },
   'foundProjects': function() {
+    _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
+    console.log(foundProjects.fetch());
     return foundProjects;
   },
 });
@@ -70,8 +74,10 @@ Template.Search_Projects_Page.events({
 
     // console.log('search input: ' + getInput);
 
-    foundProjects = Projects.find({skillsWanted: { $in: terms }}).fetch();
-    countFoundProjects = Session.set("countFoundProjects", foundProjects.length);
+    foundProjects = Projects.find({skillsWanted: { $in: terms }});
+    countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
+
+    _dep.changed();
 
     // // Prints to console the number of found projects
     // console.log('found projects: ' + Session.get("countFoundProjects"));
@@ -87,6 +93,6 @@ Template.Search_Projects_Page.events({
 });
 
 Template.Search_Projects_Page.onDestroyed(function () {
-  foundProjects = [];
-  countFoundProjects = Session.set("countFoundProjects", foundProjects.length);
+  foundProjects = undefined
+  countFoundProjects = Session.set("countFoundProjects", 0);
 });
