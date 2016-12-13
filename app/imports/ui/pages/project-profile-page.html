@@ -15,8 +15,9 @@
              src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
         <!--TODO: display this button iff viewer is project owner-->
         <br/>
-        {{#if isAdmin}}
+
         <div class="ui list">
+          {{#if isAdmin}}
           <div class="item">
             <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
             <div class="ui button">
@@ -28,8 +29,69 @@
           <div class="item">
             {{> Member_Dropdown _id=(projectDataField "_id")}}
           </div>
+          <div class="row" style="padding-top: 30px;">
+            <h1>
+              Requests to Join
+              <hr/>
+            </h1>
+            <div class="ui padded grid">
+              {{#if hasRequests}}
+              {{#each request in (projectDataField "joinRequests")}}
+              <div class="padded row">
+                <div class="ui container">
+                  <div class="ui cards">
+                    <div class="card">
+                      <div class="content">
+                        <div class="header">
+                          Join Request
+                        </div>
+                        <div class="description">
+                          {{request}} wants to join the project!
+                        </div>
+                      </div>
+                      <div class="extra content">
+                        <div class="ui two buttons">
+                          <div class="ui basic green button"
+                               id={{request}}>Approve
+                          </div>
+                          <div class="ui basic red button" id={{request}}>
+                            Decline
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+              {{else}}
+              <div class="padded row">
+                <div class="ui container">
+                  There are no join requests
+                </div>
+              </div>
+              {{/if}}
+            </div>
+          </div>
+          {{else}}
+          {{#if notMember}}
+          <div class="item">
+            {{#if notRequestedToJoin}}
+            <div class="ui green button">
+              <i class="external icon"></i>
+              Request to Join Project!
+            </div>
+            {{else}}
+            <div class="ui disabled green button">
+              <i class="external icon"></i>
+              You have requested to join!
+            </div>
+            {{/if}}
+          </div>
+          {{/if}}
+          {{/if}}
         </div>
-        {{/if}}
+
       </div>
 
       <div class="eleven wide column">

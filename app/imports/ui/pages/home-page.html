@@ -2,16 +2,17 @@
   {{#if Template.subscriptionsReady}}
     <div class="ui container" id="Splash_Top">
       <div class="ui grid">
+
         {{#if currentUser}}
           <div class="six wide column">
             <div id="Splash_Page" class="ui five row grid">
               <div class="row" style="padding-top: 30px;">
-
                 <h1>
                   Notifications
                   <hr/>
                 </h1>
                 <div class="ui padded grid">
+                  {{#if hasRequests}}
                   {{#each request in (userDataField "pendingRequests")}}
                     <div class="padded row">
                       <div class="ui container">
@@ -41,10 +42,18 @@
                       </div>
                     </div>
                   {{/each}}
+                  {{else}}
+                    <div class="padded row">
+                      <div class="ui container">
+                        You have no Notifications
+                      </div>
+                    </div>
+                  {{/if}}
                 </div>
               </div>
             </div>
           </div>
+
         {{else}}
           <div class="six wide column">
             <div id="Splash_Page" class="ui five row grid">
@@ -98,6 +107,7 @@
             </div>
           </div>
         {{/if}}
+
         <div class="ten wide column">
           <div class="ui very padded row container" style="padding-top: 15px;">
             {{>Suggested_Projects}}

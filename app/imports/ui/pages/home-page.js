@@ -48,6 +48,16 @@ Template.Home_Page.helpers({
     const project = Projects.findOne(projectId);
     return project['projectName'];
   },
+  hasRequests() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const requests = user['pendingRequests'];
+    if (requests.length == 0) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
 });
 
 Template.Home_Page.events({

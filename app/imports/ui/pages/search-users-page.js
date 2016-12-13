@@ -14,9 +14,11 @@ import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js'
 const utils = require('../../api/skill-graph/graphUtilities');
 
 // consts to use in reactive dicts
-let myCursor = Users.find();
+var foundUsers;
 Session.set("countFoundUsers", 0);
-let countFoundUsers = Session.get("countFoundUsers");
+var countFoundUsers = Session.get("countFoundUsers");
+
+var _dep = new Deps.Dependency();  // allows search result to update reactivley
 
 Template.Search_Users_Page.onCreated(function onCreated() {
   this.autorun(() => {
@@ -52,8 +54,10 @@ Template.Search_Users_Page.helpers({
       return false;
     }
   },
-  'iterateProjects': function() {
-    return myCursor.fetch();
+  'foundUsers': function() {
+    _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
+    console.log(foundUsers.fetch());
+    return foundUsers;
   },
 });
 
@@ -62,13 +66,18 @@ Template.Search_Users_Page.events({
     event.preventDefault();
 
     countFoundUsers = Session.set("countFoundUsers", 0);
-    let getInput = event.target.skills.value.split(',');
-    getInput = _.map(getInput, (skill) => { return utils.makeReadable(skill); });
+    foundUsers = undefined;
 
-    console.log('search input: ' + getInput);
+    let terms = event.target.skills.value.split(',');
+    terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
 
-    myCursor = Users.find({skills: { $in: getInput }});
-    countFoundUsers = Session.set("countFoundUsers", _.size(myCursor.fetch()));
+    console.log('search input: ' + terms);
+
+    foundUsers = Users.find({skills: { $in: terms }});
+    console.log(foundUsers.fetch());
+    countFoundUsers = Session.set("countFoundUsers", foundUsers.fetch().length);
+
+    _dep.changed();
 
     // // Prints to console the number of found projects
     // console.log('found projects: ' + Session.get("countFoundProjects"));
@@ -83,10 +92,10 @@ Template.Search_Users_Page.events({
     // console.log(myCursor.fetch()[0]);
     // console.log(myCursor.fetch()[0].projectName);
   },
-  'submit .form-clear': function (event, template) {
-    event.preventDefault();
-    countFoundUsers = Session.set("countFoundUsers", 0);
-    myCursor = Users.find({skills: ''});
-    countFoundUsers = Session.set("countFoundUsers", _.size(myCursor.fetch()));
-  },
+
+});
+
+Template.Search_Users_Page.onDestroyed(function () {
+  foundUsers = undefined;
+  countFoundUsers = Session.set("countFoundUsers", 0);
 });

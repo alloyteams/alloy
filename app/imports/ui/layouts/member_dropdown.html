@@ -17,33 +17,52 @@
       </div>
       {{#each member in projectMemberList _id}}
       <div class="member item">
-          <div class="ui basic label">
-            {{member}}
-          </div>
-          <div type="button" class="ui right floated negative icon button" id={{member}}>
-            <i class="remove icon"></i>
-          </div>
+        <div class="ui basic label">
+          {{member}}
+        </div>
+        <div type="button" class="ui right floated negative icon button" id={{member}}>
+          <i class="remove icon"></i>
+        </div>
       </div>
       {{/each}}
     </div>
   </div>
-  <div class="ui basic modal">
-    <div style="color: #A6CE39" class="header">
+  <div class="ui basic invalid modal">
+    <div style="color: red" class="header">
       Invalid Username
+    </div>
+    <div class="image content">
+      <div class="image">
+        <i style="color: red" class="user icon"></i>
+      </div>
+      <div style="color: red" class="description">
+        <p>The Username you've entered cannot be found. Please try again.</p>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui ok red basic inverted button">
+        <i class="checkmark icon"></i>
+        OK
+      </div>
+    </div>
+  </div>
+  <div class="ui basic success modal">
+    <div style="color: #A6CE39" class="header">
+      Success!
     </div>
     <div class="image content">
       <div class="image">
         <i style="color: #A6CE39" class="user icon"></i>
       </div>
       <div style="color: #A6CE39" class="description">
-        <p>The Username you've entered cannot be found. Please try again.</p>
+        <p>You have successfully invited the user to join the project!</p>
       </div>
     </div>
     <div class="actions">
-        <div class="ui ok green basic inverted button">
-          <i class="checkmark icon"></i>
-          OK
-        </div>
+      <div class="ui ok green basic inverted button">
+        <i class="checkmark icon"></i>
+        OK
+      </div>
     </div>
   </div>
 </template>
