@@ -7,6 +7,7 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
+import {Users, UsersSchema} from '../../api/users/users.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -48,6 +49,21 @@ Template.Project_Profile_Page.helpers({
     // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return project && project[fieldVal];
+  },
+  userDataField(fieldVal) {
+    // app/imports/startup/client/router.js defines the 'id' vs '_id' bindings
+    //   see app/imports/ui/pages/home-page.html
+    // uses the id param specified in page that routed to this page
+    //   see https://github.com/kadirahq/flow-router#routes-definition
+    const user = Users.findOne({ _id: FlowRouter.getParam('_id') });
+    // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
+    // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
+    return user && user[fieldVal];
+  },
+  getMyId: function() {
+    const userName = Meteor.user().profile.name;
+    const userNameId = Users.find({ 'username': userName }).fetch()[0]['_id'];
+    return userNameId;
   },
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
@@ -155,7 +171,7 @@ Template.Project_Profile_Page.events({
       Projects.update({ _id: project._id }, { $pull: { joinRequests: memberToAdd } });  // assumes uniq. usernames
     }
   },
-  'click .ui.green.button' (event, instance){
+  'click .ui.green.join.button' (event, instance){
     event.preventDefault();
     const memberToAdd = Meteor.user().profile.name;
     const project = Projects.findOne(FlowRouter.getParam('_id'));

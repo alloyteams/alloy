@@ -40,6 +40,23 @@ Accounts.onCreateUser(function (options, user) {
    * */
 
   /* initialize a new user */
+  const defaultUser = {
+    username: 'default',  // if not using UH cas, use: user.username
+    skills: ['Hugging'],
+    interests: ['working together'],
+    events: [],
+    projects: [],
+    adminProjects: [],
+    followedPeople: [],  // In real cases, would need guarantee that added user existed
+    followedProjects: [],
+    followedBy: [],
+    isSiteAdmin: false,
+    pendingRequests: [],
+  };
+  let defaultUserExists = Users.findOne({ username: defaultUser.username });
+  if (!(defaultUserExists)) {
+    Users.insert(defaultUser);
+  }
 
   // create a default club to be joined by all users (for testing)
   // FIXME: is this the bet way to have a default collection obj. accessable at startup (may also want to add validation)?
@@ -113,7 +130,6 @@ Accounts.onCreateUser(function (options, user) {
   // This is a test of adding members to projects dynamically, rather than at project declaration.
   // add this user as a member and admin of the default project array fields
   // see https://docs.mongodb.com/manual/reference/operator/update/
-  // TODO: add function to Projects collection api that allows user.projects and project.members to be set simultaneously
   Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { members: newUser.username } });
   Projects.update({ projectName: defaultProject.projectName }, { $addToSet: { admins: newUser.username } });
 

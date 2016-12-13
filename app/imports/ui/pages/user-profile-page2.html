@@ -6,7 +6,13 @@
        style="margin-top: 30px;">
     <!--TODO: add project title-->
     <div class="item">
-      <h2>{{ userDataField "firstName" }} {{ userDataField "lastName" }}</h2>
+      <h2 class="ui header">
+        <i class="user icon"></i>
+        <div class="content">
+          {{ userDataField "firstName" }} {{ userDataField "lastName" }}
+          <div class="sub header">{{ userDataField "username" }}@hawaii.edu</div>
+        </div>
+      </h2>
       <hr/>
     </div>
     <div class="ui grid">
@@ -29,19 +35,15 @@
       <div class="eleven wide column">
         <div class="ui segment">
           <a class="ui ribbon label"
-             style="background-color:#a6ce39; color:white;"><h3>
-            Biography</h3>
+             style="background-color:#98be2f; color:white;"><h3>
+            About Me</h3>
           </a>
-          <br/>
-          <br/>
-          <i class="mail icon"></i><a>{{ userDataField "username" }}
-          @hawaii.edu</a>
           <br/>
           <p>{{ userDataField "bio" }}</p>
         </div>
         <div class="ui segment">
           <a class="ui ribbon label"
-             style="background-color:#aed24c; color:white;"><h3>My
+             style="background-color:#a6ce39; color:white;"><h3>My
             Skills</h3></a>
           <br/>
           <br/>
@@ -54,7 +56,7 @@
         <div class="ui segment">
           <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
           <a class="ui ribbon label"
-             style="background-color:#b7d760; color:white;"><h3>Current
+             style="background-color:#afd34d; color:white;"><h3>Current
             Projects</h3></a>
           <div class="ui relaxed divided list">
             {{#each projectId in (userDataField "projects")}}

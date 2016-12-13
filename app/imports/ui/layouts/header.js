@@ -21,4 +21,10 @@ Template.Header.onCreated(function onCreated() {
       const userNameId = Users.find({ 'username': userName }).fetch()[0]['_id'];
       return userNameId;
     },
+
+    numberRequests() {
+      const user = Users.findOne({ username: Meteor.user().profile.name });
+      const requests = user['pendingRequests'];
+      return requests.length;
+    },
   });

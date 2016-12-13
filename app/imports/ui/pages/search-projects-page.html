@@ -15,54 +15,23 @@
               <i class="dropdown icon"></i>
               <div class="default text">Skills</div>
               <div class="menu">
-                <div class="item" data-value="Angular">Angular</div>
-                <div class="item" data-value="CSS">CSS</div>
-                <div class="item" data-value="Graphic Design">Graphic Design
-                </div>
-                <div class="item" data-value="Ember">Ember</div>
-                <div class="item" data-value="HTML">HTML</div>
-                <div class="item" data-value="Information Architecture">
-                  Information Architecture
-                </div>
-                <div class="item" data-value="Javascript">Javascript</div>
-                <div class="item" data-value="Mechanical Engineering">
-                  Mechanical
-                  Engineering
-                </div>
-                <div class="item" data-value="Meteor">Meteor</div>
-                <div class="item" data-value="NodeJS">NodeJS</div>
-                <div class="item" data-value="Plumbing">Plumbing</div>
-                <div class="item" data-value="Python">Python</div>
-                <div class="item" data-value="Rails">Rails</div>
-                <div class="item" data-value="React">React</div>
-                <div class="item" data-value="Repair">Kitchen Repair</div>
-                <div class="item" data-value="Ruby">Ruby</div>
-                <div class="item" data-value="UI Design">UI Design</div>
-                <div class="item" data-value="User Experience">User Experience
-                </div>
                 {{#each vertex in getGraphSkills}}
-                <div class="item"
-                     data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
-                </div>
+                  <div class="item"
+                       data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+                  </div>
                 {{/each}}
 
               </div>
             </div>
           </div>
 
-          <button type="submit" class="ui primary blue button" style="margin: 15px auto 0 auto;">
+          <button type="submit" class="ui primary blue button"
+                  style="margin: 15px auto 0 auto;">
             search
           </button>
         </form>
       </div>
 
-      <div class="ui container">
-        <form class="form-clear">
-          <button type="submit" class="ui primary blue button" style="margin: 10px auto 0 auto;">
-            clear
-          </button>
-        </form>
-      </div>
     </div>
   </div>
 
@@ -73,26 +42,30 @@
   <!--</div>-->
 
   {{#if compareFound}}
-  {{#each iterateProjects}}
-  <div class="ui container"
-       style="margin-top: 30px;">
-    <div class="ui segment">
-      <a href="{{ pathFor 'Project_Profile_Page' _id=(_id) }}" class="ui ribbon label"
-         style="background-color:#27aae1; color:white;">
-        <h3>{{projectName}}</h3>
-      </a>
-      <p style="margin-top: 5px;">{{bio}}</p>
-    </div>
-  </div>
-  {{/each}}
-  {{resetCompareBoolean}}
+    {{#each project in foundProjects}}
+      <div class="ui container"
+           style="margin-top: 30px;">
+        <div class="ui segment">
+          <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}"
+             class="ui ribbon label"
+             style="background-color:#27aae1; color:white;">
+            <h3>{{project.projectName}}</h3>
+          </a>
+          <p style="margin-top: 5px;"><b>Skills
+            Wanted: </b> {{project.skillsWanted}} </p>
+          <p style="margin-top: 5px;">{{project.bio}}</p>
+        </div>
+      </div>
+    {{/each}}
+    {{resetCompareBoolean}}
   {{else}}
-  <div class="ui container"
-       style="margin-top: 30px;">
-    <div class="ui segment">
-      <p style="margin-top: 5px;">Enter a skill associated with your desired Projects query.</p>
+    <div class="ui container"
+         style="margin-top: 30px;">
+      <div class="ui segment">
+        <p style="margin-top: 5px;">Enter a skill associated with your desired
+          Projects query.</p>
+      </div>
     </div>
-  </div>
   {{/if}}
 
 </template>
