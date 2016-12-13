@@ -60,23 +60,6 @@ Accounts.onCreateUser(function (options, user) {
 
   // create a default club to be joined by all users (for testing)
   // FIXME: is this the bet way to have a default collection obj. accessable at startup (may also want to add validation)?
-  const defaultUser = {
-    username: 'default',  // if not using UH cas, use: user.username
-    skills: ['Hugging'],
-    interests: ['working together'],
-    events: [],
-    projects: [],
-    adminProjects: [],
-    followedPeople: [],  // In real cases, would need guarantee that added user existed
-    followedProjects: [],
-    followedBy: [],
-    isSiteAdmin: false,
-    pendingRequests: [],
-  };
-  let defaultUserExists = Users.findOne({ username: defaultUser.username });
-  if (!(defaultUserExists)) {
-    Users.insert(defaultUser);
-  }
   // NOTE: The const declaration creates a read-only reference to a value.
   // It does not mean the value it holds is immutable, just that the variable
   // identifier cannot be reassigned

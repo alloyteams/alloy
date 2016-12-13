@@ -235,6 +235,45 @@ Template.Project_Profile_Page.events({
     }
     Projects.update({ _id: project['_id'] }, { $set: { joinRequests: pendingRequests } });
   },
+  /** Leave project **/
+  'click .ui.red.leave.button': function (event, instance) {
+    /** Remove user from project **/
+    if (confirm('Are you sure you want to leave the project?')) {
+      /** Removing user event **/
+      //Debug Console Log
+      //console.log('Trying to click');
+      //console.log(event);
+      event.preventDefault();
+      const userToDelete = Meteor.user().profile.name;
+      const project = Projects.findOne(FlowRouter.getParam('_id'));
+      let newMembers = project.members;
+      let indexOfUser = newMembers.indexOf(userToDelete);
+      if (indexOfUser > -1) {
+        newMembers.splice(indexOfUser, 1);
+      }
+      let newAdmins = project.admins;
+      indexOfUser = newAdmins.indexOf(userToDelete);
+      if (indexOfUser > -1) {
+        newAdmins.splice(indexOfUser, 1);
+      }
+      /** Remove user from project **/
+      Projects.update({ _id: project['_id'] }, { $set: { members: newMembers } });
+      Projects.update({ _id: project['_id'] }, { $set: { admins: newAdmins } });
+      /** Remove project from User **/
+      const user = Users.find({ 'username': userToDelete }).fetch()[0];
+      //Debug Console Log
+      //console.log(user);
+      const userId = user['_id'];
+      let userProjects = user['projects'];
+      const indexOfProject = userProjects.indexOf(project._id);
+      if (indexOfProject > -1) {
+        userProjects.splice(indexOfProject, 1);
+      }
+      Users.update({ _id: userId }, { $set: { projects: userProjects } });
+      //Debug Console Log
+      //console.log(Users.findOne(userId));
+    }
+  },
 //   // logic for 'submit' event for 'contact-data-form' 'button'
 //   'submit .contact-data-form'(event, instance) {
 //     event.preventDefault();
