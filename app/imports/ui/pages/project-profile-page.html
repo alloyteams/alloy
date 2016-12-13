@@ -77,7 +77,7 @@
           {{#if notMember}}
           <div class="item">
             {{#if notRequestedToJoin}}
-            <div class="ui green button">
+            <div class="ui green join button">
               <i class="external icon"></i>
               Request to Join Project!
             </div>
@@ -180,6 +180,29 @@
     <!-- testing and proof-of-concept section -->
     <!-- moved this table to project-profile-debug-table.html because some content in it was breaking the html-->
 
+  </div>
+    {{else}}
+  <div class="ui container"
+       style="margin-top: 30px;">
+    <div class="item"><h2>{{ projectDataField "projectName" }}</h2>
+      <hr/>
+    </div>
+  <div class="ui grid">
+    <div class="five wide column">
+      <img class="ui rounded image"
+           src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
+    </div>
+    <div class="eleven wide column">
+      <div class="ui segment">
+        <a class="ui ribbon label"
+           style="background-color:#27aae1; color:white;"><h3>About this Project</h3>
+        </a>
+        <p>{{ projectDataField "bio" }}</p>
+      </div>
+    </div>
+  </div>
+    <div class="ui clearing divider"></div>
+    <h1 class="ui rounded centered header" style="background:#A6CE39;padding:50px;color:white;">Log in to see more!</h1>
   </div>
   {{/if}}
   {{/if}}
