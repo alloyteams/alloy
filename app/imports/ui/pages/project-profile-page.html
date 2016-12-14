@@ -170,32 +170,6 @@
       </div>
     </div>
 
-    <ul>
-      <!-- TODO:should only be visible if currentUser is admin -->
-      <li><h5>Join requests (TODO: ONLY MAKE VISIBLE IF ADMIN):</h5></li>
-      {{#if projectDataField "joinRequests" }}
-      {{#each user in (projectDataField "joinRequests")}}
-      <li>{{ user }}
-        <button class="ui inverted yellow button addMember"
-                value="{{ user }}">
-          <h4>Add User</h4>
-        </button>
-      </li>
-      {{/each}}
-      {{else}}
-      No pending requests
-      {{/if}}
-    </ul>
-
-    <!-- user home page logic -->
-    {{#if homeActiveClass}}
-    {{/if}}
-
-
-    <!-- user events page logic -->
-    {{#if eventsActiveClass}}
-    {{/if}}
-
     <!-- testing and proof-of-concept section -->
     <!-- moved this table to project-profile-debug-table.html because some content in it was breaking the html-->
 
