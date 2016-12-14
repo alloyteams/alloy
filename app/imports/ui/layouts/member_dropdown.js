@@ -113,12 +113,16 @@ Template.Member_Dropdown.events({
       const project = Projects.findOne(this.projectId);
       let userRequests = user['pendingRequests'];
       console.log(userRequests);
-      let indexOfProj = userRequests.indexOf(project['_id']);
-      if (indexOfProj === -1) {
+      let indexOfRequest = userRequests.indexOf(project['_id']);
+      let indexOfProj = user['projects'].indexOf(project['_id']);
+      if (indexOfRequest === -1 && indexOfProj === -1) {
         userRequests.push(project['_id']);
+        Users.update({ _id: userId }, { $set: { pendingRequests: userRequests } });
+        $('.ui.basic.success.modal')
+            .modal('show')
+        ;
       }
-      Users.update({ _id: userId }, { $set: { pendingRequests: userRequests } });
-      $('.ui.basic.success.modal')
+      $('.ui.basic.existing.modal')
           .modal('show')
       ;
     }
