@@ -26,6 +26,13 @@ Template.Member_Dropdown.helpers({
     const project = Projects.findOne(_id);
     return project && project['members'];
   },
+  admin(member) {
+    const project = Projects.findOne(this.projectId);
+    if (_.contains(project.admins, member)) {
+      return true;
+    }
+    return false;
+  },
 });
 
 Template.Member_Dropdown.events({
@@ -65,6 +72,27 @@ Template.Member_Dropdown.events({
       //Debug Console Log
       //console.log(Users.findOne(userId));
     }
+  },
+  /** Escalate user to Admin level **/
+  'click .ui.icon.admin.button': function (event, instance) {
+    event.preventDefault();
+    const newAdmin = event.currentTarget.id;
+    const project = Projects.findOne(this.projectId);
+    let newAdmins = project.admins;
+    indexOfUser = newAdmins.indexOf(newAdmin);
+    if (indexOfUser === -1) {
+      newAdmins.push(newAdmin);
+    }
+    Projects.update({ _id: project['_id'] }, { $set: { admins: newAdmins } });
+    /** Update user **/
+    const user = Users.findOne({ 'username': newAdmin }).fetch()[0];
+    const userId = user['_id'];
+    let userAdminProjects = user['adminProjects'];
+    const indexOfProject = userAdminProjects.indexOf(project._id);
+    if (indexOfProject === -1) {
+      userAdminProjects.push(project._id);
+    }
+    Users.update({ _id: userId }, { $set: { adminProjects: userAdminProjects } });
   },
   /** New Add User method using notifications **/
   'click .ui.plus.icon.button': function (event, instance) {
