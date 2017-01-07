@@ -6,7 +6,8 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'; // to access Meteor.users collection
-import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
+import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
+import {Users, UsersSchema} from '../../api/users/users.js';
 import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
 import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js'
 
@@ -78,7 +79,19 @@ Template.Search.events({
 
     _dep.changed();
   },
+  'submit .form-register-users': function (event, template) {
+    event.preventDefault();
 
+    countFoundProjects = Session.set("countFoundProjects", 0);
+
+    let terms = event.target.skills.value.split(',');
+    terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
+
+    foundProjects = Projects.find({skillsWanted: { $in: terms }});
+    countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
+
+    _dep.changed();
+  },
 });
 
 Template.Search.onDestroyed(function () {
