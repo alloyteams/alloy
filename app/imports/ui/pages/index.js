@@ -50,3 +50,6 @@ import './search-users-page.js';
 
 import './site-admin-page.html';
 import './site-admin-page.js';
+
+import './search-page-2.html';
+import './search-page-2.js';

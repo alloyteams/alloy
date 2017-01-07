@@ -65,6 +65,13 @@ FlowRouter.route('/add-contact', {
   },
 });
 
+FlowRouter.route('/search2', {
+  name: 'Search',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'Search' });
+  },
+});
+
 FlowRouter.route('/edit-contact/:id', {
   name: 'Edit_Contact_Page',
   action() {

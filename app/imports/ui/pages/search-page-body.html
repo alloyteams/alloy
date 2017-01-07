@@ -1,87 +1,15 @@
 <template name="Search_Page_Body">
   {{> Header}}
 
-  <div class="ui container">
-    <div class="ui grid">
-      <div class="eight wide column">
-        <div class="ui div container" style="margin: 30px auto 0 auto;">
-          <div class="ui raised padded segment">
-            <h1>
-              <img style="height:30px; width:auto"
-                   src="/images/alloy-icon.png"> Search Projects
-            </h1>
-            <div class="ui container" style="margin: 5px auto 0 auto;">
-              <form class="form-register-project">
-                <div class="field">
-                  <div class="ui fluid multiple search selection dropdown">
-                    <input name="skills" id="skills" type="hidden">
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Skills</div>
-                    <div class="menu">
-                      {{#each vertex in getGraphSkills}}
-                      <div class="item"
-                           data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
-                      </div>
-                      {{/each}}
+  <div class="ui container" style="margin: 30px auto 0 auto;">
+    <a class="{{ isActiveRoute 'Search_Projects_Page'}}" href="{{ pathFor 'Search_Projects_Page' }}">
+      <button type="submit" class="register">Find Projects</button>
+    </a>
 
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" class="ui primary blue button"
-                        style="margin: 15px auto 0 auto;">
-                  search
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="eight wide column">
-        <div class="ui div container" style="margin: 30px auto 0 auto;">
-          <div class="ui raised padded segment">
-            <h1>
-              <img style="height:30px; width:auto"
-                   src="/images/alloy-icon.png"> Search Users
-            </h1>
-            <div class="ui container" style="margin: 5px auto 0 auto;">
-              <form class="form-register-user">
-                <!--<input type="text" name="searchInput" placeholder="Find projects">-->
-                <div class="field">
-                  <div class="ui fluid multiple search selection dropdown">
-                    <input name="skills" id="skills" type="hidden">
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Skills</div>
-                    <div class="menu">
-                      {{#each vertex in getGraphSkills}}
-                      <div class="item"
-                           data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
-                      </div>
-                      {{/each}}
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" class="ui primary blue button"
-                        style="margin: 15px auto 0 auto;">
-                  search
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <a class="{{ isActiveRoute 'Search_Users_Page'}}" href="{{ pathFor 'Search_Users_Page' }}">
+      <button type="submit" class="register">Find Users</button>
+    </a>
   </div>
-
-  <!--<div class="ui container" style="margin: 30px auto 0 auto;">-->
-  <!--<a class="{{ isActiveRoute 'Search_Projects_Page'}}" href="{{ pathFor 'Search_Projects_Page' }}">-->
-  <!--<button type="submit" class="register">Find Projects</button>-->
-  <!--</a>-->
-
-  <!--<a class="{{ isActiveRoute 'Search_Users_Page'}}" href="{{ pathFor 'Search_Users_Page' }}">-->
-  <!--<button type="submit" class="register">Find Users</button>-->
-  <!--</a>-->
-  <!--</div>-->
 
   {{>Template.dynamic template=search_main}}
   {{> Footer}}
