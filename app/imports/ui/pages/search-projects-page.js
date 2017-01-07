@@ -69,25 +69,14 @@ Template.Search_Projects_Page.events({
     event.preventDefault();
 
     countFoundProjects = Session.set("countFoundProjects", 0);
+
     let terms = event.target.skills.value.split(',');
     terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
-
-    // console.log('search input: ' + getInput);
 
     foundProjects = Projects.find({skillsWanted: { $in: terms }});
     countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
 
     _dep.changed();
-
-    // // Prints to console the number of found projects
-    // console.log('found projects: ' + Session.get("countFoundProjects"));
-    // // .fetch() makes an object Array of what is inside the myCursor variable
-    // console.log(myCursor.fetch());
-    // // _.size() counts the number of items in the array
-    // console.log(_.size(myCursor.fetch()));
-    // // i'm calling on the first item in the myCursor.fetch() array
-    // console.log(myCursor.fetch()[0]);
-    // console.log(myCursor.fetch()[0].projectName);
   },
 
 });
