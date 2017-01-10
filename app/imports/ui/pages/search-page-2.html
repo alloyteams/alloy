@@ -1,10 +1,6 @@
 <template name="Search">
 
   <div class="ui container">
-    <h1>TEST</h1>
-  </div>
-
-  <div class="ui container">
     <div class="ui grid">
       <div class="eight wide column">
         <div class="ui div container" style="margin: 30px auto 0 auto;">
@@ -77,29 +73,47 @@
   </div>
 
   {{#if compareFound}}
-  {{#each project in foundProjects}}
+    {{#each project in foundProjects}}
+    <div class="ui container"
+         style="margin-top: 30px;">
+      <div class="ui segment">
+        <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}"
+           class="ui ribbon label"
+           style="background-color:#27aae1; color:white;">
+          <h3>{{project.projectName}}</h3>
+        </a>
+        <p style="margin-top: 5px;"><b>Skills
+          Wanted: </b> {{project.skillsWanted}} </p>
+        <p style="margin-top: 5px;">{{project.bio}}</p>
+      </div>
+    </div>
+    {{/each}}
+    {{resetCompareBoolean}}
+
+  {{#each user in foundUsers}}
   <div class="ui container"
        style="margin-top: 30px;">
     <div class="ui segment">
-      <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}"
+      <!--TODO: NEED A USER PROFILE PAGE-->
+      <!--<a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}" class="ui ribbon label"-->
+      <!--style="background-color:#27aae1; color:white;">-->
+      <a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}"
          class="ui ribbon label"
          style="background-color:#27aae1; color:white;">
-        <h3>{{project.projectName}}</h3>
+        <h3>{{user.username}}</h3>
       </a>
-      <p style="margin-top: 5px;"><b>Skills
-        Wanted: </b> {{project.skillsWanted}} </p>
-      <p style="margin-top: 5px;">{{project.bio}}</p>
+      <p style="margin-top: 5px;"><b>Skills: </b>{{user.skills}}</p>
     </div>
   </div>
   {{/each}}
   {{resetCompareBoolean}}
   {{else}}
-  <div class="ui container"
-       style="margin-top: 30px;">
-    <div class="ui segment">
-      <p style="margin-top: 5px;">Enter a skill associated with your desired query.</p>
+    <div class="ui container"
+         style="margin-top: 30px;">
+      <div class="ui segment">
+        <p style="margin-top: 5px;">Enter a skill associated with your desired query.</p>
+      </div>
     </div>
-  </div>
   {{/if}}
 
 </template>
