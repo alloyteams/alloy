@@ -20,8 +20,12 @@ const displayErrorMessages = 'displayErrorMessages';
 var foundProjects;
 Session.set("countFoundProjects", 0);
 var countFoundProjects = Session.get("countFoundProjects");
+var foundUsers;
+Session.set("countFoundUsers", 0);
+var countFoundUsers = Session.get("countFoundUsers");
 
-var _dep = new Deps.Dependency();  // allows search result to update reactivley
+// allows search result to update reactivley
+var _dep = new Deps.Dependency();
 
 Template.Search.onCreated(function onCreated() {
   this.autorun(() => {
@@ -51,7 +55,7 @@ Template.Search.helpers({
     return countFoundProjects = Session.get("countFoundProjects");
   },
   compareFound() {
-    if (Session.get("countFoundProjects") > 0)
+    if (Session.get("countFoundProjects") > 0 || Session.get("countFoundUsers") > 0)
     {
       return true;
     } else {
@@ -62,6 +66,11 @@ Template.Search.helpers({
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
     console.log(foundProjects.fetch());
     return foundProjects;
+  },
+  'foundUsers': function() {
+    _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
+    console.log(foundUsers.fetch());
+    return foundUsers;
   },
 });
 
@@ -82,19 +91,21 @@ Template.Search.events({
   'submit .form-register-users': function (event, template) {
     event.preventDefault();
 
-    countFoundProjects = Session.set("countFoundProjects", 0);
+    countFoundUsers = Session.set("countFoundUsers", 0);
 
     let terms = event.target.skills.value.split(',');
     terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
 
-    foundProjects = Projects.find({skillsWanted: { $in: terms }});
-    countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
+    foundUsers = Users.find({skills: { $in: terms }});
+    countFoundUsers = Session.set("countFoundUsers", foundUsers.fetch().length);
 
     _dep.changed();
   },
 });
 
 Template.Search.onDestroyed(function () {
-  foundProjects = undefined
+  foundProjects = undefined;
   countFoundProjects = Session.set("countFoundProjects", 0);
+  foundUsers = undefined;
+  countFoundUsers = Session.set("countFoundUsers", 0);
 });
