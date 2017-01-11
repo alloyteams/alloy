@@ -86,6 +86,11 @@ Template.Search.events({
     foundProjects = Projects.find({skillsWanted: { $in: terms }});
     countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
 
+    // allows both projects and user queries to reactively update
+    countFoundUsers = Session.set("countFoundUsers", 0);
+    foundUsers = Users.find({skills: ''});
+    countFoundUsers = Session.set("countFoundUsers", foundUsers.fetch().length);
+
     _dep.changed();
   },
   'submit .form-register-users': function (event, template) {
@@ -98,6 +103,11 @@ Template.Search.events({
 
     foundUsers = Users.find({skills: { $in: terms }});
     countFoundUsers = Session.set("countFoundUsers", foundUsers.fetch().length);
+
+    // allows both projects and user queries to reactively update
+    countFoundProjects = Session.set("countFoundProjects", 0);
+    foundProjects = Projects.find({skillsWanted: ''});
+    countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
 
     _dep.changed();
   },
