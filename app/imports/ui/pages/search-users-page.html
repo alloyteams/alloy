@@ -8,7 +8,6 @@
       </h1>
       <div class="ui container" style="margin: 5px auto 0 auto;">
         <form class="form-register">
-          <!--<input type="text" name="searchInput" placeholder="Find projects">-->
           <div class="field">
             <div class="ui fluid multiple search selection dropdown">
               <input name="skills" id="skills" type="hidden">
@@ -20,51 +19,39 @@
                        data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
                   </div>
                 {{/each}}
-
               </div>
             </div>
           </div>
 
-          <button type="submit" class="ui primary blue button"
-                  style="margin: 15px auto 0 auto;">
+          <button type="submit" class="ui primary blue button" style="margin: 15px auto 0 auto;">
             search
           </button>
         </form>
       </div>
-
     </div>
   </div>
 
-  <!--Verifying the number of projects found after entering your search input-->
-  <!--Here for testing purposes. Delete later.-->
-  <!--<div class="ui text container">-->
-  <!--Users Found: {{projNum}}-->
-  <!--</div>-->
-
   {{#if compareFound}}
     {{#each user in foundUsers}}
-      <div class="ui container"
-           style="margin-top: 30px;">
+      <div class="ui container" style="margin-top: 30px;">
         <div class="ui segment">
-          <!--TODO: NEED A USER PROFILE PAGE-->
-          <!--<a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}" class="ui ribbon label"-->
-          <!--style="background-color:#27aae1; color:white;">-->
-          <a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}"
-             class="ui ribbon label"
-             style="background-color:#27aae1; color:white;">
+          <a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}" class="ui ribbon label" style="background-color:#27aae1; color:white;">
             <h3>{{user.username}}</h3>
           </a>
-          <p style="margin-top: 5px;"><b>Skills: </b>{{user.skills}}</p>
+          <p style="margin-top: 5px;">
+            <b>Skills: </b>
+            {{user.skills}}
+          </p>
         </div>
       </div>
     {{/each}}
     {{resetCompareBoolean}}
   {{else}}
-    <div class="ui container"
-         style="margin-top: 30px;">
+    <div class="ui container" style="margin-top: 30px;">
       <div class="ui segment">
-        <p style="margin-top: 5px;">Enter a skill associated with your desired
-          Users query.</p>
+        <p style="margin-top: 5px;">
+          Enter a skill associated with your desired Users query.
+        </p>
       </div>
     </div>
   {{/if}}

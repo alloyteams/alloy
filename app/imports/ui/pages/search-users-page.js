@@ -71,26 +71,10 @@ Template.Search_Users_Page.events({
     let terms = event.target.skills.value.split(',');
     terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
 
-    console.log('search input: ' + terms);
-
     foundUsers = Users.find({skills: { $in: terms }});
-    console.log(foundUsers.fetch());
     countFoundUsers = Session.set("countFoundUsers", foundUsers.fetch().length);
 
     _dep.changed();
-
-    // // Prints to console the number of found projects
-    // console.log('found projects: ' + Session.get("countFoundProjects"));
-
-    // // .fetch() makes an object Array of what is inside the myCursor variable
-    // console.log(myCursor.fetch());
-
-    // // _.size() counts the number of items in the array
-    // console.log(_.size(myCursor.fetch()));
-
-    // // i'm calling on the first item in the myCursor.fetch() array
-    // console.log(myCursor.fetch()[0]);
-    // console.log(myCursor.fetch()[0].projectName);
   },
 
 });

@@ -1,5 +1,7 @@
 <template name="Search_Page_Body">
   {{> Header}}
+  <!--  FIXME: adding #if Template.subscriptionsReady causes the Skills Wanted dropdown not to work -->
+  {{#if currentUser}}
 
   <div class="ui container" style="margin: 30px auto 0 auto;">
     <a class="{{ isActiveRoute 'Search_Projects_Page'}}" href="{{ pathFor 'Search_Projects_Page' }}">
@@ -12,5 +14,6 @@
   </div>
 
   {{>Template.dynamic template=search_main}}
+  {{/if}}
   {{> Footer}}
 </template>
