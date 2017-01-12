@@ -1,4 +1,6 @@
 <template name="Search">
+  <!--  FIXME: adding #if Template.subscriptionsReady causes the Skills Wanted dropdown not to work -->
+  {{#if currentUser}}
 
   <div class="ui container">
     <div class="ui grid">
@@ -11,7 +13,6 @@
             </h1>
             <div class="ui container" style="margin: 5px auto 0 auto;">
               <form class="form-register-projects">
-                <!--<input type="text" name="searchInput" placeholder="Find projects">-->
                 <div class="field">
                   <div class="ui fluid multiple search selection dropdown">
                     <input name="skills" id="skills" type="hidden">
@@ -74,38 +75,34 @@
 
   {{#if compareFound}}
     {{#each project in foundProjects}}
-    <div class="ui container"
-         style="margin-top: 30px;">
-      <div class="ui segment">
-        <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}"
-           class="ui ribbon label"
-           style="background-color:#27aae1; color:white;">
-          <h3>{{project.projectName}}</h3>
-        </a>
-        <p style="margin-top: 5px;"><b>Skills
-          Wanted: </b> {{project.skillsWanted}} </p>
-        <p style="margin-top: 5px;">{{project.bio}}</p>
+      <div class="ui container" style="margin-top: 30px;">
+        <div class="ui segment">
+          <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}"
+             class="ui ribbon label"
+             style="background-color:#27aae1; color:white;">
+            <h3>{{project.projectName}}</h3>
+          </a>
+          <p style="margin-top: 5px;"><b>Skills
+            Wanted: </b> {{project.skillsWanted}} </p>
+          <p style="margin-top: 5px;">{{project.bio}}</p>
+        </div>
       </div>
-    </div>
     {{/each}}
 
-  {{#each user in foundUsers}}
-  <div class="ui container"
-       style="margin-top: 30px;">
-    <div class="ui segment">
-      <!--TODO: NEED A USER PROFILE PAGE-->
-      <!--<a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}" class="ui ribbon label"-->
-      <!--style="background-color:#27aae1; color:white;">-->
-      <a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}"
-         class="ui ribbon label"
-         style="background-color:#27aae1; color:white;">
-        <h3>{{user.username}}</h3>
-      </a>
-      <p style="margin-top: 5px;"><b>Skills: </b>{{user.skills}}</p>
-    </div>
-  </div>
-  {{/each}}
-  {{resetCompareBoolean}}
+    {{#each user in foundUsers}}
+      <div class="ui container" style="margin-top: 30px;">
+        <div class="ui segment">
+          <a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}"
+             class="ui ribbon label"
+             style="background-color:#98be2f; color:white;">
+            <h3>{{user.username}}</h3>
+          </a>
+          <p style="margin-top: 5px;"><b>Skills: </b>{{user.skills}}</p>
+        </div>
+      </div>
+    {{/each}}
+
+    {{resetCompareBoolean}}
   {{else}}
     <div class="ui container"
          style="margin-top: 30px;">
@@ -115,4 +112,5 @@
     </div>
   {{/if}}
 
+  {{/if}}
 </template>
