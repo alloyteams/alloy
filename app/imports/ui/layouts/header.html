@@ -4,11 +4,11 @@
        style="max-height: 150px" -->
 
   <!-- side menu / TOC -->
-  <div class="ui top inverted tabular menu" id="top-menu">
+  <div class="ui top inverted tabular stackable menu" id="top-menu">
     <div class="ui container">
 
       <a class="item" href="{{pathFor 'Home_Page'}}">
-        <img class="ui fluid tiny image" src="/images/alloy-bare-wordmark.png">
+        <img class="ui centered fluid tiny image" src="/images/alloy-bare-wordmark.png">
         {{#if numberRequests}}
         <div class="ui label">{{ numberRequests }}</div>
         {{/if}}

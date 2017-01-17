@@ -1,7 +1,7 @@
 <template name="Edit_Profile_Page">
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections. -->
   <!-- FIXME: Had to remove usage of #if Template subscription ready because it causes issues with dropdown. A workaround should be looked into if possible but for now it 'should' work. More info: https://forums.meteor.com/t/have-you-also-noticed-that-semantic-ui-dropdowns-dont-work-well-with-blaze-conditionals/25720/6 -->
-  <div class="ui container" style="margin: 20px">
+  <div class="ui container" id="edit-profile-form">
     <form class="ui form user-data-form">
       <h4 class="ui dividing header"><i class="edit icon"></i>Edit User Profile</h4>
 

@@ -15,7 +15,7 @@
       </h2>
       <hr/>
     </div>
-    <div class="ui grid">
+    <div class="ui stackable grid">
       <div class="five wide column">
         <!--TODO: replace with profile image if we want to use profile images-->
         <img class="ui rounded image"
@@ -34,17 +34,16 @@
 
       <div class="eleven wide column">
         <div class="ui segment">
-          <a class="ui ribbon label"
-             style="background-color:#98be2f; color:white;"><h3>
-            About Me</h3>
+          <a class="ui ribbon label about-me-ribbon">
+            <h3>About Me</h3>
           </a>
           <br/>
           <p>{{ userDataField "bio" }}</p>
         </div>
         <div class="ui segment">
-          <a class="ui ribbon label"
-             style="background-color:#a6ce39; color:white;"><h3>My
-            Skills</h3></a>
+          <a class="ui ribbon label" id="my-skills-ribbon">
+            <h3>MySkills</h3>
+          </a>
           <br/>
           <br/>
           <div class="ui labels">
@@ -55,9 +54,9 @@
         </div>
         <div class="ui segment">
           <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
-          <a class="ui ribbon label"
-             style="background-color:#afd34d; color:white;"><h3>Current
-            Projects</h3></a>
+          <a class="ui ribbon label" id="my-current-projects-ribbon">
+            <h3>Current Projects</h3>
+          </a>
           <div class="ui relaxed divided list">
             {{#each projectId in (userDataField "projects")}}
             <div class="item">

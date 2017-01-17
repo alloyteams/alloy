@@ -1,9 +1,10 @@
 <template name="Search_Page_Body">
+  <!-- TODO: search-page-body.html && search-page-body.js should be moved to /ui/layouts/ folder -->
   {{> Header}}
   <!--  FIXME: adding #if Template.subscriptionsReady causes the Skills Wanted dropdown not to work -->
   {{#if currentUser}}
 
-  <div class="ui container" style="margin: 30px auto 0 auto;">
+  <div class="ui container search-page-main-containers">
     <a class="{{ isActiveRoute 'Search_Projects_Page'}}" href="{{ pathFor 'Search_Projects_Page' }}">
       <button type="submit" class="register">Find Projects</button>
     </a>
