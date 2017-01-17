@@ -3,6 +3,11 @@ body {
   background-color: white;
 }
 
+footer {
+  padding-top: 15px;
+  margin-bottom: 20px;
+}
+
 #login-buttons a,
 .accounts-dialog a {
   color: white;
@@ -16,7 +21,25 @@ body {
   color: black;
 }
 
-.landing-img {
+#welcome-banner {
+  background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('http://www.nursing.hawaii.edu/sites/www.nursing.hawaii.edu/files/image/images/IMG_3763.jpg');
+  color: white;
+}
+
+#alloy-logo {
+  height:130px;
+  width:auto;
+}
+
+#top-menu {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-radius: 0px;
+  color:white;
+  background-color: #27AAE1;
+}
+
+.landing-img { /* TODO: DELETE? UNUSED SO FAR */
   background: linear-gradient( rgba(0, 0, 0, 0.825), rgba(0, 0, 0, 0.825) ), url('http://www.nursing.hawaii.edu/sites/www.nursing.hawaii.edu/files/image/images/IMG_3763.jpg');
   opacity: 0.8;
   background-size: cover;
