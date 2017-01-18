@@ -2,20 +2,21 @@
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
   {{#if Template.subscriptionsReady}}
   {{#if currentUser}}
-  <div class="ui container"
-       style="margin-top: 30px;">
+  <div class="ui container top-margin-30px">
     <!--TODO: add project title-->
     <div class="item">
       <h2 class="ui header">
         <i class="user icon"></i>
         <div class="content">
           {{ projectDataField "projectName" }}
-          <div class="sub header"><a href="{{projectDataField "url" }}">{{ projectDataField "url" }}</a></div>
+          <div class="sub header">
+            <a href="{{projectDataField "url" }}">{{ projectDataField "url" }}</a>
+          </div>
         </div>
       </h2>
       <hr/>
     </div>
-    <div class="ui grid">
+    <div class="ui stackable grid">
       <div class="five wide column">
         <!--TODO: replace with profile image if we want to use profile images-->
         <img class="ui rounded image"
@@ -48,12 +49,12 @@
           </div>
           {{/if}}
           {{#if isAdmin}}
-          <div class="row" style="padding-top: 30px;">
+          <div class="row" id="project-requests">
             <h1>
               Requests to Join
               <hr/>
             </h1>
-            <div class="ui padded grid">
+            <div class="ui padded stackable grid">
               {{#if hasRequests}}
               {{#each request in (projectDataField "joinRequests")}}
               <div class="padded row">
@@ -115,14 +116,15 @@
 
       <div class="eleven wide column">
         <div class="ui segment">
-          <a class="ui ribbon label"
-             style="background-color:#27aae1; color:white;"><h3>About this Project</h3>
+          <a class="ui ribbon label about-project-ribbon">
+            <h3>About this Project</h3>
           </a>
           <p>{{ projectDataField "bio" }}</p>
         </div>
         <div class="ui segment">
-          <a class="ui ribbon label"
-             style="background-color:#27bae1; color:white;"><h3>Skills Wanted</h3></a>
+          <a class="ui ribbon label" id="project-skills-wanted-ribbon">
+            <h3>Skills Wanted</h3>
+          </a>
           <br/>
           <br/>
           <div class="ui labels">
@@ -133,9 +135,9 @@
         </div>
         <div class="ui segment">
           <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
-          <a class="ui ribbon label"
-             style="background-color:#27c9e1; color:white;"><h3>Project
-            Admins</h3></a>
+          <a class="ui ribbon label" id="project-admins-ribbon">
+            <h3>Project Admins</h3>
+          </a>
           <div class="ui relaxed divided list">
             {{#each admin in (projectDataField "admins")}}
             <div class="item">
@@ -151,8 +153,8 @@
         </div>
         <div class="ui segment">
           <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
-          <a class="ui ribbon label"
-             style="background-color:#27d9e1; color:white;"><h3>Members</h3>
+          <a class="ui ribbon label about-project-ribbon">
+            <h3>Members</h3>
           </a>
           <div class="ui relaxed divided list">
             {{#each member in (projectDataField "members")}}
@@ -175,27 +177,26 @@
 
   </div>
     {{else}}
-  <div class="ui container"
-       style="margin-top: 30px;">
+  <div class="ui container top-margin-30px">
     <div class="item"><h2>{{ projectDataField "projectName" }}</h2>
       <hr/>
     </div>
-  <div class="ui grid">
+  <div class="ui stackable grid">
     <div class="five wide column">
       <img class="ui rounded image"
            src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
     </div>
     <div class="eleven wide column">
       <div class="ui segment">
-        <a class="ui ribbon label"
-           style="background-color:#27aae1; color:white;"><h3>About this Project</h3>
+        <a class="ui ribbon label" id="project-preview-ribbon">
+          <h3>About this Project</h3>
         </a>
         <p>{{ projectDataField "bio" }}</p>
       </div>
     </div>
   </div>
     <div class="ui clearing divider"></div>
-    <h1 class="ui rounded centered header" style="background:#A6CE39;padding:50px;color:white;">Log in to see more!</h1>
+    <h1 class="ui rounded centered header">Log in to see more!</h1>
   </div>
   {{/if}}
   {{/if}}

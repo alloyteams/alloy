@@ -1,18 +1,17 @@
 <template name="Suggested_Projects">
 
-  <h1><img style="height:30px; width:auto"
-           src="/images/alloy-icon.png">
+  <h1><img class="alloy-icon" src="/images/alloy-icon.png">
     {{#if currentUser}}
     Suggested Projects
     {{else}}
     Featured Projects
     {{/if}}
-    <hr/>
+    <hr />
   </h1>
 
-  <div class="ui container">
+  <div class="ui stackable container">
     {{#if Template.subscriptionsReady}}
-    <div class="ui raised three cards">
+    <div class="ui raised three stackable cards">
       {{#if currentUser}}
       {{#if suggestedProjects.length}}
       {{#each project in suggestedProjects}}
@@ -20,7 +19,7 @@
       {{/each}}
 
       {{else}}
-      <div class="ui very padded centered grid container" style="padding-top:15px;">
+      <div class="ui very padded centered grid stackable container">
         <div class="ui large raised segment">
           Update your profile to see suggested projects and get connected with your dream team!<br/><br/><br/>
           <a href="{{pathFor 'Edit_Profile_Page' _id=(getMyId)}}">

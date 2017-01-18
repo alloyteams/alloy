@@ -1,14 +1,13 @@
 <template name="Search_Projects_Page">
 
-  <div class="ui div container" style="margin: 30px auto 0 auto;">
+  <div class="ui div container search-page-main-containers">
     <div class="ui raised padded segment">
       <h1>
-        <img style="height:30px; width:auto"
-             src="/images/alloy-icon.png"> Search Projects
+        <img class="alloy-icon" src="/images/alloy-icon.png">
+        Search Projects
       </h1>
-      <div class="ui container" style="margin: 5px auto 0 auto;">
+      <div class="ui container search-page-sub-containers">
         <form class="form-register">
-          <!--<input type="text" name="searchInput" placeholder="Find projects">-->
           <div class="field">
             <div class="ui fluid multiple search selection dropdown">
               <input name="skills" id="skills" type="hidden">
@@ -20,44 +19,42 @@
                        data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
                   </div>
                 {{/each}}
-
               </div>
             </div>
           </div>
 
-          <button type="submit" class="ui primary blue button"
-                  style="margin: 15px auto 0 auto;">
-            search
+          <button type="submit" class="ui primary blue button search-button">
+            Search
           </button>
         </form>
       </div>
-
     </div>
   </div>
 
   {{#if compareFound}}
     {{#each project in foundProjects}}
-      <div class="ui container"
-           style="margin-top: 30px;">
+      <div class="ui container top-margin-30px">
         <div class="ui segment">
-          <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}"
-             class="ui ribbon label"
-             style="background-color:#27aae1; color:white;">
+          <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}" class="ui ribbon label about-project-ribbon">
             <h3>{{project.projectName}}</h3>
           </a>
-          <p style="margin-top: 5px;"><b>Skills
-            Wanted: </b> {{project.skillsWanted}} </p>
-          <p style="margin-top: 5px;">{{project.bio}}</p>
+          <p class="top-margin-5px">
+            <b>Skills Wanted: </b>
+            {{project.skillsWanted}}
+          </p>
+          <p class="top-margin-5px">
+            {{project.bio}}
+          </p>
         </div>
       </div>
     {{/each}}
     {{resetCompareBoolean}}
   {{else}}
-    <div class="ui container"
-         style="margin-top: 30px;">
+    <div class="ui container top-margin-30px">
       <div class="ui segment">
-        <p style="margin-top: 5px;">Enter a skill associated with your desired
-          Projects query.</p>
+        <p class="top-margin-5px">
+          Enter a skill associated with your desired Projects query.
+        </p>
       </div>
     </div>
   {{/if}}

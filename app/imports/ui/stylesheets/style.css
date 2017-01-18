@@ -3,6 +3,139 @@ body {
   background-color: white;
 }
 
+footer {
+  padding-top: 15px;
+  margin-bottom: 20px;
+}
+
+#welcome-banner {
+  background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('http://www.nursing.hawaii.edu/sites/www.nursing.hawaii.edu/files/image/images/IMG_3763.jpg');
+  color: white;
+}
+
+#alloy-logo {
+  height: 130px;
+  width: auto;
+}
+
+#top-menu {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-radius: 0px;
+  color:white;
+  background-color: #27AAE1;
+}
+
+#cas-login, #cas-logout {
+  padding: 0px;
+}
+
+.ui.basic.invalid.modal, .ui.basic.invalid.modal  .header, .ui.basic.existing.modal, .ui.basic.existing.modal .header {
+  color: red;
+}
+
+.ui.basic.success.modal, .ui.basic.success.modal  .header {
+  color: #A6CE39;
+}
+
+.alloy-icon {
+  height: 30px;
+  width: auto;
+}
+
+.ui.very.padded.centered.grid.stackable.container, .ui.very.padded.stackable.container {
+  padding-top: 15px;
+}
+
+#edit-profile-form {
+  margin: 20px;
+}
+
+.ui.top-margin-30px {
+  margin-top: 30px;
+}
+
+p.top-margin-5px {
+  margin-top: 5px;
+}
+
+#notification-header, #project-requests {
+  padding-top: 30px;
+}
+
+#about-alloy {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#alloy-features {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.raised.three.stackable.cards {
+  padding-top: 5px;
+}
+
+.ribbon.label {
+  color: white;
+}
+
+.ui.about-project-ribbon {
+  background-color: #27AAE1;
+}
+
+#project-skills-wanted-ribbon {
+  background-color: #27BAE1;
+}
+
+#project-admins-ribbon {
+  background-color: #27C9E1;
+}
+
+#project-members-ribbon {
+  background-color: #27D9E1;
+}
+
+.ui.about-me-ribbon {
+  background-color:#98BE2f;
+}
+
+#my-skills-ribbon {
+  background-color:#A6CE39;
+}
+
+#my-current-projects-ribbon {
+  background-color: #AFD34D;
+}
+
+.ui.rounded.centered.header {
+  background: #A6CE39;
+  padding: 50px;
+  color: white;
+}
+
+.search-page-main-containers {
+  margin: 30px auto 0 auto;
+}
+
+.search-page-sub-containers {
+  margin: 5px auto 0 auto;
+}
+
+.ui.search-button {
+  margin: 15px auto 0 auto;
+}
+
+/** TODO: DELETE? EVERYTHING BELOW SEEMS UNUSED SO FAR **/
+.landing-img {
+  background: linear-gradient( rgba(0, 0, 0, 0.825), rgba(0, 0, 0, 0.825) ), url('http://www.nursing.hawaii.edu/sites/www.nursing.hawaii.edu/files/image/images/IMG_3763.jpg');
+  opacity: 0.8;
+  background-size: cover;
+  filter: blur(0px);
+  height: 600px;
+}
+
 #login-buttons a,
 .accounts-dialog a {
   color: white;
@@ -14,14 +147,6 @@ body {
 
 #login-buttons #signup-link {
   color: black;
-}
-
-.landing-img {
-  background: linear-gradient( rgba(0, 0, 0, 0.825), rgba(0, 0, 0, 0.825) ), url('http://www.nursing.hawaii.edu/sites/www.nursing.hawaii.edu/files/image/images/IMG_3763.jpg');
-  opacity: 0.8;
-  background-size: cover;
-  filter: blur(0px);
-  height: 600px;
 }
 
 .ui.negative.button:hover {

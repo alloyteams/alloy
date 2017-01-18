@@ -71,10 +71,7 @@ Template.Search_Users_Page.events({
     let terms = event.target.skills.value.split(',');
     terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
 
-    console.log('search input: ' + terms);
-
     foundUsers = Users.find({skills: { $in: terms }});
-    console.log(foundUsers.fetch());
     countFoundUsers = Session.set("countFoundUsers", foundUsers.fetch().length);
 
     _dep.changed();
