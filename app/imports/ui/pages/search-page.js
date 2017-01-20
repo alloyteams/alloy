@@ -1,5 +1,5 @@
 /**
- * Created by neilteves on 11/17/16.
+ * Created by neilteves on 01/11/17.
  */
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';

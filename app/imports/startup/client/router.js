@@ -65,7 +65,7 @@ FlowRouter.route('/add-contact', {
   },
 });
 
-FlowRouter.route('/search2', {
+FlowRouter.route('/search', {
   name: 'Search',
   action() {
     BlazeLayout.render('App_Body', { main: 'Search' });

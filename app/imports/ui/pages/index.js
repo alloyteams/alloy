@@ -40,5 +40,5 @@ import './project-creation-page.js';
 import './site-admin-page.html';
 import './site-admin-page.js';
 
-import './search-page-2.html';
-import './search-page-2.js';
+import './search-page.html';
+import './search-page.js';
