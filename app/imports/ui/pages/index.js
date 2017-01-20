@@ -37,16 +37,8 @@ import './project-admin-page.js';
 import './project-creation-page.html';
 import './project-creation-page.js';
 
-import './search-page-body.html';
+import './site-admin-page.html';
+import './site-admin-page.js';
 
 import './search-page.html';
 import './search-page.js';
-
-import './search-projects-page.html';
-import './search-projects-page.js';
-
-import './search-users-page.html';
-import './search-users-page.js';
-
-import './site-admin-page.html';
-import './site-admin-page.js';
