@@ -105,7 +105,7 @@ Accounts.onCreateUser(function (options, user) {
     pendingRequests: [],
   };
 
-  if (user.services.cas.id == 'edwhite' || user.services.cas.id == 'tevesn')
+  if (user.services.cas.id == 'ew7' || user.services.cas.id == 'tevesn')
   {
     newUser.isSiteAdmin = true;
   }
