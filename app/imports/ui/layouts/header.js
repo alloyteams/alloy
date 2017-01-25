@@ -27,4 +27,14 @@ Template.Header.onCreated(function onCreated() {
       const requests = user['pendingRequests'];
       return requests.length;
     },
+
+    isSiteAdmin() {
+      const user = Users.findOne({ username: Meteor.user().profile.name });
+      const bool = user['isSiteAdmin'];
+      if (bool == true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   });
