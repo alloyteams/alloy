@@ -51,7 +51,7 @@ FlowRouter.route('/project-admin-profile/:_id', {
   },
 });
 
-FlowRouter.route('/site-admin-profile', {
+FlowRouter.route('/admin', {
   name: 'Site_Admin_Page',
   action() {
     BlazeLayout.render('App_Body', { main: 'Site_Admin_Page' });

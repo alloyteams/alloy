@@ -16,6 +16,12 @@
 
       {{#if currentUser}}
 
+      {{#if isSiteAdmin}}
+      <a class="{{ isActiveRoute 'Site_Admin_Page'}} item" href="{{ pathFor 'Site_Admin_Page' }}">
+        Admin
+      </a>
+      {{/if}}
+
       <a class="{{ isActiveRoute 'User_Profile_Page'}} right item" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">
         <i class="user icon"></i>My Profile
       </a>
@@ -30,9 +36,6 @@
 
       <!-- TODO: these helpers have not yet been implemented -->
       {{#if isProjectAdmin}}
-      {{/if}}
-
-      {{#if isSiteAdmin}}
       {{/if}}
 
       {{/if}}

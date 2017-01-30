@@ -7,7 +7,6 @@ import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.j
 
 /* eslint-disable no-console */
 
-
 /* Validate username against UH cas, sending a specific error message on failure. */
 Accounts.validateNewUser(function (user) {
   if (user) {
@@ -105,6 +104,12 @@ Accounts.onCreateUser(function (options, user) {
     isSiteAdmin: false,
     pendingRequests: [],
   };
+
+  if (user.services.cas.id == 'ew7' || user.services.cas.id == 'tevesn')
+  {
+    newUser.isSiteAdmin = true;
+  }
+
   Users.insert(newUser);  // this means User documents will have different _id than the Meteor.user._id
                           // unless we create our own _id or Meteor.users.
                           // see https://guide.meteor.com/accounts.html#adding-fields-on-registration
