@@ -17,7 +17,9 @@
       {{#if currentUser}}
 
       {{#if isSiteAdmin}}
-        <a class="item" href=#>Admin</a>
+      <a class="{{ isActiveRoute 'Site_Admin_Page'}} item" href="{{ pathFor 'Site_Admin_Page' }}">
+        Admin
+      </a>
       {{/if}}
 
       <a class="{{ isActiveRoute 'User_Profile_Page'}} right item" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">

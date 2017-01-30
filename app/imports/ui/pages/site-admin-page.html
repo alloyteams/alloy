@@ -2,65 +2,67 @@
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
   {{#if Template.subscriptionsReady}}
     {{#if currentUser}}
-      <div class="ui container">
-        <div class="ui grid">
-          <div class="ten wide column">
-            <div class="ui div container" style="margin: 30px auto 0 auto;">
-              <div class="ui raised padded segment" style="height: 528px;">
-                <h1>
-                  <img style="height:30px; width:auto" src="/images/alloy-icon.png">
-                  Admin Feed
-                </h1>
-                <hr/>
-              </div>
-            </div>
-          </div>
-          <div class="six wide column">
-            <div class="ui div container" style="margin: 30px auto 0 auto;">
-              <div class="ui raised padded segment">
-                <h1>
-                  <img style="height:30px; width:auto" src="/images/alloy-icon.png">
-                  Projects
-                </h1>
-                Total number of projects:
-                <div class="ui container" style="margin: 5px auto 0 auto;">
-                  <button type="submit" class="fluid ui primary blue button">
-                    Edit Projects List
-                  </button>
+      <!--{{#if siteAdmin}}-->
+        <div class="ui container">
+          <div class="ui grid">
+            <div class="ten wide column">
+              <div class="ui div container" style="margin: 30px auto 0 auto;">
+                <div class="ui raised padded segment" style="height: 528px;">
+                  <h1>
+                    <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                    Admin Feed
+                  </h1>
+                  <hr/>
                 </div>
               </div>
             </div>
-            <div class="ui div container" style="margin: 30px auto 0 auto;">
-              <div class="ui raised padded segment">
-                <h1>
-                  <img style="height:30px; width:auto" src="/images/alloy-icon.png">
-                  Users
-                </h1>
-                Total number of users:
-                <div class="ui container" style="margin: 5px auto 0 auto;">
-                  <button type="submit" class="fluid ui primary blue button">
-                    Edit Users List
-                  </button>
+            <div class="six wide column">
+              <div class="ui div container" style="margin: 30px auto 0 auto;">
+                <div class="ui raised padded segment">
+                  <h1>
+                    <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                    Projects
+                  </h1>
+                  Total number of projects:
+                  <div class="ui container" style="margin: 5px auto 0 auto;">
+                    <button type="submit" class="fluid ui primary blue button">
+                      Edit Projects List
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="ui div container" style="margin: 30px auto 0 auto;">
-              <div class="ui raised padded segment">
-                <h1>
-                  <img style="height:30px; width:auto" src="/images/alloy-icon.png">
-                  Skills
-                </h1>
-                Total number of skills:
-                <div class="ui container" style="margin: 5px auto 0 auto;">
-                  <button type="submit" class="fluid ui primary blue button">
-                    Edit Skills List
-                  </button>
+              <div class="ui div container" style="margin: 30px auto 0 auto;">
+                <div class="ui raised padded segment">
+                  <h1>
+                    <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                    Users
+                  </h1>
+                  Total number of users:
+                  <div class="ui container" style="margin: 5px auto 0 auto;">
+                    <button type="submit" class="fluid ui primary blue button">
+                      Edit Users List
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="ui div container" style="margin: 30px auto 0 auto;">
+                <div class="ui raised padded segment">
+                  <h1>
+                    <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                    Skills
+                  </h1>
+                  Total number of skills:
+                  <div class="ui container" style="margin: 5px auto 0 auto;">
+                    <button type="submit" class="fluid ui primary blue button">
+                      Edit Skills List
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      <!--{{/if}}-->
     {{/if}}
   {{/if}}
 </template>
