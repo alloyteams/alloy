@@ -2,7 +2,7 @@
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
   {{#if Template.subscriptionsReady}}
     {{#if currentUser}}
-      <!--{{#if siteAdmin}}-->
+      {{#if siteAdmin}}
         <div class="ui container">
           <div class="ui grid">
             <div class="ten wide column">
@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-      <!--{{/if}}-->
+      {{/if}}
     {{/if}}
   {{/if}}
 </template>
