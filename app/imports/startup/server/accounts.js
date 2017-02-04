@@ -105,6 +105,7 @@ Accounts.onCreateUser(function (options, user) {
     pendingRequests: [],
   };
 
+  // On creation of application makes these users site admin
   if (user.services.cas.id == 'ew7' || user.services.cas.id == 'tevesn')
   {
     newUser.isSiteAdmin = true;
