@@ -19,6 +19,8 @@ const friendsActive = 'friendsActive';
 Template.Site_Admin_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('UserData');  // extended Meteor.user collection data
+    this.subscribe('Users');
+    this.subscribe('Projects');
   });
 
   // use reactive dict to store error messages
@@ -54,7 +56,13 @@ Template.Site_Admin_Page.helpers({
     } else {
       return false;
     }
-  }
+  },
+  countProjects: function () {
+    return Projects.find().fetch().length;
+  },
+  countUsers: function () {
+    return Users.find().fetch().length;
+  },
 });
 
 
