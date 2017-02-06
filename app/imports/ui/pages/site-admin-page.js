@@ -8,6 +8,8 @@ import {_} from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
+import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
+import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -19,6 +21,10 @@ const friendsActive = 'friendsActive';
 Template.Site_Admin_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('UserData');  // extended Meteor.user collection data
+    this.subscribe('Users');
+    this.subscribe('Projects');
+    SkillGraphCollection.subscribe();
+    EdgesCollection.subscribe();
   });
 
   // use reactive dict to store error messages
@@ -54,7 +60,19 @@ Template.Site_Admin_Page.helpers({
     } else {
       return false;
     }
-  }
+  },
+  countProjects: function () {
+    return Projects.find().fetch().length;
+  },
+  countUsers: function () {
+    return Users.find().fetch().length;
+  },
+  countSkills: function () {
+    return SkillGraphCollection.find().fetch().length;
+  },
+  countEdges: function () {
+    return EdgesCollection.find().fetch().length;
+  },
 });
 
 

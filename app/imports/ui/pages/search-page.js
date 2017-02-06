@@ -84,6 +84,7 @@ Template.Search.events({
     terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
 
     foundProjects = Projects.find({skillsWanted: { $in: terms }});
+    console.log(foundProjects);
     countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
 
     // allows both projects and user queries to reactively update
