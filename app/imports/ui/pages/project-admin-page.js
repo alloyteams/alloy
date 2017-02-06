@@ -117,6 +117,8 @@ Template.Project_Admin_Page.events({
       }
     });
 
+    SkillGraphCollection.addVertexList(skillsWanted);
+
     FlowRouter.go('Project_Profile_Page', { _id: FlowRouter.getParam('_id') });
   },
 });
