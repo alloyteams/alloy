@@ -67,21 +67,6 @@ Template.Edit_Profile_Page.helpers({
   },
 });
 
-// Template.Edit_Student_Data_Page.onRendered(function enableSemantic() {
-//   const template = this;
-//   template.subscribe('Contacts', () => {
-//     // Use this template.subscribe callback to guarantee that the following code executes after subscriptions OK.
-//     Tracker.afterFlush(() => {
-//       // Use Tracker.afterFlush to guarantee that the DOM is re-rendered before calling JQuery.
-//       template.$('select.ui.dropdown').dropdown();
-//       template.$('.ui.selection.dropdown').dropdown();
-//       template.$('select.dropdown').dropdown();
-//       template.$('.ui.checkbox').checkbox();
-//       template.$('.ui.radio.checkbox').checkbox();
-//     });
-//   });
-// });
-
 Template.Edit_Profile_Page.events({
   'submit .user-data-form'(event, instance) {
     event.preventDefault();

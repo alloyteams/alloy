@@ -4,7 +4,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-// import { _ } from 'meteor/erasaur:meteor-lodash';
 import {_} from 'meteor/underscore';
 
 /** @module Base */

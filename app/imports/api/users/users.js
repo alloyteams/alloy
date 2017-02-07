@@ -9,7 +9,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 export const Users = new Mongo.Collection('Users');
 
 /**
- * Create the schema for Stuff
+ * Create the schema for Users collection
  */
 export const UsersSchema = new SimpleSchema({
   username: {  // assumes that usernames will be uniq. else need to store user's _id
