@@ -60,6 +60,13 @@ FlowRouter.route('/admin', {
   },
 });
 
+FlowRouter.route('/admin/skills', {
+  name: 'Edit_Skills_Page',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'Edit_Skills_Page' });
+  },
+});
+
 FlowRouter.route('/add-contact', {
   name: 'Add_Contact_Page',
   action() {
