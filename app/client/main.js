@@ -1,7 +1,5 @@
 import '/imports/startup/client';
 import '/imports/startup/both';
-import '/imports/api/stuff';
-import '/imports/api/contacts';
 import '/imports/api/users';
 import '/imports/api/projects';
 import '/imports/api/base';

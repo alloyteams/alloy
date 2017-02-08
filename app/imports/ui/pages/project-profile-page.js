@@ -274,35 +274,6 @@ Template.Project_Profile_Page.events({
       //console.log(Users.findOne(userId));
     }
   },
-//   // logic for 'submit' event for 'contact-data-form' 'button'
-//   'submit .contact-data-form'(event, instance) {
-//     event.preventDefault();
-//     // Get contact info (text fields)
-//     const firstName = event.target.firstName.value;  // based on associated html id tags
-//     const lastName = event.target.lastName.value;
-//     const address = event.target.address.value;
-//     const phone = event.target.phone.value;
-//     const email = event.target.email.value;
-//     const newContact = { firstName, lastName, address, phone, email };
-//
-//     // Clear out any previous validation errors.
-//     instance.context.resetValidation();
-//     // Invoke clean so that newContact reflects what will be inserted.
-//     ContactsSchema.clean(newContact);
-//
-//     // Determine validity against schema.
-//     instance.context.validate(newContact);
-//     if (instance.context.isValid()) {
-//       // insert new contact data into collection
-//       Contacts.insert(newContact);
-//       instance.messageFlags.set(displayErrorMessages, false);
-//
-//       // redirect back to Home_Page
-//       FlowRouter.go('Home_Page');
-//     } else {
-//       instance.messageFlags.set(displayErrorMessages, true);
-//     }
-//   },
 });
 
 Template.Project_Profile_Page.onRendered(function onRendered() {

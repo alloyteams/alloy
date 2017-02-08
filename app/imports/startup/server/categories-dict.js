@@ -111,433 +111,433 @@ const seeds = [
     related: [],
   },
   {
-    category:  'Civil and Environmental Engr',
+    category: 'Civil and Environmental Engr',
     related: [],
   },
   {
-    category:  'Communication & Info Sciences',
+    category: 'Communication & Info Sciences',
     related: [],
   },
   {
-    category:  'Dance',
+    category: 'Dance',
     related: [],
   },
   {
-    category:  'Dental Hygiene',
+    category: 'Dental Hygiene',
     related: [],
   },
   {
-    category:  'Developmental & Repro Biology',
+    category: 'Developmental & Repro Biology',
     related: [],
   },
   {
-    category:  'Disability Studies',
+    category: 'Disability Studies',
     related: [],
   },
   {
-    category:  'East Asian Languages and Lit',
+    category: 'East Asian Languages and Lit',
     related: [],
   },
   {
-    category:  'Economics',
+    category: 'Economics',
     related: [],
   },
   {
-    category:  'Educational Administration',
+    category: 'Educational Administration',
     related: [],
   },
   {
-    category:  'Educational Psychology',
+    category: 'Educational Psychology',
     related: [],
   },
   {
-    category:  'Electrical Engineering',
+    category: 'Electrical Engineering',
     related: [],
   },
   {
-    category:  'English',
+    category: 'English',
     related: [],
   },
   {
-    category:  'Ethnic Studies',
+    category: 'Ethnic Studies',
     related: [],
   },
   {
-    category:  'Family Medicine and Community Health',
+    category: 'Family Medicine and Community Health',
     related: [],
   },
   {
-    category:  'Family Resources',
+    category: 'Family Resources',
     related: [],
   },
   {
-    category:  'Fashion Design Textiles',
+    category: 'Fashion Design Textiles',
     related: [],
   },
   {
-    category:  'Filipino',
+    category: 'Filipino',
     related: [],
   },
   {
-    category:  'Finance',
+    category: 'Finance',
     related: [],
   },
   {
-    category:  'Food Science and Human Nutrition',
+    category: 'Food Science and Human Nutrition',
     related: [],
   },
   {
-    category:  'French',
+    category: 'French',
     related: [],
   },
   {
-    category:  'Geography',
+    category: 'Geography',
     related: [],
   },
   {
-    category:  'Geology and Geophysics',
+    category: 'Geology and Geophysics',
     related: [],
   },
   {
-    category:  'Geriatric Medicine',
+    category: 'Geriatric Medicine',
     related: [],
   },
   {
-    category:  'German',
+    category: 'German',
     related: [],
   },
   {
-    category:  'Greek',
+    category: 'Greek',
     related: [],
   },
   {
-    category:  'Hawaiian Studies',
+    category: 'Hawaiian Studies',
     related: [],
   },
   {
-    category:  'Hindi',
+    category: 'Hindi',
     related: [],
   },
   {
-    category:  'History',
+    category: 'History',
     related: [],
   },
   {
-    category:  'Human Resources Managment',
+    category: 'Human Resources Managment',
     related: [],
   },
   {
-    category:  'Ilokano',
+    category: 'Ilokano',
     related: [],
   },
   {
-    category:  'Indo - Pacific Languages',
+    category: 'Indo - Pacific Languages',
     related: [],
   },
   {
-    category:  'Indonesian',
+    category: 'Indonesian',
     related: [],
   },
   {
-    category:  'Information Technology Managment',
+    category: 'Information Technology Managment',
     related: [],
   },
   {
-    category:  'Information and Computer Sciences',
+    category: 'Information and Computer Sciences',
     related: [],
   },
   {
-    category:  'Insurance',
+    category: 'Insurance',
     related: [],
   },
   {
-    category:  'Italian',
+    category: 'Italian',
     related: [],
   },
   {
-    category:  'Japanese Language and Literature',
+    category: 'Japanese Language and Literature',
     related: [],
   },
   {
-    category:  'Journalism',
+    category: 'Journalism',
     related: [],
   },
   {
-    category:  'Kinesiology & Rehab Science',
+    category: 'Kinesiology & Rehab Science',
     related: [],
   },
   {
-    category:  'Korean',
+    category: 'Korean',
     related: [],
   },
   {
-    category:  'American and European Language and Literature',
+    category: 'American and European Language and Literature',
     related: [],
   },
   {
-    category:  'Latin',
+    category: 'Latin',
     related: [],
   },
   {
-    category:  'Latin American and Iberian Studies',
+    category: 'Latin American and Iberian Studies',
     related: [],
   },
   {
-    category:  'Law',
+    category: 'Law',
     related: [],
   },
   {
-    category:  'Learning Design and Technology',
+    category: 'Learning Design and Technology',
     related: [],
   },
   {
-    category:  'Library and Information Science',
+    category: 'Library and Information Science',
     related: [],
   },
   {
-    category:  'Linguistics',
+    category: 'Linguistics',
     related: [],
   },
   {
-    category:  'Management',
+    category: 'Management',
     related: [],
   },
   {
-    category:  'Maori',
+    category: 'Maori',
     related: [],
   },
   {
-    category:  'Marine Biology',
+    category: 'Marine Biology',
     related: [],
   },
   {
-    category:  'Marketing',
+    category: 'Marketing',
     related: [],
   },
   {
-    category:  'Mathematics',
+    category: 'Mathematics',
     related: [],
   },
   {
-    category:  'Mechanical Engineering',
+    category: 'Mechanical Engineering',
     related: [],
   },
   {
-    category:  'Medical Education',
+    category: 'Medical Education',
     related: [],
   },
   {
-    category:  'Medical Technology',
+    category: 'Medical Technology',
     related: [],
   },
   {
-    category:  'Medicine',
+    category: 'Medicine',
     related: [],
   },
   {
-    category:  'Microbiology',
+    category: 'Microbiology',
     related: [],
   },
   {
-    category:  'Military Science and Leadership',
+    category: 'Military Science and Leadership',
     related: [],
   },
   {
-    category:  'Molecular and Cell Biology',
+    category: 'Molecular and Cell Biology',
     related: [],
   },
   {
-    category:  'Molecular Bioscience and Bioengineering',
+    category: 'Molecular Bioscience and Bioengineering',
     related: [],
   },
   {
-    category:  'Music',
+    category: 'Music',
     related: [],
   },
   {
-    category:  'Natural Resources and Environmental Management',
+    category: 'Natural Resources and Environmental Management',
     related: [],
   },
   {
-    category:  'Nursing',
+    category: 'Nursing',
     related: [],
   },
   {
-    category:  'Obstetrics & Gynecology',
+    category: 'Obstetrics & Gynecology',
     related: [],
   },
   {
-    category:  'Ocean and Resources Engineering',
+    category: 'Ocean and Resources Engineering',
     related: [],
   },
   {
-    category:  'Oceanography',
+    category: 'Oceanography',
     related: [],
   },
   {
-    category:  'Pacific Islands Studies',
+    category: 'Pacific Islands Studies',
     related: [],
   },
   {
-    category:  'Pathology',
+    category: 'Pathology',
     related: [],
   },
   {
-    category:  'Peace and Conflict Education',
+    category: 'Peace and Conflict Education',
     related: [],
   },
   {
-    category:  'Pediatrics',
+    category: 'Pediatrics',
     related: [],
   },
   {
-    category:  'Persian',
+    category: 'Persian',
     related: [],
   },
   {
-    category:  'Pharmacology',
+    category: 'Pharmacology',
     related: [],
   },
   {
-    category:  'Philosophy',
+    category: 'Philosophy',
     related: [],
   },
   {
-    category:  'Physics',
+    category: 'Physics',
     related: [],
   },
   {
-    category:  'Physiology',
+    category: 'Physiology',
     related: [],
   },
   {
-    category:  'Plant and Environmental Protection Science',
+    category: 'Plant and Environmental Protection Science',
     related: [],
   },
   {
-    category:  'Political Science',
+    category: 'Political Science',
     related: [],
   },
   {
-    category:  'Portuguese',
+    category: 'Portuguese',
     related: [],
   },
   {
-    category:  'Psychiatry',
+    category: 'Psychiatry',
     related: [],
   },
   {
-    category:  'Psychology',
+    category: 'Psychology',
     related: [],
   },
   {
-    category:  'Public Administration',
+    category: 'Public Administration',
     related: [],
   },
   {
-    category:  'Public Health',
+    category: 'Public Health',
     related: [],
   },
   {
-    category:  'Public Policy Center',
+    category: 'Public Policy Center',
     related: [],
   },
   {
-    category:  'Real Estate',
+    category: 'Real Estate',
     related: [],
   },
   {
-    category:  'Religion',
+    category: 'Religion',
     related: [],
   },
   {
-    category:  'Russian',
+    category: 'Russian',
     related: [],
   },
   {
-    category:  'Samoan',
+    category: 'Samoan',
     related: [],
   },
   {
-    category:  'Sanskrit',
+    category: 'Sanskrit',
     related: [],
   },
   {
-    category:  'Social Science',
+    category: 'Social Science',
     related: [],
   },
   {
-    category:  'Social Work',
+    category: 'Social Work',
     related: [],
   },
   {
-    category:  'Sociology',
+    category: 'Sociology',
     related: [],
   },
   {
-    category:  'Spanish',
+    category: 'Spanish',
     related: [],
   },
   {
-    category:  'Special Education',
+    category: 'Special Education',
     related: [],
   },
   {
-    category:  'Surgery',
+    category: 'Surgery',
     related: [],
   },
   {
-    category:  'Tahitian',
+    category: 'Tahitian',
     related: [],
   },
   {
-    category:  'Thai',
+    category: 'Thai',
     related: [],
   },
   {
-    category:  'Theatre',
+    category: 'Theatre',
     related: [],
   },
   {
-    category:  'Tongan',
+    category: 'Tongan',
     related: [],
   },
   {
-    category:  'Translation & Interpretation',
+    category: 'Translation & Interpretation',
     related: [],
   },
   {
-    category:  'Travel Industry Management',
+    category: 'Travel Industry Management',
     related: [],
   },
   {
-    category:  'Tropical Med and Medcl Micro',
+    category: 'Tropical Med and Medcl Micro',
     related: [],
   },
   {
-    category:  'Tropical Plant and Soil Sciences',
+    category: 'Tropical Plant and Soil Sciences',
     related: [],
   },
   {
-    category:  'Urban & Regional Planning',
+    category: 'Urban & Regional Planning',
     related: [],
   },
   {
-    category:  'Vietnamese',
+    category: 'Vietnamese',
     related: [],
   },
   {
-    category:  'Womens Studies',
+    category: 'Womens Studies',
     related: [],
   },
   {
-    category:  'Zoology',
+    category: 'Zoology',
     related: [],
   },
 ];
 
 /**
- * Initialize the Stuff collection if empty with seed data.
+ * Initialize the categories dict if empty with seed data.
  */
 if (CategoriesDict.find().count() === 0) {
   _.each(seeds, function seedCategories(contact) {

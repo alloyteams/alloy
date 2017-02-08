@@ -9,6 +9,15 @@ FlowRouter.route('/', {  // set homepage at reference address "/"
   },
 });
 
+//User_Profile_Page_2 is primary profile
+FlowRouter.route('/user-profile2/:_id', {
+  name: 'User_Profile_Page_2',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'User_Profile_Page_2' });
+  },
+});
+
+//Todo Deprecated, remove and migrate user profile 2 to primary
 FlowRouter.route('/user-profile', {
   name: 'User_Profile_Page',
   action() {
@@ -20,13 +29,6 @@ FlowRouter.route('/edit-profile/:_id', {
   name: 'Edit_Profile_Page',
   action() {
     BlazeLayout.render('App_Body', { main: 'Edit_Profile_Page' });
-  },
-});
-
-FlowRouter.route('/user-profile2/:_id', {
-  name: 'User_Profile_Page_2',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'User_Profile_Page_2' });
   },
 });
 
@@ -72,38 +74,10 @@ FlowRouter.route('/search', {
   },
 });
 
-FlowRouter.route('/edit-contact/:id', {
-  name: 'Edit_Contact_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Edit_Contact_Page' });
-  },
-});
-
 FlowRouter.route('/categories', {
   name: 'Categories_Page',
   action() {
     BlazeLayout.render('App_Body', { main: 'Categories_Page' });
-  },
-});
-
-FlowRouter.route('/list', {
-  name: 'List_Stuff_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'List_Stuff_Page' });
-  },
-});
-
-FlowRouter.route('/add', {
-  name: 'Add_Stuff_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Add_Stuff_Page' });
-  },
-});
-
-FlowRouter.route('/stuff/:_id', {
-  name: 'Edit_Stuff_Page',
-  action() {
-    BlazeLayout.render('App_Body', { main: 'Edit_Stuff_Page' });
   },
 });
 

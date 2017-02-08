@@ -2,7 +2,6 @@
  * Created by reedvilanueva on 10/16/16.
  */
 import {Template} from 'meteor/templating';
-import {Contacts} from '../../api/contacts/contacts.js';
 
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {BaseCollection} from '../../api/base/BaseCollection.js'
@@ -15,7 +14,6 @@ import {Users} from '../../api/users/users.js';
 Template.Home_Page.onCreated(function onCreated() {
   this.autorun(() => {
     // 'autopublish' pkg has been removed
-    this.subscribe('Contacts');
     this.subscribe('Projects');
     this.subscribe('Users');
   });
@@ -23,12 +21,6 @@ Template.Home_Page.onCreated(function onCreated() {
 
 Template.Home_Page.helpers({
 
-  /**
-   * @returns {*} All of the Contacts documents.
-   */
-  contactsList() {
-    return Contacts.find();
-  },
   /**
    * @param fieldVal
    * @returns {*} The specified value fieldVal of the project document specified by the router to this page
