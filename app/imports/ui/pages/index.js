@@ -28,5 +28,5 @@ import './site-admin-page.js';
 import './search-page.html';
 import './search-page.js';
 
-import './admin-edit-skills-page.html.html';
+import './admin-edit-skills-page.html';
 import './admin-edit-skills-page.js';

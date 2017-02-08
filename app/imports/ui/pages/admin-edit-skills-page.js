@@ -18,7 +18,7 @@ const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
 
-Template.Site_Admin_Page.onCreated(function onCreated() {
+Template.Edit_Skills_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('UserData');  // extended Meteor.user collection data
     this.subscribe('Users');
@@ -38,7 +38,7 @@ Template.Site_Admin_Page.onCreated(function onCreated() {
 });
 
 // useful thing to note, all Collection docs. have a _id key that is uniq. to that doc
-Template.Site_Admin_Page.helpers({
+Template.Edit_Skills_Page.helpers({
   userDataField(fieldVal) {
     // here, we search by username, which we assume to be uniq.
     const user = Meteor.users.findOne({ username: Meteor.user().username });  // returns undefined if no matching doc. found
@@ -76,10 +76,10 @@ Template.Site_Admin_Page.helpers({
 });
 
 
-Template.Site_Admin_Page.onRendered(function enableSemantic() {
+Template.Edit_Skills_Page.onRendered(function enableSemantic() {
 
 });
 
-Template.Site_Admin_Page.events({
+Template.Edit_Skills_Page.events({
 
 });
