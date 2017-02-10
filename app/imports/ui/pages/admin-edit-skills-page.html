@@ -1,0 +1,42 @@
+<template name="Edit_Skills_Page">
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+    {{#if currentUser}}
+      {{#if siteAdmin}}
+        <div class="ui container">
+          <div class="ui grid">
+            <div class="ten wide column">
+              <div class="ui div container" style="margin: 30px auto 0 auto;">
+                <div class="ui raised padded segment" style="height: 528px;">
+                  <h1>
+                    <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                    Skills List
+                  </h1>
+                  <hr/>
+                </div>
+              </div>
+            </div>
+            <div class="six wide column">
+              <div class="ui div container" style="margin: 30px auto 0 auto;">
+                <div class="ui raised padded segment">
+                  <h1>
+                    <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                    Add Skill
+                  </h1>
+                  <div class="fluid ui input">
+                    <input type="text" placeholder="Skill">
+                  </div>
+                  <div class="ui container" style="margin: 10px auto 0 auto;">
+                    <button type="submit" class="fluid ui primary blue button">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>
