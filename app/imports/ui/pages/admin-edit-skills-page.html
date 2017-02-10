@@ -13,6 +13,20 @@
                     Skills List
                   </h1>
                   <hr/>
+                  <div class="ui container" style="height: 420px; overflow-x: auto;">
+                    <div class="ui middle aligned divided list">
+                      {{#each skill in foundSkills}}
+                        <div class="item">
+                          <div class="right floated content">
+                            <div class="ui button">Delete</div>
+                          </div>
+                          <div class="content">
+                            {{skill.skillReadable}}
+                          </div>
+                        </div>
+                      {{/each}}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
