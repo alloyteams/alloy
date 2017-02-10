@@ -70,6 +70,7 @@ Template.Edit_Skills_Page.helpers({
   },
   'foundSkills': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
+    console.log(skillsCollection.fetch());
     return skillsCollection;
   },
 });
@@ -87,6 +88,17 @@ Template.Edit_Skills_Page.events({
     skills = _.map(skills, (skill) => { return utils.makeReadable(skill); });
 
     SkillGraphCollection.addVertexList(skills);
+
+    _dep.changed();
+  },
+  'submit .form-register-remove': function (event, template) {
+    event.preventDefault();
+
+    let skill = event.target.removeSkill.value;
+
+    SkillGraphCollection.removeVertex(skill);
+
+    console.log("delete skill: " + skill);
 
     _dep.changed();
   },

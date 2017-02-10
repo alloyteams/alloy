@@ -83,6 +83,14 @@ class SkillGraph extends BaseCollection {
 
   /**
    *
+   */
+  removeVertex(skill) {
+    this._collection.remove(skill);
+    console.log("removing vertex: " + skill);
+  }
+
+  /**
+   *
    * @param skill
    * adds the given skill to the graph (as lowercase, whitespace-removed)
    * if none with that label currently exists
