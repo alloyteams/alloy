@@ -13,11 +13,12 @@ import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
+const utils = require('../../api/skill-graph/graphUtilities');  // to use the make readable function
+var _dep = new Deps.Dependency(); // allows search result to update reactivley
 
 const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
-
 let skillsCollection;
 
 Template.Edit_Skills_Page.onCreated(function onCreated() {
@@ -64,20 +65,11 @@ Template.Edit_Skills_Page.helpers({
       return false;
     }
   },
-  countProjects: function () {
-    return Projects.find().fetch().length;
-  },
-  countUsers: function () {
-    return Users.find().fetch().length;
-  },
   countSkills: function () {
     return SkillGraphCollection.find().fetch().length;
   },
-  countEdges: function () {
-    return EdgesCollection.find().fetch().length;
-  },
   'foundSkills': function() {
-    console.log(skillsCollection.fetch());
+    _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
     return skillsCollection;
   },
 });
@@ -88,5 +80,14 @@ Template.Edit_Skills_Page.onRendered(function enableSemantic() {
 });
 
 Template.Edit_Skills_Page.events({
+  'submit .form-register-skills': function (event, template) {
+    event.preventDefault();
 
+    let skills = event.target.skills.value.split(',');
+    skills = _.map(skills, (skill) => { return utils.makeReadable(skill); });
+
+    SkillGraphCollection.addVertexList(skills);
+
+    _dep.changed();
+  },
 });
