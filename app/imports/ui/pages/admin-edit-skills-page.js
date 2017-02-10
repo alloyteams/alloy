@@ -18,6 +18,8 @@ const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
 
+let skillsCollection;
+
 Template.Edit_Skills_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('UserData');  // extended Meteor.user collection data
@@ -25,6 +27,7 @@ Template.Edit_Skills_Page.onCreated(function onCreated() {
     this.subscribe('Projects');
     SkillGraphCollection.subscribe();
     EdgesCollection.subscribe();
+    skillsCollection = SkillGraphCollection.find()
   });
 
   // use reactive dict to store error messages
@@ -72,6 +75,10 @@ Template.Edit_Skills_Page.helpers({
   },
   countEdges: function () {
     return EdgesCollection.find().fetch().length;
+  },
+  'foundSkills': function() {
+    console.log(skillsCollection.fetch());
+    return skillsCollection;
   },
 });
 

@@ -15,126 +15,16 @@
                   <hr/>
                   <div class="ui container" style="height: 420px; overflow-x: auto;">
                     <div class="ui middle aligned divided list">
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
+                      {{#each skill in foundSkills}}
+                        <div class="item">
+                          <div class="right floated content">
+                            <div class="ui button">Delete</div>
+                          </div>
+                          <div class="content">
+                            {{skill.skillReadable}}
+                          </div>
                         </div>
-                        <div class="content">
-                          Clicking
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Joining
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Hugging
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Javascript
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Finding
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Clicking
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Joining
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Hugging
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Javascript
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Finding
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Clicking
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Joining
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Hugging
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Javascript
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <div class="ui button">Delete</div>
-                        </div>
-                        <div class="content">
-                          Finding
-                        </div>
-                      </div>
+                      {{/each}}
                     </div>
                   </div>
                 </div>
