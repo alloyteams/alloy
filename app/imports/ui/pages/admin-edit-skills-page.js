@@ -97,6 +97,7 @@ Template.Edit_Skills_Page.events({
     let skillNameReadable = event.target.skillName.value;
     let skill_ID = event.target.skillId.value;
     let userIdArray = [];
+    let projectIdArray = [];
 
     SkillGraphCollection.removeVertex(skill_ID);
 
@@ -105,15 +106,27 @@ Template.Edit_Skills_Page.events({
     for (let userIndex = 0; userIndex < foundUsersCount; userIndex++) {
       userIdArray.push(foundUsers.fetch()[userIndex]._id);
     }
-
     // console.log(userIdArray);
-
     for (let userIndex = 0; userIndex < foundUsersCount; userIndex++) {
       let currentUser = Users.find({_id: userIdArray[userIndex]});
       // console.log(currentUser.fetch());
       let newSkills = _.without(currentUser.fetch()[0].skills, skillNameReadable);
       // console.log(newSkills);
       Users.update({ _id: currentUser.fetch()[0]._id }, { $set: { skills: newSkills } });
+    }
+
+    let foundProjects = Projects.find({skillsWanted: skillNameReadable});
+    let foundProjectsCount = foundProjects.fetch().length;
+    for (let projectIndex = 0; projectIndex < foundProjectsCount; projectIndex++) {
+      projectIdArray.push(foundProjects.fetch()[projectIndex]._id);
+    }
+    // console.log(projectIdArray);
+    for (let projectIndex = 0; projectIndex < foundProjectsCount; projectIndex++) {
+      let currentProject = Projects.find({_id: projectIdArray[projectIndex]});
+      // console.log(currentProject.fetch());
+      let newSkills = _.without(currentProject.fetch()[0].skillsWanted, skillNameReadable);
+      // console.log(newSkills);
+      Projects.update({ _id: currentProject.fetch()[0]._id }, {$set: { skillsWanted: newSkills } });
     }
 
     console.log("clicked delete button: [" + skill_ID + "] [" + skillNameReadable +"]");
