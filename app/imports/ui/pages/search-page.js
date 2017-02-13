@@ -65,11 +65,13 @@ Template.Search.helpers({
   'foundProjects': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
     console.log(foundProjects.fetch());
+    Session.set("foundProjects","foundProjects");
     return foundProjects;
   },
   'foundUsers': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
     console.log(foundUsers.fetch());
+    Session.set("foundUsers","foundUsers");
     return foundUsers;
   },
 });
@@ -101,9 +103,15 @@ Template.Search.events({
 
     let terms = event.target.skills.value.split(',');
     terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
+    let userTerms;
+    Session.set("userTerms","terms");
 
     foundUsers = Users.find({skills: { $in: terms }});
+    let found;
+    Session.set("found","foundUsers");
     countFoundUsers = Session.set("countFoundUsers", foundUsers.fetch().length);
+    let countFound;
+    Session.set("countFound","countFoundUsers");
 
     // allows both projects and user queries to reactively update
     countFoundProjects = Session.set("countFoundProjects", 0);
