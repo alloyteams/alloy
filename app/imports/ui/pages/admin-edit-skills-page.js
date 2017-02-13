@@ -70,7 +70,8 @@ Template.Edit_Skills_Page.helpers({
   },
   'foundSkills': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
-    return skillsCollection;
+    // console.log(skillsCollection.fetch());
+    return _.sortBy(skillsCollection.fetch(), 'skillReadable');
   },
 });
 
@@ -87,6 +88,48 @@ Template.Edit_Skills_Page.events({
     skills = _.map(skills, (skill) => { return utils.makeReadable(skill); });
 
     SkillGraphCollection.addVertexList(skills);
+
+    _dep.changed();
+  },
+  'submit .form-register-remove': function (event, template) {
+    event.preventDefault();
+
+    let skillNameReadable = event.target.skillName.value;
+    let skill_ID = event.target.skillId.value;
+    let userIdArray = [];
+    let projectIdArray = [];
+
+    SkillGraphCollection.removeVertex(skill_ID);
+
+    let foundUsers = Users.find({skills: skillNameReadable}); //creates an array that has users that contains the target skill
+    let foundUsersCount = foundUsers.fetch().length; //creates a variable with the number of users found
+    for (let userIndex = 0; userIndex < foundUsersCount; userIndex++) { //LOOP: pushes each found users _id into an array
+      userIdArray.push(foundUsers.fetch()[userIndex]._id);
+    }
+    // console.log(userIdArray);
+    for (let userIndex = 0; userIndex < foundUsersCount; userIndex++) { //LOOP: updates each found users skills
+      let currentUser = Users.find({_id: userIdArray[userIndex]});
+      // console.log(currentUser.fetch());
+      let newSkills = _.without(currentUser.fetch()[0].skills, skillNameReadable);
+      // console.log(newSkills);
+      Users.update({ _id: currentUser.fetch()[0]._id }, { $set: { skills: newSkills } });
+    }
+
+    let foundProjects = Projects.find({skillsWanted: skillNameReadable}); //creates an array that has projects that contains the target skill
+    let foundProjectsCount = foundProjects.fetch().length; //creates a variable with the number of projects found
+    for (let projectIndex = 0; projectIndex < foundProjectsCount; projectIndex++) { //LOOP: pushes each found projects _id into an array
+      projectIdArray.push(foundProjects.fetch()[projectIndex]._id);
+    }
+    // console.log(projectIdArray);
+    for (let projectIndex = 0; projectIndex < foundProjectsCount; projectIndex++) { //LOOP: updates each found projects skills
+      let currentProject = Projects.find({_id: projectIdArray[projectIndex]});
+      // console.log(currentProject.fetch());
+      let newSkills = _.without(currentProject.fetch()[0].skillsWanted, skillNameReadable);
+      // console.log(newSkills);
+      Projects.update({ _id: currentProject.fetch()[0]._id }, {$set: { skillsWanted: newSkills } });
+    }
+
+    // console.log("clicked delete button: [" + skill_ID + "] [" + skillNameReadable +"]");
 
     _dep.changed();
   },

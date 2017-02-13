@@ -13,12 +13,18 @@
                     Skills List
                   </h1>
                   <hr/>
-                  <div class="ui container" style="height: 420px; overflow-x: auto;">
+                  <div class="ui container" style="height: 420px; overflow-x: auto; padding-right: 5px;">
                     <div class="ui middle aligned divided list">
                       {{#each skill in foundSkills}}
                         <div class="item">
                           <div class="right floated content">
-                            <div class="ui button">Delete</div>
+                            <form class="form-register-remove">
+                              <input name="skillName" id="skillName" type="hidden" placeholder="Skill" value="{{ skill.skillReadable }}">
+                              <input name="skillId" id="skillId" type="hidden" placeholder="Skill" value="{{ skill._id }}">
+                              <button type="submit" class="fluid ui red button">
+                                Delete
+                              </button>
+                            </form>
                           </div>
                           <div class="content">
                             {{skill.skillReadable}}

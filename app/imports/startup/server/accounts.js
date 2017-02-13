@@ -41,7 +41,7 @@ Accounts.onCreateUser(function (options, user) {
   /* initialize a new user */
   const defaultUser = {
     username: 'default',  // if not using UH cas, use: user.username
-    skills: ['Hugging'],
+    skills: ['Hugging', 'Testing'],
     interests: ['working together'],
     events: [],
     projects: [],
