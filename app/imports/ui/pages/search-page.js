@@ -48,7 +48,6 @@ Template.Search.onRendered(function onRendered() {
 
 Template.Search.helpers({
   getGraphSkills() {
-    console.log(SkillGraphCollection.getSkills());
     return SkillGraphCollection.getSkills();
   },
   projNum() {
@@ -64,12 +63,10 @@ Template.Search.helpers({
   },
   'foundProjects': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
-    console.log(foundProjects.fetch());
     return foundProjects;
   },
   'foundUsers': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
-    console.log(foundUsers.fetch());
     return foundUsers;
   },
 });
@@ -84,7 +81,6 @@ Template.Search.events({
     terms = _.map(terms, (skill) => { return utils.makeReadable(skill); });
 
     foundProjects = Projects.find({skillsWanted: { $in: terms }});
-    console.log(foundProjects);
     countFoundProjects = Session.set("countFoundProjects", foundProjects.fetch().length);
 
     // allows both projects and user queries to reactively update
