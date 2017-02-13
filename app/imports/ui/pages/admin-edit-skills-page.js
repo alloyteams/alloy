@@ -70,8 +70,8 @@ Template.Edit_Skills_Page.helpers({
   },
   'foundSkills': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
-    console.log(skillsCollection.fetch());
-    return skillsCollection;
+    // console.log(skillsCollection.fetch());
+    return _.sortBy(skillsCollection.fetch(), 'skillReadable');
   },
 });
 
