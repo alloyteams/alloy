@@ -94,11 +94,29 @@ Template.Edit_Skills_Page.events({
   'submit .form-register-remove': function (event, template) {
     event.preventDefault();
 
-    let skill = event.target.removeSkill.value;
+    let skillNameReadable = event.target.skillName.value;
+    let skill_ID = event.target.skillId.value;
+    let userIdArray = [];
 
-    SkillGraphCollection.removeVertex(skill);
+    SkillGraphCollection.removeVertex(skill_ID);
 
-    console.log("delete skill: " + skill);
+    let foundUsers = Users.find({skills: skillNameReadable});  //creates an array that has users that contains the target skill
+    let foundUsersCount = foundUsers.fetch().length;
+    for (let userIndex = 0; userIndex < foundUsersCount; userIndex++) {
+      userIdArray.push(foundUsers.fetch()[userIndex]._id);
+    }
+
+    // console.log(userIdArray);
+
+    for (let userIndex = 0; userIndex < foundUsersCount; userIndex++) {
+      let currentUser = Users.find({_id: userIdArray[userIndex]});
+      // console.log(currentUser.fetch());
+      let newSkills = _.without(currentUser.fetch()[0].skills, skillNameReadable);
+      // console.log(newSkills);
+      Users.update({ _id: currentUser.fetch()[0]._id }, { $set: { skills: newSkills } });
+    }
+
+    console.log("clicked delete button: [" + skill_ID + "] [" + skillNameReadable +"]");
 
     _dep.changed();
   },

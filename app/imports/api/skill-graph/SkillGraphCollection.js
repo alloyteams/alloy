@@ -83,6 +83,9 @@ class SkillGraph extends BaseCollection {
 
   /**
    *
+   * @param skill
+   * removes the skill from the skillgraphscollection
+   *
    */
   removeVertex(skill) {
     this._collection.remove(skill);

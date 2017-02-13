@@ -19,7 +19,8 @@
                         <div class="item">
                           <div class="right floated content">
                             <form class="form-register-remove">
-                              <input name="removeSkill" id="removeSkill" type="hidden" placeholder="Skill" value="{{ skill._id }}">
+                              <input name="skillName" id="skillName" type="hidden" placeholder="Skill" value="{{ skill.skillReadable }}">
+                              <input name="skillId" id="skillId" type="hidden" placeholder="Skill" value="{{ skill._id }}">
                               <button type="submit" class="fluid ui red button">
                                 Delete
                               </button>
