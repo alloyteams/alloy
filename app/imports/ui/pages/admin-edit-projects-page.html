@@ -1,0 +1,37 @@
+<template name="Edit_Projects_Page">
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+    {{#if currentUser}}
+      {{#if siteAdmin}}
+        <div class="ui container">
+          <div class="ui div container" style="margin: 30px auto 0 auto;">
+            <div class="ui raised padded segment" style="height: 528px;">
+              <h1>
+                <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                Projects List
+              </h1>
+              <hr/>
+              <div class="ui container" style="height: 420px; overflow-x: auto; padding-right: 5px;">
+                <div class="ui middle aligned divided list">
+                  Project Name
+                  <div class="item">
+                    <div class="right floated content">
+                      <form class="form-register-remove">
+                        <button type="submit" class="fluid ui red button">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                    <div class="content">
+                      test
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>
