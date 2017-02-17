@@ -59,7 +59,7 @@ p.top-margin-5px {
   margin-top: 5px;
 }
 
-#notification-header, #project-requests {
+#notification-header, #project-requests, #if-logged {
   padding-top: 30px;
 }
 
@@ -125,31 +125,4 @@ p.top-margin-5px {
 
 .ui.search-button {
   margin: 15px auto 0 auto;
-}
-
-/** TODO: DELETE? EVERYTHING BELOW SEEMS UNUSED SO FAR **/
-.landing-img {
-  background: linear-gradient( rgba(0, 0, 0, 0.825), rgba(0, 0, 0, 0.825) ), url('http://www.nursing.hawaii.edu/sites/www.nursing.hawaii.edu/files/image/images/IMG_3763.jpg');
-  opacity: 0.8;
-  background-size: cover;
-  filter: blur(0px);
-  height: 600px;
-}
-
-#login-buttons a,
-.accounts-dialog a {
-  color: white;
-}
-
-#login-buttons .login-close-text {
-  color: black;
-}
-
-#login-buttons #signup-link {
-  color: black;
-}
-
-.ui.negative.button:hover {
-  color: red;
-  background-color: white;
 }
