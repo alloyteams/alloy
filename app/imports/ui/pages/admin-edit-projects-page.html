@@ -11,62 +11,17 @@
             </h1>
             <hr/>
             <div class="ui middle aligned divided list">
+              {{#each project in foundProjects}}
               <div class="item">
-                Project Name
-                <div class="right floated content">
-                  <form class="form-register-remove">
-                    <button type="submit" class="fluid ui red button">
-                      Delete
-                    </button>
-                  </form>
-                </div>
+                <h3 style="margin-top: 5px;">{{project.projectName}}</h3>
                 <div class="content">
-                  <div class="item">test</div>
-                  <div class="right item">test</div>
+                  <div class="item"><u>Admins</u>: {{project.admins}}</div>
+                  <div class="item"><u># of Members</u>: {{projects.members}}</div>
+                  <div class="item"><u>Created</u>: {{project.createdAt}}</div>
+                  <div class="item"><u>Last Modified</u>: {{project.modifiedAt}}</div>
                 </div>
               </div>
-              <div class="item">
-                Project Name
-                <div class="right floated content">
-                  <form class="form-register-remove">
-                    <button type="submit" class="fluid ui red button">
-                      Delete
-                    </button>
-                  </form>
-                </div>
-                <div class="content">
-                  <div class="item">test</div>
-                  <div class="right item">test</div>
-                </div>
-              </div>
-              <div class="item">
-                Project Name
-                <div class="right floated content">
-                  <form class="form-register-remove">
-                    <button type="submit" class="fluid ui red button">
-                      Delete
-                    </button>
-                  </form>
-                </div>
-                <div class="content">
-                  <div class="item">test</div>
-                  <div class="right item">test</div>
-                </div>
-              </div>
-              <div class="item">
-                Project Name
-                <div class="right floated content">
-                  <form class="form-register-remove">
-                    <button type="submit" class="fluid ui red button">
-                      Delete
-                    </button>
-                  </form>
-                </div>
-                <div class="content">
-                  <div class="item">test</div>
-                  <div class="right item">test</div>
-                </div>
-              </div>
+              {{/each}}
             </div>
           </div>
         </div>
