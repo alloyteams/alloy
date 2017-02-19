@@ -14,11 +14,11 @@
               {{#each project in foundProjects}}
               <div class="item">
                 <h3 style="margin-top: 5px;">{{project.projectName}}</h3>
-                <div class="content">
-                  <div class="item"><u>Admins</u>: {{project.admins}}</div>
-                  <div class="item"><u># of Members</u>: {{projects.members}}</div>
-                  <div class="item"><u>Created</u>: {{project.createdAt}}</div>
-                  <div class="item"><u>Last Modified</u>: {{project.modifiedAt}}</div>
+                <div class="content" style="margin-bottom: 5px;">
+                  <div class="item" style="margin-bottom: 2px;"><u>Admins</u>: {{project.admins}}</div>
+                  <div class="item" style="margin-bottom: 2px;"><u># of Members</u>: {{project.members.length}}</div>
+                  <div class="item" style="margin-bottom: 2px;"><u>Created</u>: {{project.createdAt}}</div>
+                  <div class="item" style="margin-bottom: 2px;"><u>Last Modified</u>: {{project.modifiedAt}}</div>
                 </div>
               </div>
               {{/each}}
