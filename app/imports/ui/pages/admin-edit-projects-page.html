@@ -1,0 +1,31 @@
+<template name="Edit_Projects_Page">
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+    {{#if currentUser}}
+      {{#if siteAdmin}}
+        <div class="ui container" style="margin: 30px auto 0 auto;">
+          <div class="ui raised padded segment">
+            <h1>
+              <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+              Projects List
+            </h1>
+            <hr/>
+            <div class="ui middle aligned divided list">
+              {{#each project in foundProjects}}
+              <div class="item">
+                <h3 style="margin-top: 5px;">{{project.projectName}}</h3>
+                <div class="content">
+                  <div class="item"><u>Admins</u>: {{project.admins}}</div>
+                  <div class="item"><u># of Members</u>: {{projects.members}}</div>
+                  <div class="item"><u>Created</u>: {{project.createdAt}}</div>
+                  <div class="item"><u>Last Modified</u>: {{project.modifiedAt}}</div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>
