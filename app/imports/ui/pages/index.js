@@ -30,3 +30,6 @@ import './search-page.js';
 
 import './admin-edit-skills-page.html';
 import './admin-edit-skills-page.js';
+
+import './admin-edit-projects-page.html';
+import './admin-edit-projects-page.js';
