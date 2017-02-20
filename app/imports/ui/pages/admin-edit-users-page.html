@@ -1,0 +1,32 @@
+<template name="Edit_Users_Page">
+  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
+  {{#if Template.subscriptionsReady}}
+    {{#if currentUser}}
+      {{#if siteAdmin}}
+        <div class="ui container" style="margin: 30px auto 0 auto;">
+          <div class="ui raised padded segment">
+            <h1>
+              <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+              Users List
+            </h1>
+            <hr/>
+            <div class="ui middle aligned divided list">
+              <!--{{#each project in foundProjects}}-->
+              <div class="item">
+                <h3 style="margin-top: 5px;">
+                  Username
+                </h3>
+                <div class="content" style="margin-bottom: 5px;">
+                  <div class="item" style="margin-bottom: 2px;"><u>Name</u>: </div>
+                  <div class="item" style="margin-bottom: 2px;"><u># Skills</u>: </div>
+                  <div class="item" style="margin-bottom: 2px;"><u># Projects</u>: </div>
+                </div>
+              </div>
+              <!--{{/each}}-->
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>
