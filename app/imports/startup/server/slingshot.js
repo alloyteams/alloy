@@ -15,6 +15,8 @@ Slingshot.createDirective('uploadToAmazonS3', Slingshot.S3Storage, {
       const message = 'Please login before posting files';
       throw new Meteor.Error('Login Required', message);
     }
+
+    return true;
   },
   key: (file) => {
     const user = Meteor.users.findOne(this.userId);
