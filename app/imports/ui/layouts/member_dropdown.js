@@ -2,7 +2,7 @@ import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
-import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import {Meteor} from 'meteor/meteor'; // to access Meteor.users collection
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
 
