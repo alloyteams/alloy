@@ -20,3 +20,5 @@ import './member_dropdown.html';
 import './member_dropdown';
 import './project-card.html';
 import './project-card.js';
+import './user-card.html';
+import './user-card.js';

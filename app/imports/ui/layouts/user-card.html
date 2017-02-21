@@ -1,0 +1,17 @@
+<template name="User_Card">
+  <div class="ui card">
+    <div class="image">
+      <!-- user image-->
+      <img src="/images/alloy-wordmark.png">
+    </div>
+    <div class="content">
+      <!--TODO: add user image-->
+      <div class="item">
+        <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}">{{ user.username }}</a>
+      </div>
+      <div class="item">{{user.firstName}} {{user.lastName}}</div>
+      <div class="item"># skills: {{user.skills.length}}</div>
+      <div class="item"># projects: {{user.projects.length}}</div>
+    </div>
+  </div>
+</template>
