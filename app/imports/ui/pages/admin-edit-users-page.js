@@ -48,10 +48,11 @@ Template.Edit_Users_Page.helpers({
       return false;
     }
   },
-  'foundProjects': function() {
+  'foundUsers': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
-    console.log(projectsCollection.fetch());
-    return _.sortBy(projectsCollection.fetch(), 'projectName');
+    // console.log(projectsCollection.fetch());
+    // return _.sortBy(projectsCollection.fetch(), 'projectName');
+    return Users.find().fetch();
   },
 });
 
