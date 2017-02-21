@@ -33,3 +33,6 @@ import './admin-edit-skills-page.js';
 
 import './admin-edit-projects-page.html';
 import './admin-edit-projects-page.js';
+
+import './admin-edit-users-page.html';
+import './admin-edit-users-page.js';
