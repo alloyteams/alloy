@@ -81,6 +81,13 @@ FlowRouter.route('/admin/users', {
   },
 });
 
+FlowRouter.route('/admin/users', {
+  name: 'Edit_Users_Page',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'Edit_Users_Page' });
+  },
+});
+
 FlowRouter.route('/add-contact', {
   name: 'Add_Contact_Page',
   action() {
