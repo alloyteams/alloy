@@ -17,14 +17,12 @@ var _dep = new Deps.Dependency(); // allows search result to update reactivley
 const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
-let projectsCollection;
 
 Template.Edit_Users_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('UserData');  // extended Meteor.user collection data
     this.subscribe('Users');
     this.subscribe('Projects');
-    projectsCollection = Projects.find();
   });
 
   // use reactive dict to store error messages
@@ -50,8 +48,6 @@ Template.Edit_Users_Page.helpers({
   },
   'foundUsers': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
-    // console.log(projectsCollection.fetch());
-    // return _.sortBy(projectsCollection.fetch(), 'projectName');
     return Users.find().fetch();
   },
 });

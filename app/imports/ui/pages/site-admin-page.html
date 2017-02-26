@@ -41,9 +41,11 @@
                   </h1>
                   Total number of users: {{countUsers}}
                   <div class="ui container" style="margin: 5px auto 0 auto;">
-                    <button type="submit" class="fluid ui primary blue button">
-                      Edit Users List
-                    </button>
+                    <a class="{{ isActiveRoute 'Edit_Users_Page'}} item" href="{{ pathFor 'Edit_Users_Page' }}">
+                      <button type="submit" class="fluid ui primary blue button">
+                        Edit Users List
+                      </button>
+                    </a>
                   </div>
                 </div>
               </div>
