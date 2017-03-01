@@ -2,8 +2,14 @@
   <!-- Note: The popup will be close immediately if you are already logged with your CAS server. -->
       <!-- if logged in, present option to log out, vice versa -->
       {{#if currentUser}}
-      <div class="item cas-logout" id="cas-logout"><i class="sign out icon"></i>Logout</div>
+      <a class="{{#unless currentUser}}right{{/unless}} item cas-logout" id="cas-logout" href="{{pathFor 'Home_Page'}}">
+        <i class="sign out icon"></i>
+        Logout
+      </a>
       {{else}}
-      <div class="item cas-login" id="cas-login"><i class="sign in icon"></i>Login</div>
+      <a class="{{#unless currentUser}}right{{/unless}} item cas-login" id="cas-login" href="{{pathFor 'Home_Page'}}">
+        <i class="sign in icon"></i>
+        Login
+      </a>
       {{/if}}
 </template>

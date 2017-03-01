@@ -41,9 +41,10 @@
       {{/if}}
 
       <!-- the handlebar-if logic here keeps user-profile tab tight on the right when user logged in-->
-      <a class="{{#unless currentUser}}right{{/unless}} item" href="{{pathFor 'Home_Page'}}">
-        {{> Cas_Login }}
-      </a>
+      <!--Just in case it breaks-->
+      <!--<a class="{{#unless currentUser}}right{{/unless}} item" href="{{pathFor 'Home_Page'}}">-->
+      {{> Cas_Login }}
+      <!--</a>-->
     </div>
   </div>
 </template>
