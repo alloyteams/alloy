@@ -114,3 +114,12 @@ FlowRouter.notFound = {
     BlazeLayout.render('App_Body', { main: 'App_Not_Found' });
   },
 };
+
+// Testing for upload system
+
+FlowRouter.route('/upload', {
+  name: 'Upload',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'Upload' });
+  },
+});

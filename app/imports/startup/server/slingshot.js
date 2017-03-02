@@ -11,15 +11,15 @@ Slingshot.createDirective('uploadToAmazonS3', Slingshot.S3Storage, {
   acl: 'public-read',
   authorize: () => {
     // Deny uploads if user is not logged in.
-    if (!this.userId) {
-      const message = 'Please login before posting files';
+    if (!this._id) {
+      const message = 'Please login before uploading files';
       throw new Meteor.Error('Login Required', message);
     }
 
     return true;
   },
   key: (file) => {
-    const user = Meteor.users.findOne(this.userId);
-    return user.username + '/' + file.name;
+    const user = Meteor.users.findOne(this._id);
+    return this._id + '/' + file.name;
   },
 });
