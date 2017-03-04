@@ -10,8 +10,19 @@
         <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}">{{ user.username }}</a>
       </div>
       <div class="item">{{user.firstName}} {{user.lastName}}</div>
-      <div class="item">#skills: {{user.skills.length}}</div>
-      <div class="item">#projects: {{user.projects.length}}</div>
+      <div class="extra content">
+        <div class="item">
+          {{#each skill in (user.skills)}}
+          <div class="ui small label" style="margin: 3px;">
+            {{ skill }}
+          </div>
+          {{/each}}
+          <!--{{user.skills.length}}-->
+        </div>
+      </div>
+      <div class="extra content">
+        <div class="item">#projects: {{user.projects.length}}</div>
+      </div>
     </div>
   </div>
 </template>
