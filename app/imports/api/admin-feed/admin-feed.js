@@ -19,6 +19,13 @@ export const UsersSchema = new SimpleSchema({
     max: 200,
   },
 
+  target: {
+    label: 'target',
+    type: String,
+    optional: false,
+    max: 200,
+  },
+
   report: {
     label: 'report',
     type: String,
