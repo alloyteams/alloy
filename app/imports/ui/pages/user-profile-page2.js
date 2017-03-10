@@ -57,6 +57,15 @@ Template.User_Profile_Page_2.helpers({
   },
   userId: function () {
     return Meteor.userId();
+  },
+  isSiteAdmin() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isSiteAdmin'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 });
 

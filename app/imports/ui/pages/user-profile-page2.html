@@ -29,6 +29,15 @@
         </div>
         </a>
         {{/if}}
+        <br/><br/>
+        {{#if isSiteAdmin}}
+        <a href="{{pathFor 'Edit_Profile_Page' _id=(userDataField "_id")}}">
+        <div class="ui button">
+          <i class="edit icon"></i>
+          Admin Edit Profile Info
+        </div>
+        </a>
+        {{/if}}
       </div>
 
       <div class="eleven wide column">

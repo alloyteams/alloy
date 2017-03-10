@@ -40,6 +40,16 @@
           {{/if}}
           {{#if notMember}}
           <!-- Show nothing -->
+          {{#if isSiteAdmin}}
+          <div class="item">
+            <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
+            <div class="ui button">
+              <i class="edit icon"></i>
+              Edit Project Info
+            </div>
+            </a>
+          </div>
+          {{/if}}
           {{else}}
           <div class="item">
             <div class="ui red leave button">
