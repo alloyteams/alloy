@@ -101,6 +101,15 @@ Template.Project_Profile_Page.helpers({
       return true;
     }
   },
+  isSiteAdmin() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isSiteAdmin'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 });
 
 Template.Project_Profile_Page.helpers({
