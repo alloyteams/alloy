@@ -281,6 +281,11 @@ Template.Project_Profile_Page.events({
       Users.update({ _id: userId }, { $set: { projects: userProjects } });
       //Debug Console Log
       //console.log(Users.findOne(userId));
+      /** If there are no members left in the project after a user leaves, the project will be deleted **/
+      if (project.members.length == 0) {
+        Projects.remove(project._id);
+        FlowRouter.go('Home_Page');
+      }
     }
   },
 });
