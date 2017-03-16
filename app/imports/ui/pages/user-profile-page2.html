@@ -2,18 +2,15 @@
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
   {{#if Template.subscriptionsReady}}
   {{#if currentUser}}
-  <div class="ui stackable divided grid container top-margin-30px">
+  <div class="ui stackable container top-margin-30px">
     <!--TODO: add project title-->
-    <div class="row">
-      <h2 class="ui header">
+      <h2 class="ui dividing header">
         <i class="user icon"></i>
         <div class="content">
           {{ userDataField "firstName" }} {{ userDataField "lastName" }}
           <div class="sub header">{{ userDataField "username" }}@hawaii.edu</div>
         </div>
       </h2>
-    </div>
-    <div class="ui divider"></div>
     <div class="ui stackable grid">
       <div class="five wide column">
         <!--TODO: replace with profile image if we want to use profile images-->
