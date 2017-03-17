@@ -12,6 +12,13 @@ export const AdminFeed = new Mongo.Collection('AdminFeed');
  * Create the schema for AdminFeed collection
  */
 export const UsersSchema = new SimpleSchema({
+  type: {
+    label: 'type',
+    type: String,
+    optional: false,
+    max: 200,
+  },
+
   reportedBy: {  // assumes that usernames will be uniq. else need to store user's _id
     label: 'reportedBy',
     type: String,
