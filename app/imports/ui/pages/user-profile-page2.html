@@ -2,18 +2,15 @@
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections -->
   {{#if Template.subscriptionsReady}}
   {{#if currentUser}}
-  <div class="ui container top-margin-30px">
+  <div class="ui stackable container top-margin-30px">
     <!--TODO: add project title-->
-    <div class="item">
-      <h2 class="ui header">
+      <h2 class="ui dividing header">
         <i class="user icon"></i>
         <div class="content">
           {{ userDataField "firstName" }} {{ userDataField "lastName" }}
           <div class="sub header">{{ userDataField "username" }}@hawaii.edu</div>
         </div>
       </h2>
-      <hr/>
-    </div>
     <div class="ui stackable grid">
       <div class="five wide column">
         <!--TODO: replace with profile image if we want to use profile images-->
@@ -26,6 +23,15 @@
         <div class="ui button">
           <i class="edit icon"></i>
           Edit Profile Info
+        </div>
+        </a>
+        {{/if}}
+        <br/><br/>
+        {{#if isSiteAdmin}}
+        <a href="{{pathFor 'Edit_Profile_Page' _id=(userDataField "_id")}}">
+        <div class="ui button">
+          <i class="edit icon"></i>
+          Admin Edit Profile Info
         </div>
         </a>
         {{/if}}

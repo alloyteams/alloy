@@ -28,8 +28,7 @@
                   </div>
                 </div>
 
-                <button type="submit" class="ui primary blue button"
-                        style="margin: 15px auto 0 auto;">
+                <button type="submit" class="ui primary blue button" style="margin: 15px auto 0 auto;">
                   search
                 </button>
               </form>
@@ -88,17 +87,13 @@
       </div>
     {{/each}}
 
-    {{#each user in foundUsers}}
-      <div class="ui container top-margin-30px">
-        <div class="ui segment">
-          <a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}"
-             class="ui ribbon label about-me-ribbon">
-            <h3>{{user.username}}</h3>
-          </a>
-          <p class="top-margin-5px"><b>Skills: </b>{{user.skills}}</p>
-        </div>
-      </div>
-    {{/each}}
+  <div class="ui container top-margin-15px">
+    <div class="ui raised four stackable cards">
+      {{#each user in foundUsers}}
+      {{> User_Card user = user }}
+      {{/each}}
+    </div>
+  </div>
 
     {{resetCompareBoolean}}
   {{else}}
