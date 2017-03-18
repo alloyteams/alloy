@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
+// import { Users, UsersSchema } from '../../api/users/users.js';
 
 Slingshot.fileRestrictions('uploadToAmazonS3', {
   allowedFileTypes: ['image/png', 'image/jpeg', 'image/gif'], // Sets allowed file formats
@@ -8,18 +9,21 @@ Slingshot.fileRestrictions('uploadToAmazonS3', {
 
 Slingshot.createDirective('uploadToAmazonS3', Slingshot.S3Storage, {
   bucket: 'alloy-images',
+  region: 'us-west-1',
   acl: 'public-read',
   authorize: () => {
+    console.log(Meteor.settings.AWSAccessKeyId);
+    console.log(Meteor.settings.AWSSecretAccessKey);
     // Deny uploads if user is not logged in.
-    if (!this._id) {
-      const message = 'Please login before uploading files';
-      throw new Meteor.Error('Login Required', message);
-    }
+    // if (!Meteor.user().profile._id) {
+    //   const message = 'Please login before uploading files';
+    //   throw new Meteor.Error('Login Required', message);
+    // }
 
     return true;
   },
   key: (file) => {
-    const user = Meteor.users.findOne(this._id);
-    return this._id + '/' + file.name;
+    const user = Meteor.user().profile._id;
+    return Meteor.user().profile._id + '/' + file.name;
   },
 });
