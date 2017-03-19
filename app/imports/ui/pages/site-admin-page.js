@@ -87,5 +87,13 @@ Template.Site_Admin_Page.onRendered(function enableSemantic() {
 });
 
 Template.Site_Admin_Page.events({
+  'submit .form-register-remove': function (event, template) {
+    event.preventDefault();
 
+    let message_ID = event.target.msgId.value;
+
+    AdminFeed.remove(message_ID);
+
+    _dep.changed();
+  },
 });
