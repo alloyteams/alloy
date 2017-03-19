@@ -53,8 +53,8 @@ Template.User_Profile_Page_2.helpers({
     const userId = Users.findOne(FlowRouter.getParam('_id'))['_id'];
     const userName = Meteor.user().profile.name;
     const userNameId = Users.find({'username':userName}).fetch()[0]['_id'];
-    console.log(userId);
-    console.log(userNameId);
+    // console.log(userId);
+    // console.log(userNameId);
     return userId == userNameId;
   },
   userId: function () {
@@ -118,7 +118,7 @@ Template.User_Profile_Page_2.events({
     }
 
     AdminFeed.insert(newReport);
-    console.log(AdminFeed.find().fetch());
+    // console.log(AdminFeed.find().fetch());
 
     $('.ui.basic.success.modal')
         .modal('show')
