@@ -8,6 +8,7 @@ import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
 import { Users, UsersSchema } from '../../api/users/users.js';
 import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
+import { AdminFeed, AdminFeedSchema } from '../../api/admin-feed/admin-feed.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -96,5 +97,24 @@ Template.User_Profile_Page_2.onRendered(function enableSemantic() {
   });
 });
 
-// Template.User_Profile_Page_2.events({
-// });
+Template.User_Profile_Page_2.events({
+  'submit .report-data-form'(event, instance) {
+    event.preventDefault();
+
+    const reportee = Meteor.user().profile.name;
+    const user = Users.findOne({ _id: FlowRouter.getParam('_id') });
+    const targetUser = user.username;
+
+    const newReport = {
+      type: 'Profanity',
+      reportedBy: reportee,
+      target: targetUser,
+      report: 'Vulgarity or Profanity found on page!',
+      createdAt: new Date(),
+      msgRead: false,
+    }
+
+    AdminFeed.insert(newReport);
+    // console.log(AdminFeed.find().fetch());
+  }
+});

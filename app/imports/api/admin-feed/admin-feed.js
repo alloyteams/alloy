@@ -11,7 +11,7 @@ export const AdminFeed = new Mongo.Collection('AdminFeed');
 /**
  * Create the schema for AdminFeed collection
  */
-export const UsersSchema = new SimpleSchema({
+export const AdminFeedSchema = new SimpleSchema({
   type: {
     label: 'type',
     type: String,
