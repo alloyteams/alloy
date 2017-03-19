@@ -116,5 +116,9 @@ Template.User_Profile_Page_2.events({
 
     AdminFeed.insert(newReport);
     // console.log(AdminFeed.find().fetch());
+
+    $('.ui.basic.success.modal')
+        .modal('show')
+    ;
   }
 });
