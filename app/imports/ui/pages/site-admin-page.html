@@ -13,6 +13,31 @@
                     Admin Feed
                   </h1>
                   <hr/>
+                  <div class="ui container" style="height: 420px; overflow-x: auto; padding-right: 5px;">
+                    <div class="ui relaxed divided list">
+                      {{#each message in foundMessages}}
+                        <div class="item">
+                          <div class="right floated content">
+                            <form class="form-register-remove">
+                              <input name="msgId" id="msgId" type="hidden" placeholder="Message" value="{{ message._id }}">
+                              <button type="submit" class="fluid ui red button">
+                                Delete
+                              </button>
+                            </form>
+                          </div>
+                          <div class="content" style="margin-bottom: 5px;">
+                            <div class="item" style="margin-bottom: 2px;"><b>Type of Message</b>: {{message.type}}</div>
+                            <div class="item" style="margin-bottom: 2px;"><b>Target</b>: <a href="{{ pathFor 'User_Profile_Page_2' _id=(message.targetId) }}">{{message.target}}</a></div>
+                            <!--<div class="item" style="margin-bottom: 2px;"><b>Target ID</b>: {{message.targetId}}</div>-->
+                            <div class="item" style="margin-bottom: 2px;"><b>Reported By</b>: {{message.reportedBy}}</div>
+                            <div class="item" style="margin-bottom: 2px;"><b>Message</b>: {{message.report}}</div>
+                            <div class="item" style="margin-bottom: 2px;"><b>Time</b>: {{message.createdAt}}</div>
+                            <!--<div class="item" style="margin-bottom: 2px;"><b>Message Read</b>: {{message.msgRead}}</div>-->
+                          </div>
+                        </div>
+                      {{/each}}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
