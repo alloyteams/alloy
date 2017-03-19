@@ -33,6 +33,13 @@ export const AdminFeedSchema = new SimpleSchema({
     max: 200,
   },
 
+  targetId: {
+    label: 'targetId',
+    type: String,
+    optional: false,
+    max: 200,
+  },
+
   report: {
     label: 'report',
     type: String,

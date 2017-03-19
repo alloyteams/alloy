@@ -17,6 +17,7 @@ Template.User_Profile_Page_2.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
     this.subscribe('Projects');
+    this.subscribe('AdminFeed');
   });
 
   // use reactive dict to store error messages
@@ -104,18 +105,20 @@ Template.User_Profile_Page_2.events({
     const reportee = Meteor.user().profile.name;
     const user = Users.findOne({ _id: FlowRouter.getParam('_id') });
     const targetUser = user.username;
+    const targetUserId = user._id;
 
     const newReport = {
       type: 'Profanity',
       reportedBy: reportee,
       target: targetUser,
+      targetId: targetUserId,
       report: 'Vulgarity or Profanity found on page!',
       createdAt: new Date(),
       msgRead: false,
     }
 
     AdminFeed.insert(newReport);
-    // console.log(AdminFeed.find().fetch());
+    console.log(AdminFeed.find().fetch());
 
     $('.ui.basic.success.modal')
         .modal('show')
