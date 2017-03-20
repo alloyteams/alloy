@@ -26,6 +26,14 @@ footer {
   background-color: #27AAE1;
 }
 
+#landing-top-menu {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-radius: 0px;
+  color:white;
+  background-color: transparent;
+}
+
 .ui.basic.invalid.modal, .ui.basic.invalid.modal  .header, .ui.basic.existing.modal, .ui.basic.existing.modal .header {
   color: red;
 }
