@@ -9,10 +9,7 @@
       </a>
 
       <div class="right item">
-      <button class="ui inverted button cas-login" href="{{pathFor 'Home_Page'}}">
-        <i class="sign in icon"></i>
-        Login
-      </button>
+        {{> Cas_Login}}
       </div>
 
     </div>
@@ -28,7 +25,9 @@
       </div>
 
       <div class="row">
-        {{> Cas_Login}}
+        <button class="ui huge button cas-login" href="{{pathFor 'Home_Page'}}">
+          Login with your UHM account
+        </button>
       </div>
 
     </div>

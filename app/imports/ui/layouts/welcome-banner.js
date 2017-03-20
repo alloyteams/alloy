@@ -19,7 +19,7 @@ Template.Welcome_Banner.events({
    * @param event The click event.
    * @returns {boolean} False.
    */
-  'click .ui.button.cas-login': function casLogin(event, instance) {
+  'click .cas-login': function casLogin(event, instance) {
     event.preventDefault();
     const callback = function loginCallback(error) {
       if (error) {
