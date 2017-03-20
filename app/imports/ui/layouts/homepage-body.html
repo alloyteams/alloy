@@ -7,5 +7,12 @@
   {{/unless}}
 
   {{> Template.dynamic template=main}}
+
+  {{> Suggested_Projects}}
+
+  {{#unless currentUser}}
+    {{> About_Alloy}}
+  {{/unless}}
+
   {{> Footer}}
 </template>

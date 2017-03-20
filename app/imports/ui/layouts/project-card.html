@@ -1,5 +1,5 @@
 <template name="Project_Card">
-  <div class="ui raised card">
+  <div class="ui card">
     <div class="image">
       <!-- project image-->
       <img src="/images/alloy-wordmark.png">
@@ -19,7 +19,7 @@
     </div>-->
     <!--TODO: add skills relevant to that project-->
     <!--<div class="extra content">-->
-      <p>Skills needed:</p>
+      <p>Skills wanted:</p>
       {{#each skill in (project.skillsWanted)}}
           {{ skill }},
       {{/each}}
