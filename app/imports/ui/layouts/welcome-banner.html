@@ -1,10 +1,39 @@
 <template name="Welcome_Banner">
-  <div class="ui fluid container" id="welcome-banner"
-       style="">
-    <div class="ui centered padded grid">
-      <div class="row"><img class="ui image" id="alloy-logo" src="/images/alloy-wordmark.png"/>
+
+  <div class="ui fluid container" id="welcome-banner">
+
+    <div class="ui top inverted tabular menu" id="landing-top-menu">
+
+      <a class="item" href="{{pathFor 'Home_Page'}}">
+        <img class="ui centered fluid tiny image" src="/images/alloy-bare-wordmark.png">
+      </a>
+
+      <div class="right item">
+      <button class="ui inverted button cas-login" href="{{pathFor 'Home_Page'}}">
+        <i class="sign in icon"></i>
+        Login
+      </button>
       </div>
-      <div class="row"><h3>Alloy brings dream teams together at UH.</h3></div>
+
     </div>
+
+    <div class="ui centered padded grid">
+
+      <div class="row">
+        <img class="ui image" id="alloy-logo" src="/images/alloy-wordmark.png"/>
+      </div>
+
+      <div class="row">
+        <h2>Alloy brings dream teams together at UH.</h2>
+      </div>
+
+      <div class="row">
+        {{> Cas_Login}}
+      </div>
+
+    </div>
+
   </div>
+
+
 </template>

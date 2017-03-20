@@ -9,9 +9,12 @@
     <hr />
   </h1>
 
-  <div class="ui stackable container">
+  <div class="ui grid" style="height:20%;overflow-x:scroll;overflow-y:hidden;white-space:nowrap;margin:0px;">
+
+
+  <!--<div class="ui grid noMargin" style="overflow-x:scroll;overflow-y:hidden;white-space:nowrap;">-->
     {{#if Template.subscriptionsReady}}
-    <div class="ui raised three stackable cards">
+    <div class="ui raised cards">
       {{#if currentUser}}
       {{#if suggestedProjects.length}}
       {{#each project in suggestedProjects}}
@@ -35,5 +38,8 @@
       {{/if}}
     </div>
     {{/if}}
+  <!--</div>-->
+
   </div>
+
 </template>

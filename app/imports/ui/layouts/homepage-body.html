@@ -1,8 +1,11 @@
 <template name="Homepage_Body">
+
   {{#unless currentUser}}
-    {{>Welcome_Banner}}
+    {{> Welcome_Banner}}
+  {{else}}
+    {{> Header}}
   {{/unless}}
-  {{>Header}}
-  {{>Template.dynamic template=main}}
+
+  {{> Template.dynamic template=main}}
   {{> Footer}}
 </template>

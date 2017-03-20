@@ -1,5 +1,6 @@
 <template name="Home_Page">
   {{#if Template.subscriptionsReady}}
+
   <div class="ui stackable grid container">
 
     {{#if currentUser}}
@@ -109,13 +110,13 @@
     </div>
     {{/if}}
 
-    <div class="ten wide column">
-      <div class="ui very padded stackable container">
-        {{>Suggested_Projects}}
-      </div>
-    </div>
+    <!--<div class="ten wide column">-->
+      <!--<div class="ui very padded stackable container">-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 
+  {{>Suggested_Projects}}
 
   {{else}}
   <div class="ui stackable container">
