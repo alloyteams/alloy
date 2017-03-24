@@ -110,7 +110,8 @@ Template.User_Profile_Page_2.events({
     const newReport = {
       type: 'Profanity',
       reportedBy: reportee,
-      target: targetUser,
+      targetUser: targetUser,
+      targetProject: '',
       targetId: targetUserId,
       report: 'Vulgarity or Profanity found on page!',
       createdAt: new Date(),

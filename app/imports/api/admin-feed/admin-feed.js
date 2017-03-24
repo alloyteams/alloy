@@ -26,10 +26,17 @@ export const AdminFeedSchema = new SimpleSchema({
     max: 200,
   },
 
-  target: {
-    label: 'target',
+  targetUser: {
+    label: 'targetUser',
     type: String,
-    optional: false,
+    optional: true,
+    max: 200,
+  },
+
+  targetProject: {
+    label: 'targetProject',
+    type: String,
+    optional: true,
     max: 200,
   },
 
