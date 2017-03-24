@@ -67,6 +67,11 @@ Template.Project_Profile_Page.helpers({
     const userNameId = Users.find({ 'username': userName }).fetch()[0]['_id'];
     return userNameId;
   },
+  getMemberId: function(member) {
+    const memberID = Users.find({ 'username': member }).fetch()[0]['_id'];
+    // console.log(memberID);
+    return memberID;
+  },
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
     const project = Projects.findOne(FlowRouter.getParam('_id'));
