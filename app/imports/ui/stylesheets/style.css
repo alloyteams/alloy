@@ -34,6 +34,10 @@ footer {
   color: #A6CE39;
 }
 
+.ui.basic.report.modal, .ui.basic.report.modal  .header {
+  color: #A6CE39;
+}
+
 .alloy-icon {
   height: 30px;
   width: auto;
