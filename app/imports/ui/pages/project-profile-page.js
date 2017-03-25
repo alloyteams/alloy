@@ -8,6 +8,7 @@ import {_} from 'meteor/underscore';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
+import { AdminFeed, AdminFeedSchema } from '../../api/admin-feed/admin-feed.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -20,6 +21,7 @@ Template.Project_Profile_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
     this.subscribe('Projects');
+    this.subscribe('AdminFeed');
   });
 
   // use reactive dict to store error messages
@@ -64,6 +66,11 @@ Template.Project_Profile_Page.helpers({
     const userName = Meteor.user().profile.name;
     const userNameId = Users.find({ 'username': userName }).fetch()[0]['_id'];
     return userNameId;
+  },
+  getMemberId: function(member) {
+    const memberID = Users.find({ 'username': member }).fetch()[0]['_id'];
+    // console.log(memberID);
+    return memberID;
   },
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
@@ -288,6 +295,34 @@ Template.Project_Profile_Page.events({
       }
     }
   },
+  'submit .report-data-form'(event, instance) {
+    event.preventDefault();
+
+    const reportee = Meteor.user().profile.name;
+    const project = Projects.findOne({ _id: FlowRouter.getParam('_id') });
+    const targetProject = project.projectName;
+    const targetProjectId = project._id;
+
+    const newReport = {
+      type: 'Profanity',
+      reportedBy: reportee,
+      targetUser: '',
+      targetProject: targetProject,
+      targetId: targetProjectId,
+      report: 'Vulgarity or Profanity found on page!',
+      createdAt: new Date(),
+      msgRead: false,
+    }
+
+    console.log(newReport);
+
+    AdminFeed.insert(newReport);
+    console.log(AdminFeed.find().fetch());
+
+    $('.ui.basic.report.modal')
+        .modal('show')
+    ;
+  }
 });
 
 Template.Project_Profile_Page.onRendered(function onRendered() {

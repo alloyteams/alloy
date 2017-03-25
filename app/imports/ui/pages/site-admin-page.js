@@ -8,21 +8,23 @@ import {_} from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Users, UsersSchema} from '../../api/users/users.js';
+import {AdminFeed, AdminFeedSchema} from '../../api/admin-feed/admin-feed.js';
 import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
 import {EdgesCollection} from '../../api/skill-graph/EdgesCollection.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
-
 const homeActive = 'homeActive';
 const eventsActive = 'eventsActive';
 const friendsActive = 'friendsActive';
+var _dep = new Deps.Dependency(); // allows search result to update reactivley
 
 Template.Site_Admin_Page.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('UserData');  // extended Meteor.user collection data
     this.subscribe('Users');
     this.subscribe('Projects');
+    this.subscribe('AdminFeed');
     SkillGraphCollection.subscribe();
     EdgesCollection.subscribe();
   });
@@ -73,6 +75,10 @@ Template.Site_Admin_Page.helpers({
   countEdges: function () {
     return EdgesCollection.find().fetch().length;
   },
+  'foundMessages': function() {
+    _dep.depend();
+    return AdminFeed.find().fetch().reverse();
+  }
 });
 
 
@@ -81,5 +87,13 @@ Template.Site_Admin_Page.onRendered(function enableSemantic() {
 });
 
 Template.Site_Admin_Page.events({
+  'submit .form-register-remove': function (event, template) {
+    event.preventDefault();
 
+    let message_ID = event.target.msgId.value;
+
+    AdminFeed.remove(message_ID);
+
+    _dep.changed();
+  },
 });

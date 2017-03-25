@@ -8,6 +8,7 @@ import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
 import { Users, UsersSchema } from '../../api/users/users.js';
 import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
+import { AdminFeed, AdminFeedSchema } from '../../api/admin-feed/admin-feed.js';
 
 // consts to use in reactive dicts
 const displayErrorMessages = 'displayErrorMessages';
@@ -16,6 +17,7 @@ Template.User_Profile_Page_2.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('Users');
     this.subscribe('Projects');
+    this.subscribe('AdminFeed');
   });
 
   // use reactive dict to store error messages
@@ -51,8 +53,8 @@ Template.User_Profile_Page_2.helpers({
     const userId = Users.findOne(FlowRouter.getParam('_id'))['_id'];
     const userName = Meteor.user().profile.name;
     const userNameId = Users.find({'username':userName}).fetch()[0]['_id'];
-    console.log(userId);
-    console.log(userNameId);
+    // console.log(userId);
+    // console.log(userNameId);
     return userId == userNameId;
   },
   userId: function () {
@@ -96,5 +98,31 @@ Template.User_Profile_Page_2.onRendered(function enableSemantic() {
   });
 });
 
-// Template.User_Profile_Page_2.events({
-// });
+Template.User_Profile_Page_2.events({
+  'submit .report-data-form'(event, instance) {
+    event.preventDefault();
+
+    const reportee = Meteor.user().profile.name;
+    const user = Users.findOne({ _id: FlowRouter.getParam('_id') });
+    const targetUser = user.username;
+    const targetUserId = user._id;
+
+    const newReport = {
+      type: 'Profanity',
+      reportedBy: reportee,
+      targetUser: targetUser,
+      targetProject: '',
+      targetId: targetUserId,
+      report: 'Vulgarity or Profanity found on page!',
+      createdAt: new Date(),
+      msgRead: false,
+    }
+
+    AdminFeed.insert(newReport);
+    // console.log(AdminFeed.find().fetch());
+
+    $('.ui.basic.success.modal')
+        .modal('show')
+    ;
+  }
+});
