@@ -23,10 +23,7 @@ import './project-card.html';
 import './project-card.js';
 import './user-card.html';
 import './user-card.js';
-<<<<<<< HEAD
 import './upload.html';
 import './uploader.html';
 import './uploader.js';
-=======
 import './about-alloy.html';
->>>>>>> refs/remotes/origin/master
