@@ -1,17 +1,20 @@
 <template name="Suggested_Projects">
 
-  <h1><img class="alloy-icon" src="/images/alloy-icon.png">
-    {{#if currentUser}}
-    Suggested Projects
-    {{else}}
-    Featured Projects
-    {{/if}}
-    <hr />
-  </h1>
+  <div class="ui centered container">
 
-  <div class="ui stackable container">
+    <h1 class="ui dividing header">
+      <center>
+        <img class="alloy-icon" src="/images/alloy-icon.png">
+        {{#if currentUser}}
+        Suggested Projects
+        {{else}}
+        Featured Projects
+        {{/if}}
+      </center>
+    </h1>
+
     {{#if Template.subscriptionsReady}}
-    <div class="ui raised three stackable cards">
+    <div class="ui five stackable cards">
       {{#if currentUser}}
       {{#if suggestedProjects.length}}
       {{#each project in suggestedProjects}}
@@ -36,4 +39,5 @@
     </div>
     {{/if}}
   </div>
+
 </template>

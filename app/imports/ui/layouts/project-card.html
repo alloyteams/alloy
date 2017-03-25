@@ -10,21 +10,21 @@
          href="{{pathFor 'Project_Profile_Page' _id=project._id}}">{{ project.projectName }}</a>
       <!--TODO: add a created date-->
       <div class="meta">
-              <span
-                  class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
+              <span class="date">Created on {{ project.createdAt.toLocaleDateString }} </span>
       </div>
       <!-- description of the project-->
       <div class="description">
-        {{ project.bio }}
-      </div>
-    </div>
+        <p>{{ project.bio }}</p>
+      <!--</div>
+    </div>-->
     <!--TODO: add skills relevant to that project-->
-    <div class="extra content">
+    <!--<div class="extra content">-->
+      <p>Skills wanted:</p>
       {{#each skill in (project.skillsWanted)}}
-        <div class="ui small label">
-          {{ skill }}
-        </div>
+          {{ skill }},
       {{/each}}
+    <!--</div>-->
+      </div>
     </div>
     <div class="extra content">
       Members:
