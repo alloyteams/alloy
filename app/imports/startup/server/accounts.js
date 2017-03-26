@@ -106,7 +106,7 @@ Accounts.onCreateUser(function (options, user) {
   };
 
   // On creation of application makes these users site admin
-  if (user.services.cas.id == 'ew7' || user.services.cas.id == 'tevesn')
+  if (user.services.cas.id == 'ew7' || user.services.cas.id == 'tevesn' || user.services.cas.id == 'mjm4')
   {
     newUser.isSiteAdmin = true;
   }

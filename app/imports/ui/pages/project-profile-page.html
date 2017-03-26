@@ -21,7 +21,7 @@
             <br/>
 
             <div class="ui list">
-              {{#if isAdmin}}
+              {{#if isSiteAdmin}}
                 <div class="item">
                   <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
                   <div class="ui button">
@@ -35,17 +35,24 @@
                 </div>
               {{/if}}
 
-              {{#if notMember}}
-                {{#if isSiteAdmin}}
-                <div class="item">
-                  <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
-                  <div class="ui button">
-                    <i class="edit icon"></i>
-                    Edit Project Info
+              {{#unless isSiteAdmin}}
+                {{#if isAdmin}}
+                  <div class="item">
+                    <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
+                    <div class="ui button">
+                      <i class="edit icon"></i>
+                      Edit Project Info
+                    </div>
+                    </a>
                   </div>
-                  </a>
-                </div>
+                  <div class="item">
+                    {{> Member_Dropdown _id=(projectDataField "_id")}}
+                  </div>
                 {{/if}}
+              {{/unless}}
+
+              {{#if notMember}}
+
               {{else}}
                 <div class="item">
                   <div class="ui red leave button">
