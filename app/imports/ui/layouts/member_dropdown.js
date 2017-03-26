@@ -103,16 +103,16 @@ Template.Member_Dropdown.events({
     event.preventDefault();
     let userToAdd = event.currentTarget.parentNode.children[0].value;
     userToAdd = String(userToAdd).toLowerCase();
-    console.log(userToAdd);
+    // console.log(userToAdd);
     /** Check if user exists **/
     const user = Users.find({ 'username': userToAdd }).fetch()[0];
-    console.log(user);
+    // console.log(user);
     /** If User exists, proceed to request to add **/
     if (user != null) {
       const userId = user['_id'];
       const project = Projects.findOne(this.projectId);
       let userRequests = user['pendingRequests'];
-      console.log(userRequests);
+      // console.log(userRequests);
       let indexOfRequest = userRequests.indexOf(project['_id']);
       let indexOfProj = user['projects'].indexOf(project['_id']);
       if (indexOfRequest === -1 && indexOfProj === -1) {
@@ -121,12 +121,12 @@ Template.Member_Dropdown.events({
         $('.ui.basic.success.modal')
             .modal('show')
         ;
+      } else {
+        $('.ui.basic.existing.modal')
+            .modal('show')
+        ;
       }
-      $('.ui.basic.existing.modal')
-          .modal('show')
-      ;
-    }
-    else {
+    } else {
       $('.ui.basic.invalid.modal')
           .modal('show')
       ;
