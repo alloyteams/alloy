@@ -6,9 +6,19 @@
     {{> Header}}
   {{/unless}}
 
-  {{> Template.dynamic template=main}}
-
-  {{> Suggested_Projects}}
+  {{#if currentUser}}
+    <div class="ui two column stackable grid container">
+      <div class="four wide column">
+        {{> Template.dynamic template=main}}
+      </div>
+      <div class="twelve wide column">
+        {{> Suggested_Projects}}
+      </div>
+    </div>
+  {{else}}
+    {{> Template.dynamic template=main}}
+    {{ > Suggested_Projects}}
+  {{/if}}
 
   {{#unless currentUser}}
     {{> About_Alloy}}
