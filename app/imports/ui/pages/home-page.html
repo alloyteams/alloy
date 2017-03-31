@@ -7,10 +7,10 @@
     <!--<div class="six wide column">
       <div class="ui five row grid">
         <div class="row" id="notification-header">-->
+          <div class="four wide column">
           <h1 class="ui dividing header" id="notification-header">
             <center>Notifications</center>
           </h1>
-          <div class="ui padded grid">
             {{#if hasRequests}}
             {{#each request in (userDataField "pendingRequests")}}
             <!--<div class="padded row">
@@ -42,11 +42,11 @@
             </div>-->
             {{/each}}
             {{else}}
-            <div class="padded row">
-              <div class="ui container">
+            <!--<div class="padded row">
+              <div class="ui container">-->
                 <center><p>You have no notifications.</p></center>
-              </div>
-            </div>
+              <!--</div>
+            </div>-->
             {{/if}}
           </div>
         <!--</div>
