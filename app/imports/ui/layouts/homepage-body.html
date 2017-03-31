@@ -1,12 +1,7 @@
 <template name="Homepage_Body">
 
-  {{#unless currentUser}}
-    {{> Welcome_Banner}}
-  {{else}}
-    {{> Header}}
-  {{/unless}}
-
   {{#if currentUser}}
+    {{> Header}}
     <div class="ui two column stackable grid container">
       <div class="four wide column">
         {{> Template.dynamic template=main}}
@@ -16,13 +11,11 @@
       </div>
     </div>
   {{else}}
+    {{> Welcome_Banner}}
     {{> Template.dynamic template=main}}
-    {{ > Suggested_Projects}}
-  {{/if}}
-
-  {{#unless currentUser}}
+    {{> Suggested_Projects}}
     {{> About_Alloy}}
-  {{/unless}}
+  {{/if}}
 
   {{> Footer}}
 </template>
