@@ -37,7 +37,7 @@ Template.Project_Creation_Page.onCreated(function onCreated() {
 
 Template.Project_Creation_Page.helpers({
   getGraphSkills() {
-    console.log(SkillGraphCollection.getSkills())
+    // console.log(SkillGraphCollection.getSkills())
     return SkillGraphCollection.getSkills();
   },
   errorClass() {
@@ -86,36 +86,65 @@ Template.Project_Creation_Page.events({
       createdAt: new Date(),
     };
 
-    // Clear out any previous validation errors.
-    instance.context.resetValidation();
-    // Invoke clean so that newContact reflects what will be inserted.
-    ProjectsSchema.clean(newProject);
+    // Validation of project name that already exists
+    const allProjectsObjects = Projects.find().fetch();
+    const projectNames = _.pluck(allProjectsObjects, 'projectName');
+    // console.log(projectNames);
+    var readableNames = _.map(projectNames, function(nameOfProject) {
+      return utils.makeReadable(nameOfProject);
+    });
+    // console.log(readableNames);
+    const readableNewProjectName = utils.makeReadable(newProjectName);
+    const comparisonResult = _.some(readableNames, function(theSame) {
+      return readableNewProjectName === theSame;
+    });
+    // console.log(comparisonResult);
+    if (comparisonResult) {
+      console.log("There exists a Project with that name.");
+      // Clear out any previous validation errors.
+      instance.context.resetValidation();
+      // Invoke clean so that newContact reflects what will be inserted.
+      ProjectsSchema.clean(newProject);
 
-    // Determine validity against schema and check if a project already using given name
-    const exists = Projects.findOne({ projectName: newProjectName });
-    instance.context.validate(newProject);
-    if (instance.context.isValid() && !exists) {
-      // insert new contact data into collection
-      Projects.insert(newProject);
-      instance.messageFlags.set(displayErrorMessages, false);
+      // Modal pop up if unsuccessful
+      $('.ui.basic.invalid.modal')
+          .modal('show')
+      ;
 
-      // Update the user to reflect new project
-      const user = Users.findOne({ username: creator });
-      const userID = user['_id'];
-      const projectId = Projects.findOne({ projectName: newProjectName })._id;
-      Users.update({ _id: userID }, { $addToSet: { projects: projectId } });
-      Users.update({ _id: userID }, { $addToSet: { adminProjects: projectId } });
-
-      // use skills posted in this project to update skillgraph
-      SkillGraphCollection.addVertexList(newSkills);
-      // FIXME: debug messages from the addVertexList method are displayed on client console
-
-      // redirect back to Home_Page
-      FlowRouter.go('Home_Page');
+      FlowRouter.go('Project_Creation_Page');
     } else {
-      console.log("Trying to create failed");
+      console.log("You're good to go!");
+      // // Clear out any previous validation errors.
+      instance.context.resetValidation();
+      // // Invoke clean so that newContact reflects what will be inserted.
+      ProjectsSchema.clean(newProject);
 
-      instance.messageFlags.set(displayErrorMessages, true);
+      // Determine validity against schema and check if a project already using given name
+      const exists = Projects.findOne({ projectName: newProjectName });
+      instance.context.validate(newProject);
+      if (instance.context.isValid() && !exists) {
+        // insert new contact data into collection
+        Projects.insert(newProject);
+        instance.messageFlags.set(displayErrorMessages, false);
+
+        // Update the user to reflect new project
+        const user = Users.findOne({ username: creator });
+        const userID = user['_id'];
+        const projectId = Projects.findOne({ projectName: newProjectName })._id;
+        Users.update({ _id: userID }, { $addToSet: { projects: projectId } });
+        Users.update({ _id: userID }, { $addToSet: { adminProjects: projectId } });
+
+        // use skills posted in this project to update skillgraph
+        SkillGraphCollection.addVertexList(newSkills);
+        // FIXME: debug messages from the addVertexList method are displayed on client console
+
+        // redirect back to Home_Page
+        FlowRouter.go('Home_Page');
+      } else {
+        console.log("Trying to create failed");
+
+        instance.messageFlags.set(displayErrorMessages, true);
+      }
     }
   },
 });
