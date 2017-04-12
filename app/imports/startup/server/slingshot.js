@@ -23,7 +23,7 @@ Slingshot.createDirective('uploadToAmazonS3', Slingshot.S3Storage, {
     return true;
   },
   key: (file) => {
-    const user = Meteor.user().profile._id;
-    return Meteor.user().profile._id + '/' + file.name;
+    const user = Meteor.userId();
+    return `${user}/${file.name}`;
   },
 });
