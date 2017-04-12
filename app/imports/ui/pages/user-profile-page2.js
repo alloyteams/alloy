@@ -5,7 +5,8 @@ import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
-import { Meteor } from 'meteor/meteor'  // to access Meteor.users collection
+import { Email } from 'meteor/email';
+import { Meteor } from 'meteor/meteor';  // to access Meteor.users collection
 import { Users, UsersSchema } from '../../api/users/users.js';
 import { Projects, ProjectsSchema } from '../../api/projects/projects.js';
 import { AdminFeed, AdminFeedSchema } from '../../api/admin-feed/admin-feed.js';
@@ -120,6 +121,18 @@ Template.User_Profile_Page_2.events({
 
     AdminFeed.insert(newReport);
     // console.log(AdminFeed.find().fetch());
+
+    const emailTargetName = targetUser + ": profile page has been reported for profanity.";
+
+    // Sending an email to alloy email account about REPORT
+    Meteor.call(
+        'sendEmail',
+        'alloyUH@gmail.com',
+        'alloyUH@gmail.com',
+        'ALLOY-NOTIFICATION-REPORT-USER',
+        emailTargetName
+    );
+    // console.log("email sent");
 
     $('.ui.basic.success.modal')
         .modal('show')
