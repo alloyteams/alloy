@@ -193,11 +193,11 @@ Template.Project_Profile_Page.events({
     const memberToAdd = Meteor.user().profile.name;
     const project = Projects.findOne(FlowRouter.getParam('_id'));
     if (_.contains(project.joinRequests, memberToAdd)) {
-      console.log("User has already requested to join");
+      // console.log("User has already requested to join");
     }
     else {
       Projects.update({ _id: project._id }, { $addToSet: { joinRequests: memberToAdd } });
-      console.log("added to joinRequests");
+      // console.log("added to joinRequests");
     }
   },
   'click .ui.basic.green.button': function (event, instance) {
