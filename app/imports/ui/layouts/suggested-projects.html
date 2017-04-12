@@ -1,6 +1,6 @@
 <template name="Suggested_Projects">
 
-  <div class="ui centered container">
+  <div class="ui centered container" id="suggested">
 
     <h1 class="ui dividing header">
       <center>
@@ -14,13 +14,13 @@
     </h1>
 
     {{#if Template.subscriptionsReady}}
-    <div class="ui five stackable cards">
       {{#if currentUser}}
       {{#if suggestedProjects.length}}
-      {{#each project in suggestedProjects}}
-        {{> Project_Card project = project }}
-      {{/each}}
-
+      <div class="ui five stackable cards">
+        {{#each project in suggestedProjects}}
+          {{> Project_Card project = project }}
+        {{/each}}
+      </div>
       {{else}}
       <div class="ui very padded centered grid stackable container">
         <div class="ui large raised segment">
@@ -32,11 +32,12 @@
       </div>
       {{/if}}
       {{else}}
-      {{#each project in projectsList}}
-        {{> Project_Card project = project }}
-      {{/each}}
+      <div class="ui five stackable cards">
+        {{#each project in projectsList}}
+          {{> Project_Card project = project }}
+        {{/each}}
+      </div>
       {{/if}}
-    </div>
     {{/if}}
   </div>
 
