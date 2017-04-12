@@ -51,9 +51,6 @@ insecure@1.0.7
 
 atoy40:accounts-cas
 random@1.0.10
-<<<<<<< HEAD
 ostrio:files
 edgee:slingshot
-=======
 email
->>>>>>> refs/remotes/origin/master
