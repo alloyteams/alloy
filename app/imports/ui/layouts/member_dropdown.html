@@ -17,20 +17,20 @@
       </div>
       {{#each member in projectMemberList _id}}
       <div class="member item">
-        {{member}}
-        {{#if admin member}}
-        <div class="ui label">
-          ADMIN
+          {{member}}
+          {{#if admin member}}
+            <div class="ui label">
+              ADMIN
+            </div>
+          {{else}}
+            <div type="button" class="ui icon admin button" id={{member}}>
+              <i class="arrow up icon"></i>
+            </div>
+          {{/if}}
+          <div type="button" class="ui right floated negative icon button" id={{member}}>
+            <i class="remove icon"></i>
+          </div>
         </div>
-        {{else}}
-        <div type="button" class="ui icon admin button" id={{member}}>
-          <i class="arrow up icon"></i>
-        </div>
-        {{/if}}
-        <div type="button" class="ui right floated negative icon button" id={{member}}>
-          <i class="remove icon"></i>
-        </div>
-      </div>
       {{/each}}
     </div>
   </div>
