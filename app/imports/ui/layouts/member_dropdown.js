@@ -121,7 +121,7 @@ Template.Member_Dropdown.events({
         mailRecipient = userToAdd + "@hawaii.edu";
         emailMsg = "You have a request to join project " + project['projectName'] + " from " + Meteor.user().profile.name + ".";
 
-        // Sending an email to alloy email account about REPORT
+        // Sending an email to alloy email account about project invite
         Meteor.call(
             'sendEmail',
             mailRecipient,
