@@ -38,7 +38,7 @@ footer {
   background-color: transparent;
 }
 
-.ui.basic.invalid.modal, .ui.basic.invalid.modal  .header {
+.ui.basic.invalid.modal, .ui.basic.invalid.modal  .header, .ui.basic.invalid.name.modal, .ui.basic.invalid.name.modal  .header {
   color: red;
 }
 
