@@ -117,6 +117,20 @@ Template.Member_Dropdown.events({
       let indexOfProj = user['projects'].indexOf(project['_id']);
       if (indexOfRequest === -1 && indexOfProj === -1) {
         userRequests.push(project['_id']);
+
+        mailRecipient = userToAdd + "@hawaii.edu";
+        emailMsg = "You have a request to join project " + project['projectName'] + " from " + Meteor.user().profile.name + ".";
+
+        // Sending an email to alloy email account about project invite
+        Meteor.call(
+            'sendEmail',
+            mailRecipient,
+            'alloyUH@gmail.com',
+            'ALLOY-NOTIFICATION-INVITE',
+            emailMsg
+        );
+        // console.log("email sent");
+
         Users.update({ _id: userId }, { $set: { pendingRequests: userRequests } });
         $('.ui.basic.success.modal')
             .modal('show')

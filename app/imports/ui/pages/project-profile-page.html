@@ -30,9 +30,11 @@
                   </div>
                   </a>
                 </div>
-                <div class="item">
-                  {{> Member_Dropdown _id=(projectDataField "_id")}}
-                </div>
+                {{#if isAdmin}}
+                  <div class="item">
+                    {{> Member_Dropdown _id=(projectDataField "_id")}}
+                  </div>
+                {{/if}}
               {{/if}}
 
               {{#unless isSiteAdmin}}
@@ -52,7 +54,7 @@
               {{/unless}}
 
               {{#if notMember}}
-
+                <!--DO NOTHING-->
               {{else}}
                 <div class="item">
                   <div class="ui red leave button">

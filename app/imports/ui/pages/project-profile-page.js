@@ -138,6 +138,7 @@ Template.Project_Profile_Page.helpers({
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
   },
 });
+
 /*
  Template.Project_Profile_Page.onRendered(function enableSemantic() {
  // secondary menu logic FIXME: does not work (used events and helpers instead)
@@ -149,6 +150,7 @@ Template.Project_Profile_Page.helpers({
  });
  });
  */
+
 Template.Project_Profile_Page.events({
   // change what nav menu tab is active (I know this is an ugly way to do it, but can fix later)
   'click .homeTab' (event, instance) {
@@ -193,11 +195,31 @@ Template.Project_Profile_Page.events({
     const memberToAdd = Meteor.user().profile.name;
     const project = Projects.findOne(FlowRouter.getParam('_id'));
     if (_.contains(project.joinRequests, memberToAdd)) {
-      console.log("User has already requested to join");
+      // console.log("User has already requested to join");
     }
     else {
       Projects.update({ _id: project._id }, { $addToSet: { joinRequests: memberToAdd } });
-      console.log("added to joinRequests");
+      // console.log("added to joinRequests");
+
+      const project = Projects.findOne({ _id: FlowRouter.getParam('_id') });
+      let projectAdminsArray = project.admins;
+      const emailMsg = Meteor.user().profile.name + " requested to join project " + project.projectName + ".";
+
+      // console.log(projectAdminsArray);
+      // console.log("test print");
+
+      projectAdminsArray = _.map(projectAdminsArray, function(name){ return name + "@hawaii.edu"; });
+
+      // console.log(projectAdminsArray);
+
+      _.each(projectAdminsArray, function(name)
+      {Meteor.call(
+          'sendEmail',
+          name,
+          'alloyUH@gmail.com',
+          'ALLOY-NOTIFICATION-REQUEST-TO-JOIN-PROJECT',
+          emailMsg
+      )})
     }
   },
   'click .ui.basic.green.button': function (event, instance) {
@@ -315,7 +337,7 @@ Template.Project_Profile_Page.events({
       msgRead: false,
     }
 
-    console.log(newReport);
+    // console.log(newReport);
 
     AdminFeed.insert(newReport);
     // console.log(AdminFeed.find().fetch());

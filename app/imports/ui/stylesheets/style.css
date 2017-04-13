@@ -38,8 +38,12 @@ footer {
   background-color: transparent;
 }
 
-.ui.basic.invalid.modal, .ui.basic.invalid.modal  .header, .ui.basic.existing.modal, .ui.basic.existing.modal .header {
+.ui.basic.invalid.modal, .ui.basic.invalid.modal  .header {
   color: red;
+}
+
+.ui.basic.existing.modal, .ui.basic.existing.modal .header {
+  color: yellow;
 }
 
 .ui.basic.success.modal, .ui.basic.success.modal  .header {
