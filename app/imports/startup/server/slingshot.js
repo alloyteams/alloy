@@ -12,13 +12,11 @@ Slingshot.createDirective('uploadToAmazonS3', Slingshot.S3Storage, {
   region: 'us-west-1',
   acl: 'public-read',
   authorize: () => {
-    console.log(Meteor.settings.AWSAccessKeyId);
-    console.log(Meteor.settings.AWSSecretAccessKey);
     // Deny uploads if user is not logged in.
-    // if (!Meteor.user().profile._id) {
-    //   const message = 'Please login before uploading files';
-    //   throw new Meteor.Error('Login Required', message);
-    // }
+    if (!Meteor.userId()) {
+      const message = 'Please login before uploading files';
+      throw new Meteor.Error('Login Required', message);
+    }
 
     return true;
   },
