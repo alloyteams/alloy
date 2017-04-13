@@ -107,7 +107,7 @@ Template.Project_Creation_Page.events({
       ProjectsSchema.clean(newProject);
 
       // Modal pop up if unsuccessful
-      $('.ui.basic.invalid.modal')
+      $('.ui.basic.invalid.name.modal')
           .modal('show')
       ;
 

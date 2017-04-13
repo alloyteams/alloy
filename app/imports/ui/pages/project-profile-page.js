@@ -201,7 +201,6 @@ Template.Project_Profile_Page.events({
       Projects.update({ _id: project._id }, { $addToSet: { joinRequests: memberToAdd } });
       // console.log("added to joinRequests");
 
-      const project = Projects.findOne({ _id: FlowRouter.getParam('_id') });
       let projectAdminsArray = project.admins;
       const emailMsg = Meteor.user().profile.name + " requested to join project " + project.projectName + ".";
 
