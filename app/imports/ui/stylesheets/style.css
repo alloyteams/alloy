@@ -42,11 +42,11 @@ footer {
   color: red;
 }
 
-.ui.basic.existing.modal, .ui.basic.existing.modal .header {
+.ui.basic.existing.modal, .ui.basic.existing.modal .header, .ui.basic.invite.exist.modal, .ui.basic.invite.exist.modal .header {
   color: yellow;
 }
 
-.ui.basic.success.modal, .ui.basic.success.modal  .header {
+.ui.basic.success.modal, .ui.basic.success.modal  .header, .ui.basic.invite.success.modal, .ui.basic.invite.success.modal  .header {
   color: #A6CE39;
 }
 

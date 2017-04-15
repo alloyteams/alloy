@@ -4,6 +4,9 @@ import './edit-user-profile.js';
 import './home-page.html';
 import './home-page.js';
 
+import './invite-page.html';
+import './invite-page.js';
+
 import './categories-page.html';
 import './categories-page.js';
 
