@@ -2,53 +2,62 @@
   <!--  FIXME: adding #if Template.subscriptionsReady causes the Skills Wanted dropdown not to work -->
   {{#if currentUser}}
   <div class="ui container top-margin-30px">
-    <div class="ui raised padded segment">
-      <h1>
-        <img class="alloy-icon" src="/images/alloy-icon.png">
-        Create Project
-        <hr/>
-      </h1>
-      <form class="ui form project-data-form">
+
+    <h1 class="ui dividing header">
+      <img id="project-create-icon" src="/images/alloy-icon.png">
+      Create Project
+    </h1>
+    <form class="ui form project-data-form">
+      <div class="ui raised padded segment">
+
         <div class="field">
           <label>Project Title</label>
-          <input type="text" name="projectName" id="projectName"
-                 placeholder="Project Name">
+          <input type="text" name="projectName" id="projectName" placeholder="Project Name">
         </div>
-        <div class="field">
-          <label>Upload Project Image</label>
-          <input type="file" name="project-image"
-                 placeholder="Upload a photo for your project...">
-        </div>
-        <div class="field">
-          <label>Project Description</label>
-          <textarea name="bio" id="bio"
-                    placeholder="Description"></textarea>
-        </div>
-        <div class="field">
-          <label>Skills Wanted</label>
-          <div class="ui fluid multiple search selection dropdown">
-            <input name="skills" id="skills" type="hidden">
-            <i class="dropdown icon"></i>
-            <div class="default text">Skills</div>
-            <div class="menu">
-              {{#each vertex in getGraphSkills}}
-              <div class="item"
-                   data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
-              </div>
-              {{/each}}
 
+        <div class="field">
+          <label>Project Website</label>
+          <input type="text" name="projectUrl" id="projectUrl" placeholder="www.github.com">
+        </div>
+
+        <div class="ui stackable grid container">
+
+          <div class="five wide column">
+            <div class="field">
+              <label>Project Image</label>
+              <img class="ui rounded image profile-picture" src="/images/alloy-wordmark.png">
+              <br />
+              <div class="ui button"><i class="upload icon"></i>Upload Project Image</div>
+              <input type="file" name="project-image" id="hidden-project-image" style="display: none">
+            </div>
+          </div>
+
+          <div class="eleven wide column">
+            <div class="field">
+              <label>Project Description</label>
+              <textarea name="bio" id="bio" placeholder="Description"></textarea>
+            </div>
+            <div class="field">
+              <label>Skills Wanted</label>
+              <div class="ui fluid multiple search selection dropdown">
+                <input name="skills" id="skills" type="hidden">
+                <i class="dropdown icon"></i>
+                <div class="default text">Skills</div>
+                <div class="menu">
+                  {{#each vertex in getGraphSkills}}
+                  <div class="item"
+                       data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+                  </div>
+                  {{/each}}
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="field">
-
-        </div>
-        <div class="field">
-          <label>Project Website</label>
-          <input type="text" name="projectUrl" id="projectUrl"
-                 placeholder="www.github.com">
-        </div>
-        <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
+      </div>
+      <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
+      <center>
         <button class="ui primary blue button" type="submit">
           <i class="save icon"></i>
           Submit
@@ -58,9 +67,9 @@
             <i class="trash icon"></i>
             Abandon Changes
           </div>
-        </a>
-      </form>
-    </div>
+        </a></center>
+    </form>
+
   </div>
 
   <div class="ui basic invalid name modal">
