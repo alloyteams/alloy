@@ -3,20 +3,17 @@
   {{#if Template.subscriptionsReady}}
     {{#if currentUser}}
       {{#if siteAdmin}}
-        <div class="ui container" style="margin: 30px auto 0 auto;">
-          <div class="ui raised padded segment">
-            <h1>
-              <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+          <div class="ui raised padded segment div container">
+            <h1 class="ui dividing header">
+              <img id="admin-user-icon" src="/images/alloy-icon.png">
               Users List
             </h1>
-            <hr/>
             <div class="ui raised four stackable cards top-margin-15px">
               {{#each user in foundUsers}}
                 {{> User_Card user = user }}
               {{/each}}
             </div>
           </div>
-        </div>
       {{/if}}
     {{/if}}
   {{/if}}
