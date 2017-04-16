@@ -149,7 +149,7 @@
               <br/>
               <div class="ui labels">
                 {{#each wanted in (projectDataField "skillsWanted")}}
-                <a class="ui label">{{ wanted }}</a>
+                <a class="ui label skill-label">{{ wanted }}</a>
                 {{/each}}
               </div>
             </div>
@@ -164,8 +164,8 @@
                   <i class="large user middle aligned icon"></i>
                   <div class="content">
                     <!-- assumes using UH naming/email scheme -->
-                    <a class="description" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">{{ admin }}</a>
-                    <a class="header">{{admin}}@hawaii.edu</a>
+                    <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">{{ admin }}</a>
+                    <div class="description">{{admin}}@hawaii.edu</div>
                   </div>
                 </div>
                 {{/each}}
@@ -182,8 +182,8 @@
                   <i class="large user middle aligned icon"></i>
                   <div class="content">
                     <!-- assumes using UH naming/email scheme -->
-                    <a class="description" href="{{ pathFor 'User_Profile_Page_2' _id=(getMemberId member) }}">{{ member }}</a>
-                    <a class="header">{{member}}@hawaii.edu</a>
+                    <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(getMemberId member) }}">{{ member }}</a>
+                    <div class="description">{{member}}@hawaii.edu</div>
                   </div>
                 </div>
                 {{/each}}

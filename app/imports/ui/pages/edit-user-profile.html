@@ -1,55 +1,80 @@
 <template name="Edit_Profile_Page">
   <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections. -->
   <!-- FIXME: Had to remove usage of #if Template subscription ready because it causes issues with dropdown. A workaround should be looked into if possible but for now it 'should' work. More info: https://forums.meteor.com/t/have-you-also-noticed-that-semantic-ui-dropdowns-dont-work-well-with-blaze-conditionals/25720/6 -->
-  <div class="ui container" id="edit-profile-form">
+  <div class="ui stackable container" id="edit-profile-form">
+
+    <h2 class="ui dividing header"><i class="edit icon"></i>Edit User Profile</h2>
+
     <form class="ui form user-data-form">
-      <h4 class="ui dividing header"><i class="edit icon"></i>Edit User Profile</h4>
-
-      <div class="field">
-        <div class="two fields">
-          <div class="field">
-            <label>First Name</label>
-            <input type="text" name="firstName" id="firstName"
-                   placeholder="{{ userDataField "firstName" }}" value="{{ userDataField
-            "firstName" }}">
-          </div>
-          <div class="field">
-            <label>Last Name</label>
-            <input type="text" name="lastName" id="lastName"
-                   placeholder="{{ userDataField 'lastName' }}"
-            value="{{ userDataField 'lastName' }}">
-            <!--{{#if displayFieldError 'lastName' }}
-            <div class="ui error message">
-              <p>You must specify your last name.</p>
+      <div class="ui raised segment">
+        <div class="field">
+          <div class="two fields">
+            <div class="field">
+              <label>First Name</label>
+              <input type="text" name="firstName" id="firstName"
+                     placeholder="{{ userDataField " firstName" }}" value="{{ userDataField
+              "firstName" }}">
             </div>
-            {{/if}}-->
+            <div class="field">
+              <label>Last Name</label>
+              <input type="text" name="lastName" id="lastName"
+                     placeholder="{{ userDataField 'lastName' }}"
+                     value="{{ userDataField 'lastName' }}">
+              <!--{{#if displayFieldError 'lastName' }}
+              <div class="ui error message">
+                <p>You must specify your last name.</p>
+              </div>
+              {{/if}}-->
+            </div>
+          </div>
+        </div>
+        <div class="ui stackable grid container">
+
+          <div class="five wide column">
+            <div class="field">
+              <label>Profile Picture</label>
+              <img class="ui rounded image"
+                   src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
+            </div>
+            <div class="ui button"><i class="image icon"></i>Select Default Picture</div>
+            <br/><br/>
+            <div class="ui button"><i class="upload icon"></i>Upload Profile Picture</div>
+          </div>
+
+          <div class="eleven wide column">
+            <div class="field">
+              <label>About Me</label>
+              <textarea name="bio" id="bio"
+                        placeholder="{{ userDataField 'bio' _id=(userDataField " _id")}}"
+              value="{{ userDataField 'bio' _id=(userDataField " _id")}}"></textarea>
+            </div>
+
+            <div class="field">
+              <label>My Skills</label>
+              <!--TODO: replace placeholder with previously entered information for the project-->
+              <div class="ui fluid multiple search selection dropdown">
+                <input name="skills" id="skills" type="hidden" placeholder="{{ getSkillString }}"
+                       value="{{ getSkillString }}">
+                <i class="dropdown icon"></i>
+                <div class="default text">Skills</div>
+                <div class="menu">
+                  {{#each vertex in getGraphSkills}}
+                  <div class="item"
+                       data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+                  </div>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="field">
-        <label>Bio</label>
-        <textarea name="bio" id="bio"
-                  placeholder="{{ userDataField 'bio' _id=(userDataField " _id")}}"
-        value="{{ userDataField 'bio' _id=(userDataField " _id")}}"></textarea>
-      </div>
+      <center>
+        <button class="ui button" tabindex="0"><i class="save icon"></i>Update</button>
+      </center>
 
-      <div class="field">
-        <label>My Skills</label>
-        <!--TODO: replace placeholder with previously entered information for the project-->
-        <div class="ui fluid multiple search selection dropdown">
-          <input name="skills" id="skills" type="hidden" placeholder="{{ getSkillString }}" value="{{ getSkillString }}">
-          <i class="dropdown icon"></i>
-          <div class="default text">Skills</div>
-          <div class="menu">
-            {{#each vertex in getGraphSkills}}
-              <div class="item"
-                   data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}</div>
-            {{/each}}
-          </div>
-        </div>
-      </div>
-
-      <button class="ui button" tabindex="0"><i class="save icon"></i>Update</button>
     </form>
+
+
   </div>
 </template>

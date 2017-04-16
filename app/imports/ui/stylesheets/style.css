@@ -194,3 +194,13 @@ p.top-margin-5px, #admin-feed-project-title {
 .ui.label.skill-label {
   margin: 0px 2px 2px 0px;
 }
+
+#user-card-name {
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+#edit-profile-form-subsegment {
+  padding-bottom: 5px;
+}
