@@ -65,7 +65,7 @@ footer {
   padding-bottom: 2px;
 }
 
-#admin-feed-icon, #admin-project-icon {
+#admin-feed-icon, #admin-project-icon, #admin-user-icon {
   height: 30px;
   width: auto;
   margin: 0px 0px 10px 0px;
