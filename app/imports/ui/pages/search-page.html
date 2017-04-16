@@ -77,12 +77,17 @@
       <div class="ui container top-margin-30px">
         <div class="ui segment">
           <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}"
-             class="ui ribbon label about-project-ribbon">
+             class="ui blue ribbon label">
             <h3>{{project.projectName}}</h3>
           </a>
-          <p class="top-margin-5px"><b>Skills
-            Wanted: </b> {{project.skillsWanted}} </p>
-          <p class="top-margin-5px">{{project.bio}}</p>
+          <p class="top-margin-5px"><b>Description</b><br />{{project.bio}}</p>
+          <p class="top-margin-5px"><b> Skills Wanted: </b> <!--{{project.skillsWanted}}-->
+            <div class="ui labels">
+              {{ #each skill in (project.skillsWanted) }}
+              <a class="ui label skill-label">{{ skill }}</a>
+              {{ /each }}
+            </div>
+          </p>
         </div>
       </div>
     {{/each}}

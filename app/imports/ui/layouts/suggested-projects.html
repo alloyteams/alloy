@@ -16,7 +16,7 @@
     {{#if Template.subscriptionsReady}}
       {{#if currentUser}}
       {{#if suggestedProjects.length}}
-      <div class="ui five stackable cards">
+      <div class="ui three stackable cards">
         {{#each project in suggestedProjects}}
           {{> Project_Card project = project }}
         {{/each}}
@@ -32,7 +32,7 @@
       </div>
       {{/if}}
       {{else}}
-      <div class="ui five stackable cards">
+      <div class="ui four stackable cards">
         {{#each project in projectsList}}
           {{> Project_Card project = project }}
         {{/each}}

@@ -112,6 +112,7 @@ p.top-margin-5px, #admin-feed-project-title {
   color: white;
 }
 
+/** NOT USED ANYMORE
 .ui.about-project-ribbon {
   background-color: #27AAE1;
 }
@@ -139,6 +140,7 @@ p.top-margin-5px, #admin-feed-project-title {
 #my-current-projects-ribbon {
   background-color: #AFD34D;
 }
+**/
 
 .ui.rounded.centered.header {
   background: #A6CE39;
@@ -187,4 +189,8 @@ p.top-margin-5px, #admin-feed-project-title {
 
 .fluid.ui.primary.blue.button {
   margin: 10px auto 0 auto;
+}
+
+.ui.label.skill-label {
+  margin: 0px 2px 2px 0px;
 }
