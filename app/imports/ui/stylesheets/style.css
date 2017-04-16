@@ -65,7 +65,7 @@ footer {
   padding-bottom: 2px;
 }
 
-#admin-feed-icon, #admin-project-icon, #admin-user-icon, #admin-skill-icon {
+#admin-feed-icon, #admin-project-icon, #admin-user-icon, #admin-skill-icon, #project-create-icon, #project-edit-icon {
   height: 30px;
   width: auto;
   margin: 0px 0px 10px 0px;
@@ -112,6 +112,7 @@ p.top-margin-5px, #admin-feed-project-title {
   color: white;
 }
 
+/** NOT USED ANYMORE
 .ui.about-project-ribbon {
   background-color: #27AAE1;
 }
@@ -139,6 +140,7 @@ p.top-margin-5px, #admin-feed-project-title {
 #my-current-projects-ribbon {
   background-color: #AFD34D;
 }
+**/
 
 .ui.rounded.centered.header {
   background: #A6CE39;
@@ -187,4 +189,23 @@ p.top-margin-5px, #admin-feed-project-title {
 
 .fluid.ui.primary.blue.button {
   margin: 10px auto 0 auto;
+}
+
+.ui.label.skill-label {
+  margin: 0px 2px 2px 0px;
+}
+
+#user-card-name {
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+#edit-profile-form-subsegment {
+  padding-bottom: 5px;
+}
+
+img.ui.rounded.image.profile-picture {
+  padding:1px;
+  border:1px solid #021a40;
 }
