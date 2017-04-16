@@ -22,6 +22,10 @@
       </a>
       {{/if}}
 
+      <a class="{{ isActiveRoute 'Invite_Page'}} item" href="{{ pathFor 'Invite_Page' }}">
+        Invite
+      </a>
+
       <a class="{{ isActiveRoute 'User_Profile_Page'}} right item" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">
         <i class="user icon"></i>My Profile
       </a>

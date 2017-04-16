@@ -103,7 +103,7 @@ class SkillGraph extends BaseCollection {
 
     const exists = this._collection.findOne({ skill: utils.makeUniform(skill) });
     if (!exists) {
-      console.log(`skillgraph: addvertex: adding vertex "${skill}"`);
+      // console.log(`skillgraph: addvertex: adding vertex "${skill}"`);
       const newSkill = {
         skill: utils.makeUniform(skill),
         skillReadable: utils.makeReadable(skill),
@@ -111,7 +111,9 @@ class SkillGraph extends BaseCollection {
       this._collection.insert(newSkill);
 
       this._vertexCount++;
-    } else console.log(`SkillGraphCollection: addVertex(): ${skill}: already in graph\n`);
+    } else {
+      // console.log(`SkillGraphCollection: addVertex(): ${skill}: already in graph\n`);
+    }
   }
 
   /**
@@ -144,7 +146,9 @@ class SkillGraph extends BaseCollection {
         }
       }
 
-    } else console.log(`addVertexList: param skills = ${skills}\nis not an array\n`);
+    } else {
+      // console.log(`addVertexList: param skills = ${skills}\nis not an array\n`);
+    }
   }
 
   /**
@@ -160,12 +164,12 @@ class SkillGraph extends BaseCollection {
     const skillDoc = this._collection.findOne({ skill: skill });
 
     if(!skillDoc) {
-      console.log(`The vertex "${skill}" could not be found in skillgraph`);
+      // console.log(`The vertex "${skill}" could not be found in skillgraph`);
       return skillDoc;
     }
 
-    console.log("SkillGraphCollection: adjList: skillDoc");
-    console.log(skillDoc);
+    // console.log("SkillGraphCollection: adjList: skillDoc");
+    // console.log(skillDoc);
     const adjList = EdgesCollection.adjList(skillDoc._id);
     // console.log(skillVertex);
     // console.log();
@@ -191,7 +195,7 @@ class SkillGraph extends BaseCollection {
       strategy: PriorityQueue.BinaryHeapStrategy
     });
 
-    console.log(maxPQ);
+    // console.log(maxPQ);
     return maxPQ;
   }
 

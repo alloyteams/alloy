@@ -53,6 +53,13 @@ FlowRouter.route('/project-admin-profile/:_id', {
   },
 });
 
+FlowRouter.route('/invite', {
+  name: 'Invite_Page',
+  action() {
+    BlazeLayout.render('App_Body', { main: 'Invite_Page' });
+  },
+});
+
 FlowRouter.route('/admin', {
   name: 'Site_Admin_Page',
   action() {

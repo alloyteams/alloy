@@ -63,7 +63,7 @@ class Edges extends BaseCollection {
     check(weight, Number);
 
     // console.log(`edge is instanceOf Edge: ${(edge instanceof Edge)}`);
-    console.log(`addingEdge ${v.skill}, ${w.skill}, ${weight}`);
+    // console.log(`addingEdge ${v.skill}, ${w.skill}, ${weight}`);
     // let v = edge.either();
     // let w = edge.other(v);
     // const adjV = this.adjList(v);
@@ -73,7 +73,7 @@ class Edges extends BaseCollection {
     const existingEdge = this.connects(v._id, w._id);
 
     if (!existingEdge) {
-      console.log(`edge ${v.skill}--${w.skill} does NOT exists: inserting`);
+      // console.log(`edge ${v.skill}--${w.skill} does NOT exists: inserting`);
       // if edge NOT already in adjLists of v and w, add it to BOTH those lists
       const edge = {
         v: v.skill,
@@ -85,12 +85,12 @@ class Edges extends BaseCollection {
       };
       this._insertEdge(edge);
     } else {
-      console.log(`edge ${v.skill}--${w.skill} ALREADY exists: updating`);
+      // console.log(`edge ${v.skill}--${w.skill} ALREADY exists: updating`);
       // else edge connecting v and w is already in the Edge collection.
       // We then need to update this existing edge
       this._updateEdge(existingEdge);
     }
-    console.log();
+    // console.log();
   }
 
   _insertEdge(edge) {
