@@ -65,6 +65,12 @@ footer {
   padding-bottom: 2px;
 }
 
+#admin-feed-icon, #admin-project-icon, #admin-user-icon, #admin-skill-icon, #project-create-icon, #project-edit-icon {
+  height: 30px;
+  width: auto;
+  margin: 0px 0px 10px 0px;
+}
+
 .ui.very.padded.centered.grid.stackable.container, .ui.very.padded.stackable.container {
   padding-top: 15px;
 }
@@ -80,7 +86,7 @@ footer {
   margin-top: 15px;
 }
 
-p.top-margin-5px {
+p.top-margin-5px, #admin-feed-project-title {
   margin-top: 5px;
 }
 
@@ -106,6 +112,7 @@ p.top-margin-5px {
   color: white;
 }
 
+/** NOT USED ANYMORE
 .ui.about-project-ribbon {
   background-color: #27AAE1;
 }
@@ -133,6 +140,7 @@ p.top-margin-5px {
 #my-current-projects-ribbon {
   background-color: #AFD34D;
 }
+**/
 
 .ui.rounded.centered.header {
   background: #A6CE39;
@@ -150,4 +158,54 @@ p.top-margin-5px {
 
 .ui.search-button {
   margin: 15px auto 0 auto;
+}
+
+#admin-feed-container {
+  height: 528px;
+}
+
+#feed-container, #admin-skills-list {
+  height: 420px;
+  overflow-x: auto;
+  padding-right: 5px;
+}
+
+.content-feed-message {
+  margin-bottom: 5px;
+}
+
+.feed-message {
+  margin-bottom: 2px;
+}
+
+.ui.div.container {
+  margin: 30px auto 0 auto;
+}
+
+#admin-edit-skills-container {
+  height: 528px;
+  margin: 30px auto 0 auto;
+}
+
+.fluid.ui.primary.blue.button {
+  margin: 10px auto 0 auto;
+}
+
+.ui.label.skill-label {
+  margin: 0px 2px 2px 0px;
+}
+
+#user-card-name {
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+#edit-profile-form-subsegment {
+  padding-bottom: 5px;
+}
+
+img.ui.rounded.image.profile-picture {
+  padding:1px;
+  border:1px solid #021a40;
 }

@@ -6,14 +6,15 @@
     </div>
     <div class="content">
       <!--TODO: add user image-->
-      <div class="item" style="font-size: larger; text-transform: uppercase; font-weight: bold; margin-bottom: 2px;">
-        <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}">{{ user.username }}</a>
+      <div class="item" id="user-card-name">
+        <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}">{{ user.firstName }} {{ user.lastName }}</a>
       </div>
-      <div class="item">{{user.firstName}} {{user.lastName}}</div>
+      <div class="item">{{user.username}}@hawaii.edu</div>
       <div class="extra content">
         <div class="item">
+          <b>Skills:</b><br />
           {{#each skill in (user.skills)}}
-          <div class="ui small label" style="margin: 3px;">
+          <div class="ui label skill-label">
             {{ skill }}
           </div>
           {{/each}}
@@ -21,7 +22,7 @@
         </div>
       </div>
       <div class="extra content">
-        <div class="item">#projects: {{user.projects.length}}</div>
+        <div class="item"><b>Number of Projects:</b> {{user.projects.length}}</div>
       </div>
     </div>
   </div>

@@ -15,8 +15,7 @@
         <div class="ui stackable grid">
           <div class="five wide column">
             <!--TODO: replace with profile image if we want to use profile images-->
-            <img class="ui rounded image"
-                 src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
+            <img class="ui rounded image profile-picture" src="http://www.hawaiibusiness.com/wordpress/wp-content/uploads/2014/10/14-Nov-General-Sun-Surfing-THIN-e1415932269309.jpg">
             <!--TODO: display this button iff viewer is project owner-->
             <br/>
 
@@ -136,26 +135,26 @@
 
           <div class="eleven wide column">
             <div class="ui segment">
-              <a class="ui ribbon label about-project-ribbon" style="margin-bottom: 10px;">
-                <h3>About this Project</h3>
+              <a class="ui blue ribbon label" style="margin-bottom: 10px;">
+                <h3>Project Description</h3>
               </a>
               <p>{{ projectDataField "bio" }}</p>
             </div>
             <div class="ui segment">
-              <a class="ui ribbon label" id="project-skills-wanted-ribbon">
+              <a class="ui teal ribbon label">
                 <h3>Skills Wanted</h3>
               </a>
               <br/>
               <br/>
               <div class="ui labels">
                 {{#each wanted in (projectDataField "skillsWanted")}}
-                <a class="ui label">{{ wanted }}</a>
+                <a class="ui label skill-label">{{ wanted }}</a>
                 {{/each}}
               </div>
             </div>
             <div class="ui segment">
               <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
-              <a class="ui ribbon label" id="project-admins-ribbon">
+              <a class="ui green ribbon label">
                 <h3>Project Admins</h3>
               </a>
               <div class="ui relaxed divided list">
@@ -164,8 +163,8 @@
                   <i class="large user middle aligned icon"></i>
                   <div class="content">
                     <!-- assumes using UH naming/email scheme -->
-                    <a class="description" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">{{ admin }}</a>
-                    <a class="header">{{admin}}@hawaii.edu</a>
+                    <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(getMyId) }}">{{ admin }}</a>
+                    <div class="description">{{admin}}@hawaii.edu</div>
                   </div>
                 </div>
                 {{/each}}
@@ -173,7 +172,7 @@
             </div>
             <div class="ui segment">
               <!-- TODO: for each member, fill in their name, LINK their profile and add their email-->
-              <a class="ui ribbon label about-project-ribbon">
+              <a class="ui olive ribbon label">
                 <h3>Members</h3>
               </a>
               <div class="ui relaxed divided list">
@@ -182,8 +181,8 @@
                   <i class="large user middle aligned icon"></i>
                   <div class="content">
                     <!-- assumes using UH naming/email scheme -->
-                    <a class="description" href="{{ pathFor 'User_Profile_Page_2' _id=(getMemberId member) }}">{{ member }}</a>
-                    <a class="header">{{member}}@hawaii.edu</a>
+                    <a class="header" href="{{ pathFor 'User_Profile_Page_2' _id=(getMemberId member) }}">{{ member }}</a>
+                    <div class="description">{{member}}@hawaii.edu</div>
                   </div>
                 </div>
                 {{/each}}
