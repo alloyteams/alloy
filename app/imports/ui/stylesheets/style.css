@@ -65,6 +65,12 @@ footer {
   padding-bottom: 2px;
 }
 
+#admin-feed-icon {
+  height: 30px;
+  width: auto;
+  margin: 0px 0px 10px 0px;
+}
+
 .ui.very.padded.centered.grid.stackable.container, .ui.very.padded.stackable.container {
   padding-top: 15px;
 }
@@ -150,4 +156,27 @@ p.top-margin-5px {
 
 .ui.search-button {
   margin: 15px auto 0 auto;
+}
+
+#admin-feed-container {
+  height: 528px;
+  margin: 30px auto 0 auto;
+}
+
+#feed-container {
+  height: 420px;
+  overflow-x: auto;
+  padding-right: 5px;
+}
+
+#content-feed-message {
+  margin-bottom: 5px;
+}
+
+.feed-message {
+  margin-bottom: 2px;
+}
+
+.ui.div.container {
+  margin: 30px auto 0 auto;
 }
