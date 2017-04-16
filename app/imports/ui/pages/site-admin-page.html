@@ -24,7 +24,7 @@
                               </button>
                             </form>
                           </div>
-                          <div class="content" id="content-feed-message">
+                          <div class="content content-feed-message">
                             <div class="item feed-message"><b>Type of Message</b>: {{message.type}}</div>
                             <div class="item feed-message"><b>Target</b>: <a href="{{ pathFor 'User_Profile_Page_2' _id=(message.targetId) }}">{{message.targetUser}}</a>
                               <a href="{{ pathFor 'Project_Profile_Page' _id=(message.targetId) }}">{{message.targetProject}}</a></div>
@@ -49,13 +49,11 @@
                     Projects
                   </h1>
                   Total number of projects: {{countProjects}}
-                  <div class="ui container" style="margin: 5px auto 0 auto;">
                     <a class="{{ isActiveRoute 'Edit_Projects_Page'}} item" href="{{ pathFor 'Edit_Projects_Page' }}">
                       <button type="submit" class="fluid ui primary blue button">
                         Edit Projects List
                       </button>
                     </a>
-                  </div>
                 </div>
 
                 <div class="ui raised padded segment div container">
@@ -64,13 +62,11 @@
                     Users
                   </h1>
                   Total number of users: {{countUsers}}
-                  <div class="ui container">
                     <a class="{{ isActiveRoute 'Edit_Users_Page'}} item" href="{{ pathFor 'Edit_Users_Page' }}">
                       <button type="submit" class="fluid ui primary blue button">
                         Edit Users List
                       </button>
                     </a>
-                  </div>
                 </div>
 
                 <div class="ui raised padded segment div container">
@@ -79,13 +75,11 @@
                     Skills
                   </h1>
                   Total number of skills: {{countSkills}}
-                  <div class="ui container" style="margin: 5px auto 0 auto;">
                     <a class="{{ isActiveRoute 'Edit_Skills_Page'}} item" href="{{ pathFor 'Edit_Skills_Page' }}">
                       <button type="submit" class="fluid ui primary blue button">
                         Edit Skills List
                       </button>
                     </a>
-                  </div>
                 </div>
 
             </div>

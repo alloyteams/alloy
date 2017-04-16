@@ -65,7 +65,7 @@ footer {
   padding-bottom: 2px;
 }
 
-#admin-feed-icon {
+#admin-feed-icon, #admin-project-icon {
   height: 30px;
   width: auto;
   margin: 0px 0px 10px 0px;
@@ -86,7 +86,7 @@ footer {
   margin-top: 15px;
 }
 
-p.top-margin-5px {
+p.top-margin-5px, #admin-feed-project-title {
   margin-top: 5px;
 }
 
@@ -169,7 +169,7 @@ p.top-margin-5px {
   padding-right: 5px;
 }
 
-#content-feed-message {
+.content-feed-message {
   margin-bottom: 5px;
 }
 
