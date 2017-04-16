@@ -3,17 +3,16 @@
   {{#if Template.subscriptionsReady}}
     {{#if currentUser}}
       {{#if siteAdmin}}
-        <div class="ui container">
-          <div class="ui grid">
+          <div class="ui stackable grid div container">
             <div class="ten wide column">
-              <div class="ui div container" style="margin: 30px auto 0 auto;">
-                <div class="ui raised padded segment" style="height: 528px;">
-                  <h1>
-                    <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                <div class="ui raised padded segment container">
+
+                  <h1 class="ui dividing header">
+                    <img id="admin-skill-icon" src="/images/alloy-icon.png">
                     Skills List
                   </h1>
-                  <hr/>
-                  <div class="ui container" style="height: 420px; overflow-x: auto; padding-right: 5px;">
+
+                  <div class="ui container" id="admin-skills-list">
                     <div class="ui middle aligned divided list">
                       {{#each skill in foundSkills}}
                         <div class="item">
@@ -33,31 +32,27 @@
                       {{/each}}
                     </div>
                   </div>
+
                 </div>
-              </div>
+
             </div>
             <div class="six wide column">
-              <div class="ui div container" style="margin: 30px auto 0 auto;">
-                <div class="ui raised padded segment">
+                <div class="ui raised padded segment container">
                   <form class="form-register-skills">
                     <h1>
-                      <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+                      <img class="alloy-icon" src="/images/alloy-icon.png">
                       Add Skill
                     </h1>
                     <div class="fluid ui input">
                       <input name="skills" id="skills" type="text" placeholder="Skill">
                     </div>
-                    <div class="ui container" style="margin: 10px auto 0 auto;">
                       <button type="submit" class="fluid ui primary blue button">
                         Submit
                       </button>
-                    </div>
                   </form>
                 </div>
-              </div>
             </div>
           </div>
-        </div>
       {{/if}}
     {{/if}}
   {{/if}}

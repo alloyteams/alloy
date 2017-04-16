@@ -65,7 +65,7 @@ footer {
   padding-bottom: 2px;
 }
 
-#admin-feed-icon, #admin-project-icon, #admin-user-icon {
+#admin-feed-icon, #admin-project-icon, #admin-user-icon, #admin-skill-icon {
   height: 30px;
   width: auto;
   margin: 0px 0px 10px 0px;
@@ -160,10 +160,9 @@ p.top-margin-5px, #admin-feed-project-title {
 
 #admin-feed-container {
   height: 528px;
-  margin: 30px auto 0 auto;
 }
 
-#feed-container {
+#feed-container, #admin-skills-list {
   height: 420px;
   overflow-x: auto;
   padding-right: 5px;
@@ -179,4 +178,13 @@ p.top-margin-5px, #admin-feed-project-title {
 
 .ui.div.container {
   margin: 30px auto 0 auto;
+}
+
+#admin-edit-skills-container {
+  height: 528px;
+  margin: 30px auto 0 auto;
+}
+
+.fluid.ui.primary.blue.button {
+  margin: 10px auto 0 auto;
 }
