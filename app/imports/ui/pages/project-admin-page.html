@@ -65,12 +65,13 @@
             <i class="save icon"></i>
             Save
           </button>
-          <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField " _id")}}">
-          <div class="ui gray button">
-            <i class="trash icon"></i>
-            Abandon Changes
-          </div>
-          </a></center>
+          <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField "_id")}}">
+            <div class="ui gray button">
+              <i class="trash icon"></i>
+              Abandon Changes
+            </div>
+          </a>
+        </center>
       </form>
     </div>
   {{/unless}}
