@@ -50,7 +50,7 @@ Template.Edit_Projects_Page.helpers({
   },
   'foundProjects': function() {
     _dep.depend();  // allows helper to run reactively, see http://stackoverflow.com/a/18216255
-    console.log(projectsCollection.fetch());
+    // console.log(projectsCollection.fetch());
     return _.sortBy(projectsCollection.fetch(), 'projectName');
   },
 });
@@ -61,5 +61,30 @@ Template.Edit_Projects_Page.onRendered(function enableSemantic() {
 });
 
 Template.Edit_Projects_Page.events({
+  'submit .form-delete-project': function (event, template) {
+    event.preventDefault();
 
+    const project_ID = event.target.projectId.value;
+    const project = Projects.findOne({_id: project_ID});
+    const projectMembers = project.members;
+
+    // console.log(projectMembers);
+
+    _.each(projectMembers, function(username){
+      /** Remove project from User **/
+      const user = Users.find({ 'username': username }).fetch()[0];
+      const userId = user['_id'];
+      let userProjects = user['projects'];
+      const indexOfProject = userProjects.indexOf(project._id);
+      if (indexOfProject > -1) {
+        userProjects.splice(indexOfProject, 1);
+      }
+      Users.update({ _id: userId }, { $set: { projects: userProjects } });
+    })
+
+    /** Remove the project from the Projects collection **/
+    Projects.remove(project._id);
+
+    _dep.changed();
+  },
 });

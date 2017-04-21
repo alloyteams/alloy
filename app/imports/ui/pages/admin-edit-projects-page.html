@@ -11,6 +11,14 @@
             <div class="ui middle aligned divided list">
               {{#each project in foundProjects}}
               <div class="item">
+                <div class="right floated content">
+                  <form class="form-delete-project">
+                    <input name="projectId" id="projectId" type="hidden" placeholder="Project" value="{{ project._id }}">
+                    <button type="submit" class="fluid ui red button">
+                      Delete
+                    </button>
+                  </form>
+                </div>
                 <h3 id="admin-feed-project-title">
                   <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}">{{project.projectName}}</a>
                 </h3>
