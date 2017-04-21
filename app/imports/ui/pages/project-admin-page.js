@@ -5,6 +5,7 @@ import {Template} from 'meteor/templating';
 import {ReactiveDict} from 'meteor/reactive-dict';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
+import {Users, UsersSchema} from '../../api/users/users.js';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
 import {SkillGraphCollection} from '../../api/skill-graph/SkillGraphCollection.js';
@@ -16,6 +17,7 @@ const utils = require('../../api/skill-graph/graphUtilities');  // to use the ma
 
 Template.Project_Admin_Page.onCreated(function onCreated() {
   this.autorun(() => {
+    this.subscribe('Users');
     this.subscribe('Projects');  // extended Meteor.user collection data
 
     SkillGraphCollection.subscribe();
@@ -44,12 +46,15 @@ Template.Project_Admin_Page.helpers({
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return project && project[fieldVal];
   },
+
   firstName: function () {
     return Meteor.user().username;
   },
+
   userId: function () {
     return Meteor.userId();
   },
+
   getSkillString: function () {
     const project = Projects.findOne(FlowRouter.getParam('_id'));
     let skillString = '';
@@ -59,9 +64,20 @@ Template.Project_Admin_Page.helpers({
     skillString = skillString.substring(0, skillString.length - 1);
     return skillString;
   },
+
   getGraphSkills() {
     console.log(SkillGraphCollection.getSkills());
     return SkillGraphCollection.getSkills();
+  },
+
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
   },
 });
 
@@ -69,6 +85,7 @@ Template.Project_Admin_Page.helpers({
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';  // empty string is falsey
   },
+
   displayFieldError(fieldName) {
     const errorKeys = Template.instance().context.invalidKeys();
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);

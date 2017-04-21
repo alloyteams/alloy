@@ -8,9 +8,36 @@
               <img id="admin-user-icon" src="/images/alloy-icon.png">
               Users List
             </h1>
-            <div class="ui raised four stackable cards top-margin-15px">
+            <div class="ui middle aligned divided list">
               {{#each user in foundUsers}}
-                {{> User_Card user = user }}
+              <div class="item">
+                {{#if user.isRestricted}}
+                  <div class="right floated content">
+                    <form class="form-unrestrict-user">
+                      <input name="userId" id="userId" type="hidden" placeholder="User" value="{{ user._id }}">
+                      <button type="submit" class="fluid ui black button">
+                        Unrestrict
+                      </button>
+                    </form>
+                  </div>
+                {{else}}
+                  <div class="right floated content">
+                    <form class="form-restrict-user">
+                      <input name="userId" id="userId" type="hidden" placeholder="User" value="{{ user._id }}">
+                      <button type="submit" class="fluid ui red button">
+                        Restrict
+                      </button>
+                    </form>
+                  </div>
+                {{/if}}
+                <h3>
+                  <a href="{{ pathFor 'User_Profile_Page_2' _id=(user._id) }}"><span style="text-transform: uppercase;">{{user.username}}</span></a>
+                </h3>
+                <div>
+                  <div class="item feed-message">{{user.firstName}} {{user.lastName}}</div>
+                  <div class="item feed-message"># of Projects: {{user.projects.length}}</div>
+                </div>
+              </div>
               {{/each}}
             </div>
           </div>

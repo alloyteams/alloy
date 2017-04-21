@@ -25,7 +25,15 @@ Template.Invite_Page.onRendered(function onRendered() {
 });
 
 Template.Invite_Page.helpers({
-
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
+  },
 });
 
 Template.Invite_Page.events({

@@ -38,11 +38,11 @@ footer {
   background-color: transparent;
 }
 
-.ui.basic.invalid.modal, .ui.basic.invalid.modal  .header, .ui.basic.invalid.name.modal, .ui.basic.invalid.name.modal  .header {
+.ui.basic.invalid.modal, .ui.basic.invalid.modal  .header, .ui.basic.invalid.name.modal, .ui.basic.invalid.name.modal  .header, .ui.basic.invite.exist.modal, .ui.basic.invite.exist.modal .header  {
   color: red;
 }
 
-.ui.basic.existing.modal, .ui.basic.existing.modal .header, .ui.basic.invite.exist.modal, .ui.basic.invite.exist.modal .header {
+.ui.basic.existing.modal, .ui.basic.existing.modal .header{
   color: yellow;
 }
 
