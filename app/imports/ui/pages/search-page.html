@@ -19,9 +19,9 @@
                     <i class="dropdown icon"></i>
                     <div class="default text">Skills</div>
                     <div class="menu">
-                      {{#each vertex in getGraphSkills}}
+                      {{#each vertex in getProjectSkills}}
                       <div class="item"
-                           data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+                           data-value="{{vertex.skillReadable}}">{{vertex}}
                       </div>
                       {{/each}}
                     </div>
@@ -52,9 +52,9 @@
                     <i class="dropdown icon"></i>
                     <div class="default text">Skills</div>
                     <div class="menu">
-                      {{#each vertex in getGraphSkills}}
+                      {{#each vertex in getUserSkills}}
                       <div class="item"
-                           data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+                           data-value="{{vertex.skillReadable}}">{{vertex}}
                       </div>
                       {{/each}}
                     </div>
