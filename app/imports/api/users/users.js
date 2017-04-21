@@ -105,6 +105,11 @@ export const UsersSchema = new SimpleSchema({
     type: Boolean,
     optional: false,
   },
+  isRestricted: {
+    label: 'isRestricted',
+    type: Boolean,
+    optional: false,
+  },
 });
 
 Users.attachSchema(UsersSchema);

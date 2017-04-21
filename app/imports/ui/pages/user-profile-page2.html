@@ -7,6 +7,10 @@
       <h2 class="ui dividing header">
         <i class="user icon"></i>
         <div class="content">
+          {{#if isRestricted}}
+          <span style="color: red;">Account Restricted - email alloyUH@gmail.com for more information</span>
+          <br/>
+          {{/if}}
           {{ userDataField "firstName" }} {{ userDataField "lastName" }}
           <div class="sub header">{{ userDataField "username" }}@hawaii.edu</div>
         </div>

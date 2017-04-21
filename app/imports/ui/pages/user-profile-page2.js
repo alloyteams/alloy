@@ -69,6 +69,15 @@ Template.User_Profile_Page_2.helpers({
     } else {
       return false;
     }
+  },
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 });
 

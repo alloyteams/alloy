@@ -85,7 +85,7 @@ Template.Edit_Profile_Page.events({
     //UsersSchema.clean(updatedUser);
     // Determine validity.
     //instance.context.validate(updatedUser);
-    console.log(skills);
+    // console.log(skills);
     Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { firstName: firstName } });
     Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { lastName: lastName } });
     Users.update({ _id: FlowRouter.getParam('_id') }, { $set: { bio: bio } });
