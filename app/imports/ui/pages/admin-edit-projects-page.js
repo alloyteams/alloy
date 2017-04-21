@@ -67,9 +67,22 @@ Template.Edit_Projects_Page.events({
     if (confirm('Are you sure you want to delete the project?')) {
       const project_ID = event.target.projectId.value;
       const project = Projects.findOne({ _id: project_ID });
+      const projectAdmins = project.admins;
       const projectMembers = project.members;
-
+      // console.log(projectAdmins);
       // console.log(projectMembers);
+
+      _.each(projectAdmins, function (username) {
+        /** Remove project from User (admin) **/
+        const user = Users.find({ 'username': username }).fetch()[0];
+        const userId = user['_id'];
+        let userProjects = user['adminProjects'];
+        const indexOfProject = userProjects.indexOf(project._id);
+        if (indexOfProject > -1) {
+          userProjects.splice(indexOfProject, 1);
+        }
+        Users.update({ _id: userId }, { $set: { adminProjects: userProjects } });
+      })
 
       _.each(projectMembers, function (username) {
         /** Remove project from User **/
