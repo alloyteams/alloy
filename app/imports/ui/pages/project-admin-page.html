@@ -1,82 +1,77 @@
 <template name="Project_Admin_Page">
-  <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections. -->
-  <!-- FIXME: Had to remove usage of #if Template subscription ready because it causes issues with dropdown. A workaround should be looked into if possible but for now it 'should' work. More info: https://forums.meteor.com/t/have-you-also-noticed-that-semantic-ui-dropdowns-dont-work-well-with-blaze-conditionals/25720/6 -->
-
-  {{#if Template.subscriptionsReady}}
-  {{/if}}
-  <div class="ui container top-margin-30px">
-
-    <h1 class="ui dividing header">
-      <img id="project-edit-icon" src="/images/alloy-icon.png">
-      Edit Project Information
-    </h1>
-
-    <form class="ui form project-data-form">
-      <div class="ui raised padded segment">
-
-        <div class="field">
-          <label>Project Title</label>
-          <input type="text" name="projectName" id="projectName"
-                 placeholder="{{ projectDataField " projectName" }}"
-          value="{{ projectDataField "projectName" }}">
-        </div>
-
-        <div class="field">
-          <label>Project Website</label>
-          <input type="text" name="projectUrl" id="projectUrl"
-                 placeholder="www.github.com" value="{{projectDataField " url"}}">
-        </div>
-
-        <div class="ui stackable grid container">
-
-          <div class="five wide column">
-            <div class="field">
-              <label>Project Image</label>
-              <img class="ui rounded image profile-picture" src="/images/alloy-wordmark.png">
-              <br />
-              <div class="ui button"><i class="upload icon"></i>Upload Project Image</div>
-              <input type="file" name="project-image" id="hidden-project-image" style="display: none">
-            </div>
+  {{#unless isRestricted}}
+    <!-- Make sure all subscriptions for this template are available to us, so fineOne can access subcribed collections. -->
+    <!-- FIXME: Had to remove usage of #if Template subscription ready because it causes issues with dropdown.
+    A workaround should be looked into if possible but for now it 'should' work.
+    More info: https://forums.meteor.com/t/have-you-also-noticed-that-semantic-ui-dropdowns-dont-work-well-with-blaze-conditionals/25720/6 -->
+    {{#if Template.subscriptionsReady}}
+    {{/if}}
+    <div class="ui container top-margin-30px">
+      <h1 class="ui dividing header">
+        <img id="project-edit-icon" src="/images/alloy-icon.png">
+        Edit Project Information
+      </h1>
+      <form class="ui form project-data-form">
+        <div class="ui raised padded segment">
+          <div class="field">
+            <label>Project Title</label>
+            <input type="text" name="projectName" id="projectName"
+                   placeholder="{{ projectDataField " projectName" }}"
+            value="{{ projectDataField "projectName" }}">
           </div>
-
-          <div class="eleven wide column">
-            <div class="field">
-              <label>Project Description</label>
-              <textarea name="bio" id="bio" placeholder="{{projectDataField " bio" }}" value="{{projectDataField
-              "bio"}}"></textarea>
+          <div class="field">
+            <label>Project Website</label>
+            <input type="text" name="projectUrl" id="projectUrl"
+                   placeholder="www.github.com" value="{{projectDataField " url"}}">
+          </div>
+          <div class="ui stackable grid container">
+            <div class="five wide column">
+              <div class="field">
+                <label>Project Image</label>
+                <img class="ui rounded image profile-picture" src="/images/alloy-wordmark.png">
+                <br />
+                <div class="ui button"><i class="upload icon"></i>Upload Project Image</div>
+                <input type="file" name="project-image" id="hidden-project-image" style="display: none">
+              </div>
             </div>
-            <div class="field">
-              <label>Skills Wanted</label>
-              <!--TODO: replace placeholder with previously entered information for the project-->
-              <div class="ui fluid multiple search selection dropdown">
-                <input name="skillsWanted" id="skillsWanted" type="hidden" value="{{ getSkillString }}">
-                <i class="dropdown icon"></i>
-                <div class="default text">Skills</div>
-                <div class="menu">
-                  {{#each vertex in getGraphSkills}}
-                  <div class="item"
-                       data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+            <div class="eleven wide column">
+              <div class="field">
+                <label>Project Description</label>
+                <textarea name="bio" id="bio" placeholder="{{projectDataField " bio" }}" value="{{projectDataField
+                "bio"}}"></textarea>
+              </div>
+              <div class="field">
+                <label>Skills Wanted</label>
+                <!--TODO: replace placeholder with previously entered information for the project-->
+                <div class="ui fluid multiple search selection dropdown">
+                  <input name="skillsWanted" id="skillsWanted" type="hidden" value="{{ getSkillString }}">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Skills</div>
+                  <div class="menu">
+                    {{#each vertex in getGraphSkills}}
+                    <div class="item"
+                         data-value="{{vertex.skillReadable}}">{{vertex.skillReadable}}
+                    </div>
+                    {{/each}}
                   </div>
-                  {{/each}}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
-      <center>
-        <button class="ui primary blue button" type="submit">
-          <i class="save icon"></i>
-          Save
-        </button>
-        <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField " _id")}}">
-        <div class="ui gray button">
-          <i class="trash icon"></i>
-          Abandon Changes
-        </div>
-        </a></center>
-    </form>
-  </div>
-
+        <!-- FIXME: for now , this breaks users' ability to find their current projects. see project-admin-page.js-->
+        <center>
+          <button class="ui primary blue button" type="submit">
+            <i class="save icon"></i>
+            Save
+          </button>
+          <a href="{{pathFor 'Project_Profile_Page' _id=(projectDataField " _id")}}">
+          <div class="ui gray button">
+            <i class="trash icon"></i>
+            Abandon Changes
+          </div>
+          </a></center>
+      </form>
+    </div>
+  {{/unless}}
 </template>

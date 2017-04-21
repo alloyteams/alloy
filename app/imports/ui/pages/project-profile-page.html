@@ -19,25 +19,9 @@
             <!--TODO: display this button iff viewer is project owner-->
             <br/>
 
-            <div class="ui list">
-              {{#if isSiteAdmin}}
-                <div class="item">
-                  <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
-                  <div class="ui button">
-                    <i class="edit icon"></i>
-                    Edit Project Info
-                  </div>
-                  </a>
-                </div>
-                {{#if isAdmin}}
-                  <div class="item">
-                    {{> Member_Dropdown _id=(projectDataField "_id")}}
-                  </div>
-                {{/if}}
-              {{/if}}
-
-              {{#unless isSiteAdmin}}
-                {{#if isAdmin}}
+            {{#unless isRestricted}}
+              <div class="ui list">
+                {{#if isSiteAdmin}}
                   <div class="item">
                     <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
                     <div class="ui button">
@@ -46,91 +30,109 @@
                     </div>
                     </a>
                   </div>
+                  {{#if isAdmin}}
+                    <div class="item">
+                      {{> Member_Dropdown _id=(projectDataField "_id")}}
+                    </div>
+                  {{/if}}
+                {{/if}}
+
+                {{#unless isSiteAdmin}}
+                  {{#if isAdmin}}
+                    <div class="item">
+                      <a href="{{pathFor 'Project_Admin_Page' _id=(projectDataField "_id")}}">
+                      <div class="ui button">
+                        <i class="edit icon"></i>
+                        Edit Project Info
+                      </div>
+                      </a>
+                    </div>
+                    <div class="item">
+                      {{> Member_Dropdown _id=(projectDataField "_id")}}
+                    </div>
+                  {{/if}}
+                {{/unless}}
+
+                {{#if notMember}}
+                  <!--DO NOTHING-->
+                {{else}}
                   <div class="item">
-                    {{> Member_Dropdown _id=(projectDataField "_id")}}
+                    <div class="ui red leave button">
+                      <i class="sign out icon"></i>
+                      Leave the Project
+                    </div>
                   </div>
                 {{/if}}
-              {{/unless}}
 
-              {{#if notMember}}
-                <!--DO NOTHING-->
-              {{else}}
-                <div class="item">
-                  <div class="ui red leave button">
-                    <i class="sign out icon"></i>
-                    Leave the Project
-                  </div>
-                </div>
-              {{/if}}
-
-              {{#if isAdmin}}
-                <div class="row" id="project-requests">
-                  <h1 class="ui dividing header">
-                    Requests to Join
-                  </h1>
-                  <div class="ui padded stackable grid">
-                    {{#if hasRequests}}
-                    {{#each request in (projectDataField "joinRequests")}}
-                    <div class="padded row">
-                      <div class="ui container">
-                        <div class="ui cards">
-                          <div class="card">
-                            <div class="content">
-                              <div class="header">
-                                Join Request
-                              </div>
-                              <div class="description">
-                                {{request}} wants to join the project!
-                              </div>
-                            </div>
-                            <div class="extra content">
-                              <div class="ui two buttons">
-                                <div class="ui basic green button"
-                                     id={{request}}>Approve
+                {{#if isAdmin}}
+                  <div class="row" id="project-requests">
+                    <h1 class="ui dividing header">
+                      Requests to Join
+                    </h1>
+                    <div class="ui padded stackable grid">
+                      {{#if hasRequests}}
+                      {{#each request in (projectDataField "joinRequests")}}
+                      <div class="padded row">
+                        <div class="ui container">
+                          <div class="ui cards">
+                            <div class="card">
+                              <div class="content">
+                                <div class="header">
+                                  Join Request
                                 </div>
-                                <div class="ui basic red button" id={{request}}>
-                                  Decline
+                                <div class="description">
+                                  {{request}} wants to join the project!
+                                </div>
+                              </div>
+                              <div class="extra content">
+                                <div class="ui two buttons">
+                                  <div class="ui basic green button"
+                                       id={{request}}>Approve
+                                  </div>
+                                  <div class="ui basic red button" id={{request}}>
+                                    Decline
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    {{/each}}
-                    {{else}}
-                    <div class="padded row">
-                      <div class="ui container">
-                        There are no join requests
+                      {{/each}}
+                      {{else}}
+                      <div class="padded row">
+                        <div class="ui container">
+                          There are no join requests
+                        </div>
                       </div>
+                      {{/if}}
                     </div>
-                    {{/if}}
                   </div>
-                </div>
-              {{else}}
-                {{#if notMember}}
-                  <div class="item">
-                    {{#if notRequestedToJoin}}
-                    <div class="ui green join button">
-                      <i class="external icon"></i>
-                      Request to Join Project!
+                {{else}}
+                  {{#if notMember}}
+                    <div class="item">
+                      {{#if notRequestedToJoin}}
+                      <div class="ui green join button">
+                        <i class="external icon"></i>
+                        Request to Join Project!
+                      </div>
+                      {{else}}
+                      <div class="ui disabled green button">
+                        <i class="external icon"></i>
+                        You have requested to join!
+                      </div>
+                      {{/if}}
                     </div>
-                    {{else}}
-                    <div class="ui disabled green button">
-                      <i class="external icon"></i>
-                      You have requested to join!
-                    </div>
-                    {{/if}}
-                  </div>
+                  {{/if}}
                 {{/if}}
-              {{/if}}
-              <br/><br/>
-              <form class="ui form report-data-form">
-                <button class="ui red button" type="submit">
-                  Report
-                </button>
-              </form>
-            </div>
+                <br/><br/>
+                <form class="ui form report-data-form">
+                  <button class="ui red button" type="submit">
+                    Report
+                  </button>
+                </form>
+              </div>
+            {{/unless}}
           </div>
 
           <div class="eleven wide column">

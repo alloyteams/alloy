@@ -1,63 +1,65 @@
 <template name="Invite_Page">
   {{#if currentUser}}
-    <div class="ui container top-margin-30px">
-      <div class="ui raised padded segment">
-        <h1>
-          <img class="alloy-icon" src="/images/alloy-icon.png">
-          Invite Your Friends
-          <hr/>
-        </h1>
-          <div class="field" style="margin: 10px 0;">
-            <label>UH Manoa Username</label>
-            <div class="ui fluid action input" style="margin-top: 10px;">
-              <input type="text" placeholder="Username">
-              <button class="ui invite button">
-                Submit
-              </button>
+    {{#unless isRestricted}}
+      <div class="ui container top-margin-30px">
+        <div class="ui raised padded segment">
+          <h1>
+            <img class="alloy-icon" src="/images/alloy-icon.png">
+            Invite Your Friends
+            <hr/>
+          </h1>
+            <div class="field" style="margin: 10px 0;">
+              <label>UH Manoa Username</label>
+              <div class="ui fluid action input" style="margin-top: 10px;">
+                <input type="text" placeholder="Username">
+                <button class="ui invite button">
+                  Submit
+                </button>
+              </div>
             </div>
+          <img class="ui fluid image" src="http://hawaiieducationdirectory.com/images/schools/hawaii-colleges-and-universities.jpg">
+        </div>
+      </div>
+
+      <div class="ui basic invite success modal">
+        <div class="header">
+          Success
+        </div>
+        <div class="image content">
+          <div class="image">
+            <i class="green user icon"></i>
           </div>
-        <img class="ui fluid image" src="http://hawaiieducationdirectory.com/images/schools/hawaii-colleges-and-universities.jpg">
+          <div class="description">
+            <p>You have successfully invited the user!</p>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="ui ok green basic inverted button">
+            <i class="checkmark icon"></i>
+            OK
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="ui basic invite success modal">
-      <div class="header">
-        Success
-      </div>
-      <div class="image content">
-        <div class="image">
-          <i class="green user icon"></i>
+      <div class="ui basic invite exist modal">
+        <div class="header">
+          Warning
         </div>
-        <div class="description">
-          <p>You have successfully invited the user!</p>
+        <div class="image content">
+          <div class="image">
+            <i class="red user icon"></i>
+          </div>
+          <div class="description">
+            <p>The username you've entered is already a member of Alloy.</p>
+          </div>
         </div>
-      </div>
-      <div class="actions">
-        <div class="ui ok green basic inverted button">
-          <i class="checkmark icon"></i>
-          OK
-        </div>
-      </div>
-    </div>
-
-    <div class="ui basic invite exist modal">
-      <div class="header">
-        Warning
-      </div>
-      <div class="image content">
-        <div class="image">
-          <i class="red user icon"></i>
-        </div>
-        <div class="description">
-          <p>The username you've entered is already a member of Alloy.</p>
+        <div class="actions">
+          <div class="ui ok red basic button">
+            <i class="checkmark icon"></i>
+            OK
+          </div>
         </div>
       </div>
-      <div class="actions">
-        <div class="ui ok red basic button">
-          <i class="checkmark icon"></i>
-          OK
-        </div>
-      </div>
-    </div>
+    {{/unless}}
   {{/if}}
 </template>

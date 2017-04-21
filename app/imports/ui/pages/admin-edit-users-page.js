@@ -67,15 +67,15 @@ Template.Edit_Users_Page.events({
     Users.update({ _id: user_ID }, { $set: { isRestricted: false } });
 
     const targetUserEmail = Users.findOne({ _id: user_ID }).username + "@hawaii.edu";
-    // Sending an email to alloy email account about REPORT
-    Meteor.call(
-        'sendEmail',
-        targetUserEmail,
-        'alloyUH@gmail.com',
-        'ALLOY-NOTIFICATION-RESTRICTION-REMOVED',
-        'The restriction on your account has been lifted.'
-    );
-    // console.log("email sent");
+    // // Sending an email to alloy email account about REPORT
+    // Meteor.call(
+    //     'sendEmail',
+    //     targetUserEmail,
+    //     'alloyUH@gmail.com',
+    //     'ALLOY-NOTIFICATION-RESTRICTION-REMOVED',
+    //     'The restriction on your account has been lifted.'
+    // );
+    // // console.log("email sent");
 
     _dep.changed();
   },
@@ -89,15 +89,15 @@ Template.Edit_Users_Page.events({
     Users.update({ _id: user_ID }, { $set: { isRestricted: true } });
 
     const targetUserEmail = Users.findOne({ _id: user_ID }).username + "@hawaii.edu";
-    // Sending an email to alloy email account about REPORT
-    Meteor.call(
-        'sendEmail',
-        targetUserEmail,
-        'alloyUH@gmail.com',
-        'ALLOY-NOTIFICATION-USER-RESTRICTED',
-        'Your account has been RESTRICTED.  Please contact alloyUH@gmail.com for more information.'
-    );
-    // console.log("email sent");
+    // // Sending an email to alloy email account about REPORT
+    // Meteor.call(
+    //     'sendEmail',
+    //     targetUserEmail,
+    //     'alloyUH@gmail.com',
+    //     'ALLOY-NOTIFICATION-USER-RESTRICTED',
+    //     'Your account has been RESTRICTED.  Please contact alloyUH@gmail.com for more information.'
+    // );
+    // // console.log("email sent");
 
     _dep.changed();
   }

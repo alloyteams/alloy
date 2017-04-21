@@ -36,5 +36,15 @@ Template.Header.onCreated(function onCreated() {
       } else {
         return false;
       }
-    }
+    },
+
+    isRestricted() {
+      const user = Users.findOne({ username: Meteor.user().profile.name });
+      const bool = user['isRestricted'];
+      if (bool == true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   });

@@ -34,6 +34,7 @@ Template.Edit_Profile_Page.helpers({
     console.log(SkillGraphCollection.getSkills())
     return SkillGraphCollection.getSkills();
   },
+
   userDataField(fieldVal) {
     // app/imports/startup/client/router.js defines the 'id' vs '_id' bindings
     //   see app/imports/ui/pages/home-page.html
@@ -64,6 +65,16 @@ Template.Edit_Profile_Page.helpers({
     skillString = skillString.substring(0, skillString.length - 1);
     console.log(skillString);
     return skillString;
+  },
+
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
   },
 });
 
