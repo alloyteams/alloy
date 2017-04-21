@@ -307,7 +307,7 @@ Template.Project_Profile_Page.events({
   /** Leave project **/
   'click .ui.red.leave.button': function (event, instance) {
     /** Remove user from project **/
-    if (confirm('Are you sure you want to leave the project?')) {
+    if (confirm('Are you sure you want to leave the project?  If you are the last person in the project the project will be deleted.')) {
       /** Removing user event **/
       //Debug Console Log
       //console.log('Trying to click');
