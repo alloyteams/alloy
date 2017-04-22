@@ -160,7 +160,6 @@ p.top-margin-5px, #admin-feed-project-title {
   margin: 15px auto 0 auto;
 }
 
-<<<<<<< HEAD
 /*CSS for uploader*/
 
 .upload-area .alert {
@@ -175,7 +174,8 @@ p.top-margin-5px, #admin-feed-project-title {
   bottom: 0px;
   width: 100%;
   opacity: 0;
-=======
+}
+
 #admin-feed-container {
   height: 528px;
 }
@@ -224,5 +224,4 @@ p.top-margin-5px, #admin-feed-project-title {
 img.ui.rounded.image.profile-picture {
   padding:1px;
   border:1px solid #021a40;
->>>>>>> refs/remotes/origin/master
 }
