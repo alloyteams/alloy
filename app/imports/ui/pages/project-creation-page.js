@@ -40,12 +40,24 @@ Template.Project_Creation_Page.helpers({
     // console.log(SkillGraphCollection.getSkills())
     return SkillGraphCollection.getSkills();
   },
+
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';  // empty string is falsey
   },
+
   displayFieldError(fieldName) {
     const errorKeys = Template.instance().context.invalidKeys();
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
+  },
+
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
   },
 });
 
@@ -107,7 +119,7 @@ Template.Project_Creation_Page.events({
       ProjectsSchema.clean(newProject);
 
       // Modal pop up if unsuccessful
-      $('.ui.basic.invalid.modal')
+      $('.ui.basic.invalid.name.modal')
           .modal('show')
       ;
 

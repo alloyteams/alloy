@@ -47,8 +47,11 @@ Template.Search.onRendered(function onRendered() {
 });
 
 Template.Search.helpers({
-  getGraphSkills() {
-    return _.sortBy(SkillGraphCollection.getSkills(), 'skillReadable');
+  getProjectSkills() {
+    return _.uniq(_.flatten(_.pluck(Projects.find().fetch(), 'skillsWanted'))).sort();
+  },
+  getUserSkills() {
+    return _.uniq(_.flatten(_.pluck(Users.find().fetch(), 'skills'))).sort()
   },
   projNum() {
     return countFoundProjects = Session.get("countFoundProjects");

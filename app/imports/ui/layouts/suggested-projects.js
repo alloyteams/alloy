@@ -65,15 +65,15 @@ Template.Suggested_Projects.helpers({
     // here, we search by logged-in username (using the Meteor.users collection),
     // which we assume to be uniq. and in Users. Returns undefined if no matching doc. found
     const user = Users.findOne({ username: Meteor.user().profile.name });  // if not using UH cas, use: Meteor.user().username
-    console.log(user);
+    // console.log(user);
 
     // get suggestionsPerSkill number of most weighted related skills for each skill
     // store as array of 'readable' versions of the skills as taken from skillgraph
     let relatedSkills = _.flatten(
         _.map(user.skills, (seed) => {
-          console.log(`suggested-projects: suggestedProjects: relatedSkills: seed: ${seed}`);
+          // console.log(`suggested-projects: suggestedProjects: relatedSkills: seed: ${seed}`);
           let pq = SkillGraphCollection.adjMaxPQ(seed);
-          console.log(pq);
+          // console.log(pq);
           // relies on assumption that seed is in 'readable' form (defined in api/skill-graph/graphUtilities.js)
           // ie. assumes all user.skills entered in edit-user-profile page and that the page enforces 'readable'
           let related = [seed];
@@ -85,8 +85,8 @@ Template.Suggested_Projects.helpers({
           return related;
         })
     );
-    console.log('relatedSkills');
-    console.log(relatedSkills);
+    // console.log('relatedSkills');
+    // console.log(relatedSkills);
     // account for different skills being related to the same thing
     relatedSkills = _.uniq(relatedSkills);
     // relies on assumption that all projects have skills in 'readable' form (defined in api/skill-graph/graphUtilities.js)
@@ -94,14 +94,14 @@ Template.Suggested_Projects.helpers({
     // For each suggestedSkill, get suggestionsPerSkill projects with that skill in skillsWanted and skills field
     let suggestions = [];
     _.each(relatedSkills, (skill) => {
-      console.log(skill);
-      console.log(Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch());
+      // console.log(skill);
+      // console.log(Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch());
       suggestions = suggestions.concat(
           Projects.find({ skillsWanted: skill }, { limit: suggestionsPerSkill }).fetch()
       );
     });
-    console.log('suggestions');
-    console.log(suggestions);
+    // console.log('suggestions');
+    // console.log(suggestions);
     suggestions = _.uniq(suggestions, (project) => { return project._id; });
 
     // TODO: need efficient way to enforce a displayLimit on the number of suggestions displayed

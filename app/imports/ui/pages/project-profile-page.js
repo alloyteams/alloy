@@ -7,8 +7,8 @@ import {FlowRouter} from 'meteor/kadira:flow-router';
 import {_} from 'meteor/underscore';
 import {Email} from 'meteor/email';
 import {Meteor} from 'meteor/meteor'  // to access Meteor.users collection
+import { Users, UsersSchema } from '../../api/users/users.js';
 import {Projects, ProjectsSchema} from '../../api/projects/projects.js';
-import {Users, UsersSchema} from '../../api/users/users.js';
 import { AdminFeed, AdminFeedSchema } from '../../api/admin-feed/admin-feed.js';
 
 // consts to use in reactive dicts
@@ -53,6 +53,7 @@ Template.Project_Profile_Page.helpers({
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return project && project[fieldVal];
   },
+
   userDataField(fieldVal) {
     // app/imports/startup/client/router.js defines the 'id' vs '_id' bindings
     //   see app/imports/ui/pages/home-page.html
@@ -63,24 +64,29 @@ Template.Project_Profile_Page.helpers({
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return user && user[fieldVal];
   },
+
   getMyId: function() {
     const userName = Meteor.user().profile.name;
     const userNameId = Users.find({ 'username': userName }).fetch()[0]['_id'];
     return userNameId;
   },
+
   getMemberId: function(member) {
     const memberID = Users.find({ 'username': member }).fetch()[0]['_id'];
     // console.log(memberID);
     return memberID;
   },
+
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
     const project = Projects.findOne(FlowRouter.getParam('_id'));
     return _.contains(project.admins, Meteor.user().profile.name);
   },
+
   userId: function () {
     return Meteor.userId();
   },
+
   hasRequests() {
     const project = Projects.findOne(FlowRouter.getParam('_id'));
     const requests = project['joinRequests'];
@@ -91,6 +97,7 @@ Template.Project_Profile_Page.helpers({
       return true;
     }
   },
+
   notRequestedToJoin() {
     const project = Projects.findOne(FlowRouter.getParam('_id'));
     if (_.contains(project.joinRequests, Meteor.user().profile.name)) {
@@ -100,6 +107,7 @@ Template.Project_Profile_Page.helpers({
       return true;
     }
   },
+
   notMember() {
     const project = Projects.findOne(FlowRouter.getParam('_id'));
     if (_.contains(project.members, Meteor.user().profile.name)) {
@@ -109,6 +117,7 @@ Template.Project_Profile_Page.helpers({
       return true;
     }
   },
+
   isSiteAdmin() {
     const user = Users.findOne({ username: Meteor.user().profile.name });
     const bool = user['isSiteAdmin'];
@@ -117,25 +126,49 @@ Template.Project_Profile_Page.helpers({
     } else {
       return false;
     }
-  }
+  },
+
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
+  },
 });
 
 Template.Project_Profile_Page.helpers({
   homeActiveClass() {
     return Template.instance().navMenuActive.get(homeActive) ? 'active' : '';  // 'active' string also doubles as truthy
   },
+
   eventsActiveClass() {
     return Template.instance().navMenuActive.get(eventsActive) ? 'active' : '';
   },
+
   friendsActiveClass() {
     return Template.instance().navMenuActive.get(friendsActive) ? 'active' : '';
   },
+
   errorClass() {
     return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';  // empty string is falsey
   },
+
   displayFieldError(fieldName) {
     const errorKeys = Template.instance().context.invalidKeys();
     return _.find(errorKeys, (keyObj) => keyObj.name === fieldName);
+  },
+
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
   },
 });
 
@@ -201,25 +234,29 @@ Template.Project_Profile_Page.events({
       Projects.update({ _id: project._id }, { $addToSet: { joinRequests: memberToAdd } });
       // console.log("added to joinRequests");
 
-      const project = Projects.findOne({ _id: FlowRouter.getParam('_id') });
       let projectAdminsArray = project.admins;
-      const emailMsg = Meteor.user().profile.name + " requested to join project " + project.projectName + ".";
-
+      // const emailMsg = Meteor.user().profile.name + " requested to join project " + project.projectName + ".";
+      htmlMsg = "<div style='border: 3px solid #27AAE1; border-radius: 3px; padding-top: 20px;'>" +
+          "<a href='http://www.alloy.rocks'><img src='https://github.com/alloyteams/alloy/blob/master/app/public/images/alloy-wordmark.png?raw=true'" +
+          "style='display: block; margin: auto;'></a><br>" +
+          "<div style='background-color: #F8F8F8;'>" +
+          "<div style='text-align: center; font-size: large; max-width: 450px; margin: 0 auto; padding: 10px;'>" +
+          "<span style='color: #A6CE39; text-transform: uppercase;'>" +Meteor.user().profile.name + "</span> " +
+          "requested to join project <span style='color: #A6CE39; text-transform: uppercase;'>" + project.projectName + "</span>." +
+          "</div></div></div>";
       // console.log(projectAdminsArray);
-      // console.log("test print");
 
       projectAdminsArray = _.map(projectAdminsArray, function(name){ return name + "@hawaii.edu"; });
-
       // console.log(projectAdminsArray);
 
       _.each(projectAdminsArray, function(name)
       {Meteor.call(
-          'sendEmail',
+          'sendHtmlEmail',
           name,
           'alloyUH@gmail.com',
           'ALLOY-NOTIFICATION-REQUEST-TO-JOIN-PROJECT',
-          emailMsg
-      )})
+          htmlMsg
+      )});
     }
   },
   'click .ui.basic.green.button': function (event, instance) {
@@ -277,7 +314,7 @@ Template.Project_Profile_Page.events({
   /** Leave project **/
   'click .ui.red.leave.button': function (event, instance) {
     /** Remove user from project **/
-    if (confirm('Are you sure you want to leave the project?')) {
+    if (confirm('Are you sure you want to leave the project?  If you are the last person in the project the project will be deleted.')) {
       /** Removing user event **/
       //Debug Console Log
       //console.log('Trying to click');

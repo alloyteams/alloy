@@ -44,10 +44,12 @@ Template.User_Profile_Page_2.helpers({
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return user && user[fieldVal];
   },
+
   projectDataField(projectId, fieldVal) {
     const project = Projects.findOne({ _id: projectId });
     return project && project[fieldVal];
   },
+
   isAdmin() {
     // duplicate code here b/c helpers can't call each other by default. see http://stackoverflow.com/q/17229302
     // TODO: check that this function actually checks if current user is allowed admin permissions
@@ -58,9 +60,11 @@ Template.User_Profile_Page_2.helpers({
     // console.log(userNameId);
     return userId == userNameId;
   },
+
   userId: function () {
     return Meteor.userId();
   },
+
   isSiteAdmin() {
     const user = Users.findOne({ username: Meteor.user().profile.name });
     const bool = user['isSiteAdmin'];
@@ -69,7 +73,17 @@ Template.User_Profile_Page_2.helpers({
     } else {
       return false;
     }
-  }
+  },
+
+  isRestricted() {
+    const user = Users.findOne({ username: Meteor.user().profile.name });
+    const bool = user['isRestricted'];
+    if (bool == true) {
+      return true;
+    } else {
+      return false;
+    }
+  },
 });
 
 Template.User_Profile_Page_2.helpers({

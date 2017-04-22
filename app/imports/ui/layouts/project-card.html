@@ -14,14 +14,14 @@
       </div>
       <!-- description of the project-->
       <div class="description">
-        <p>{{ project.bio }}</p>
+        <p><b>Description</b><br />{{ project.bio }}</p>
       <!--</div>
     </div>-->
     <!--TODO: add skills relevant to that project-->
     <!--<div class="extra content">-->
-      <p>Skills wanted:</p>
+      <p><b>Skills wanted:</b></p>
       {{#each skill in (project.skillsWanted)}}
-          {{ skill }},
+          <div class="ui label skill-label">{{ skill }}</div>
       {{/each}}
     <!--</div>-->
       </div>

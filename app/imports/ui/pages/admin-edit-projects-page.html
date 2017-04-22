@@ -3,30 +3,35 @@
   {{#if Template.subscriptionsReady}}
     {{#if currentUser}}
       {{#if siteAdmin}}
-        <div class="ui container" style="margin: 30px auto 0 auto;">
-          <div class="ui raised padded segment">
-            <h1>
-              <img style="height:30px; width:auto" src="/images/alloy-icon.png">
+          <div class="ui raised padded segment div container">
+            <h1 class="ui dividing header">
+              <img id="admin-project-icon" src="/images/alloy-icon.png">
               Projects List
             </h1>
-            <hr/>
             <div class="ui middle aligned divided list">
               {{#each project in foundProjects}}
               <div class="item">
-                <h3 style="margin-top: 5px;">
+                <div class="right floated content">
+                  <form class="form-delete-project">
+                    <input name="projectId" id="projectId" type="hidden" placeholder="Project" value="{{ project._id }}">
+                    <button type="submit" class="fluid ui red button">
+                      Delete
+                    </button>
+                  </form>
+                </div>
+                <h3 id="admin-feed-project-title">
                   <a href="{{ pathFor 'Project_Profile_Page' _id=(project._id) }}">{{project.projectName}}</a>
                 </h3>
-                <div class="content" style="margin-bottom: 5px;">
-                  <div class="item" style="margin-bottom: 2px;"><u>Admins</u>: {{project.admins}}</div>
-                  <div class="item" style="margin-bottom: 2px;"><u># of Members</u>: {{project.members.length}}</div>
-                  <div class="item" style="margin-bottom: 2px;"><u>Created</u>: {{project.createdAt}}</div>
-                  <div class="item" style="margin-bottom: 2px;"><u>Last Modified</u>: {{project.modifiedAt}}</div>
+                <div class="content content-feed-message">
+                  <div class="item feed-message"><u>Admins</u>: {{project.admins}}</div>
+                  <div class="item feed-message"><u># of Members</u>: {{project.members.length}}</div>
+                  <div class="item feed-message"><u>Created</u>: {{project.createdAt}}</div>
+                  <div class="item feed-message"><u>Last Modified</u>: {{project.modifiedAt}}</div>
                 </div>
               </div>
               {{/each}}
             </div>
           </div>
-        </div>
       {{/if}}
     {{/if}}
   {{/if}}

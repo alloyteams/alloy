@@ -31,7 +31,7 @@ Template.Home_Page.helpers({
     // uses the id param specified in page that routed to this page
     //   see https://github.com/kadirahq/flow-router#routes-definition
     const user = Users.findOne({ username: Meteor.user().profile.name });
-    console.log(user[fieldVal]);
+    // console.log(user[fieldVal]);
     // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
     // once the subcribed collection has loaded, if the user exists, then return the specified fieldVal
     return user && user[fieldVal];
@@ -61,14 +61,14 @@ Template.Home_Page.events({
     event.preventDefault();
     let userToAdd = Meteor.user().profile.name;
     userToAdd = String(userToAdd).toLowerCase();
-    console.log(userToAdd);
+    // console.log(userToAdd);
     /** Check if user exists **/
     const user = Users.find({ 'username': userToAdd }).fetch()[0];
     /** If User exists, proceed to add **/
     if (user != null) {
-      console.log(event.currentTarget.id);
+      // console.log(event.currentTarget.id);
       const project = Projects.findOne(event.currentTarget.id);
-      console.log(project);
+      // console.log(project);
       let newMembers = project['members'];
       //console.log(newMembers);
       let indexOfUser = newMembers.indexOf(userToAdd);
