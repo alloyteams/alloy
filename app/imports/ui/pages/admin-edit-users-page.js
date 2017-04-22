@@ -67,13 +67,21 @@ Template.Edit_Users_Page.events({
     Users.update({ _id: user_ID }, { $set: { isRestricted: false } });
 
     const targetUserEmail = Users.findOne({ _id: user_ID }).username + "@hawaii.edu";
+    htmlMsg = "<div style='border: 3px solid #27AAE1; border-radius: 3px; padding-top: 20px;'>" +
+        "<a href='http://www.alloy.rocks'><img src='https://github.com/alloyteams/alloy/blob/master/app/public/images/alloy-wordmark.png?raw=true'" +
+        "style='display: block; margin: auto;'></a><br>" +
+        "<div style='background-color: #F8F8F8;'>" +
+        "<div style='text-align: center; font-size: large; max-width: 450px; margin: 0 auto; padding: 10px;'>" +
+        "The restriction on your account has been lifted." +
+        "</div></div></div>";
+
     // Sending an email to alloy email account about REPORT
     Meteor.call(
-        'sendEmail',
+        'sendHtmlEmail',
         targetUserEmail,
         'alloyUH@gmail.com',
         'ALLOY-NOTIFICATION-RESTRICTION-REMOVED',
-        'The restriction on your account has been lifted.'
+        htmlMsg
     );
     // console.log("email sent");
 
@@ -89,13 +97,21 @@ Template.Edit_Users_Page.events({
     Users.update({ _id: user_ID }, { $set: { isRestricted: true } });
 
     const targetUserEmail = Users.findOne({ _id: user_ID }).username + "@hawaii.edu";
+    htmlMsg = "<div style='border: 3px solid #27AAE1; border-radius: 3px; padding-top: 20px;'>" +
+        "<a href='http://www.alloy.rocks'><img src='https://github.com/alloyteams/alloy/blob/master/app/public/images/alloy-wordmark.png?raw=true'" +
+        "style='display: block; margin: auto;'></a><br>" +
+        "<div style='background-color: #F8F8F8;'>" +
+        "<div style='text-align: center; font-size: large; max-width: 450px; margin: 0 auto; padding: 10px;'>" +
+        "Your account has been RESTRICTED.  Please contact alloyUH@gmail.com for more information." +
+        "</div></div></div>";
+
     // Sending an email to alloy email account about REPORT
     Meteor.call(
-        'sendEmail',
+        'sendHtmlEmail',
         targetUserEmail,
         'alloyUH@gmail.com',
         'ALLOY-NOTIFICATION-USER-RESTRICTED',
-        'Your account has been RESTRICTED.  Please contact alloyUH@gmail.com for more information.'
+        htmlMsg
     );
     // console.log("email sent");
 

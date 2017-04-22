@@ -235,21 +235,28 @@ Template.Project_Profile_Page.events({
       // console.log("added to joinRequests");
 
       let projectAdminsArray = project.admins;
-      const emailMsg = Meteor.user().profile.name + " requested to join project " + project.projectName + ".";
+      // const emailMsg = Meteor.user().profile.name + " requested to join project " + project.projectName + ".";
+      htmlMsg = "<div style='border: 3px solid #27AAE1; border-radius: 3px; padding-top: 20px;'>" +
+          "<a href='http://www.alloy.rocks'><img src='https://github.com/alloyteams/alloy/blob/master/app/public/images/alloy-wordmark.png?raw=true'" +
+          "style='display: block; margin: auto;'></a><br>" +
+          "<div style='background-color: #F8F8F8;'>" +
+          "<div style='text-align: center; font-size: large; max-width: 450px; margin: 0 auto; padding: 10px;'>" +
+          "<span style='color: #A6CE39; text-transform: uppercase;'>" +Meteor.user().profile.name + "</span> " +
+          "requested to join project <span style='color: #A6CE39; text-transform: uppercase;'>" + project.projectName + "</span>." +
+          "</div></div></div>";
       // console.log(projectAdminsArray);
-      // console.log("test print");
 
       projectAdminsArray = _.map(projectAdminsArray, function(name){ return name + "@hawaii.edu"; });
       // console.log(projectAdminsArray);
 
       _.each(projectAdminsArray, function(name)
       {Meteor.call(
-          'sendEmail',
+          'sendHtmlEmail',
           name,
           'alloyUH@gmail.com',
           'ALLOY-NOTIFICATION-REQUEST-TO-JOIN-PROJECT',
-          emailMsg
-      )})
+          htmlMsg
+      )});
     }
   },
   'click .ui.basic.green.button': function (event, instance) {
