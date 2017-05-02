@@ -12,10 +12,10 @@
             <center>Notifications</center>
           </h1>
             {{#if hasRequests}}
+            <div class="ui stackable cards">
             {{#each request in (userDataField "pendingRequests")}}
             <!--<div class="padded row">
               <div class="ui container">-->
-                <div class="ui five stackable cards">
                   <div class="card">
                     <div class="content">
                       <div class="header">
@@ -37,10 +37,10 @@
                       </div>
                     </div>
                   </div>
-                </div>
               <!--</div>
             </div>-->
             {{/each}}
+            </div>
             {{else}}
             <!--<div class="padded row">
               <div class="ui container">-->
