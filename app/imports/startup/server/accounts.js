@@ -51,6 +51,7 @@ Accounts.onCreateUser(function (options, user) {
     followedBy: [],
     isSiteAdmin: false,
     pendingRequests: [],
+    isRestricted: false,
   };
 
   // On creation of application makes these users site admin
