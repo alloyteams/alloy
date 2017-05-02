@@ -160,6 +160,22 @@ p.top-margin-5px, #admin-feed-project-title {
   margin: 15px auto 0 auto;
 }
 
+/*CSS for uploader*/
+
+.upload-area .alert {
+  position: relative;
+}
+
+.upload-area input[type="file"] {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  opacity: 0;
+}
+
 #admin-feed-container {
   height: 528px;
 }

@@ -5,6 +5,7 @@ import '/imports/api/projects';
 import '/imports/api/base';
 import '/imports/api/categories-dict';
 import '/imports/api/skill-graph';
+import '/imports/api/images';
 import '/imports/ui/layouts';
 import '/imports/ui/pages';
 import '/imports/ui/stylesheets/style.css';
