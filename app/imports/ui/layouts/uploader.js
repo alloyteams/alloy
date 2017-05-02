@@ -3,7 +3,6 @@ import { Template } from 'meteor/templating';
 import { Slingshot } from 'meteor/edgee:slingshot';
 
 let temp;
-let fURL;
 const getFileFromInput = event => event.target.files[0];
 
 const setPlaceholderText = (string = 'Click or Drag a File Here to Upload') => {
@@ -11,17 +10,17 @@ const setPlaceholderText = (string = 'Click or Drag a File Here to Upload') => {
 };
 
 // TODO: Add URL to projects for display
-// const addUrlToDatabase = (url) => {
-//   Meteor.call('storeUrlInDatabase', url, (error) => {
-//     if (error) {
-//       window.alert(`Error, could not store url. Code: ${error.message}`);
-//       setPlaceholderText();
-//     } else {
-//       window.alert('Image successfully uploaded');
-//       setPlaceholderText();
-//     }
-//   });
-// };
+const addUrlToDatabase = (url) => {
+  Meteor.call('storeUrlInDatabase', url, (error) => {
+    if (error) {
+      window.alert(`Error, could not store url. Code: ${error.message}`);
+      setPlaceholderText();
+    } else {
+      window.alert('Image successfully uploaded');
+      setPlaceholderText();
+    }
+  });
+};
 
 const uploadFileToAmazon = (file) => {
   const uploader = new Slingshot.Upload('uploadToAmazonS3');
@@ -31,7 +30,7 @@ const uploadFileToAmazon = (file) => {
       window.alert(error.message);
       setPlaceholderText();
     } else {
-      // addUrlToDatabase(url);
+      addUrlToDatabase(url);
       setPlaceholderText(url);
     }
   });
@@ -49,8 +48,4 @@ Template.Uploader.events({
   'change input[type="file"]': (event, instance) => {
     upload({ event, template: instance });
   },
-});
-
-Template.Uploader.helpers({
-  getURL: () => `${fURL}`,
 });
